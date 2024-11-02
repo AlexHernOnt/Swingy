@@ -1,2 +1,7 @@
 /home/ahernand/swingy/src/main/java/swingy/App.java
-/home/ahernand/swingy/src/main/java/swingy/hero.java
+/home/ahernand/swingy/src/main/java/swingy/hero/Warrior.java
+/home/ahernand/swingy/src/main/java/swingy/hero/Hero.java
+/home/ahernand/swingy/src/main/java/swingy/hero/heroCreator.java
+/home/ahernand/swingy/src/main/java/swingy/hero/Knight.java
+/home/ahernand/swingy/src/main/java/swingy/hero/Wizard.java
+/home/ahernand/swingy/src/main/java/swingy/hero/Archer.java
