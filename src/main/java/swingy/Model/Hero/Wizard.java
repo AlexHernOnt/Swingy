@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Knight.java                                        :+:      :+:    :+:   */
+/*   Wizard.java                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/02 17:43:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:45:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package hero;
+package Hero;
 
-public class Knight extends Hero{
+public class Wizard extends Hero{
 
     /*
     ** Parameters
@@ -22,11 +22,11 @@ public class Knight extends Hero{
     ** Methods
     */
 
-    Knight(String p_class, String p_name)
+    Wizard(String p_class, String p_name)
     {
         super(p_class, p_name);
-        attack = 2;
-        defense = 8;
+        attack = 9;
+        defense = 1;
         HP = 10;
     }
 }

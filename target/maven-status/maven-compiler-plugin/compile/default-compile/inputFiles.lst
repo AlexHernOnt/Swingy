@@ -1,7 +1,10 @@
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/heroCreator.java
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/Warrior.java
 /home/ahernand/swingy/src/main/java/swingy/App.java
-/home/ahernand/swingy/src/main/java/swingy/hero/Warrior.java
-/home/ahernand/swingy/src/main/java/swingy/hero/Hero.java
-/home/ahernand/swingy/src/main/java/swingy/hero/heroCreator.java
-/home/ahernand/swingy/src/main/java/swingy/hero/Knight.java
-/home/ahernand/swingy/src/main/java/swingy/hero/Wizard.java
-/home/ahernand/swingy/src/main/java/swingy/hero/Archer.java
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/Wizard.java
+/home/ahernand/swingy/src/main/java/swingy/Model/ModelGameLogic.java
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/Hero.java
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/Knight.java
+/home/ahernand/swingy/src/main/java/swingy/Controller/ControllerGame.java
+/home/ahernand/swingy/src/main/java/swingy/View/ViewGame.java
+/home/ahernand/swingy/src/main/java/swingy/Model/Hero/Archer.java

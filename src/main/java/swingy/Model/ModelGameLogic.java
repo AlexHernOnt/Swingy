@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   App.java                                           :+:      :+:    :+:   */
+/*   ModelGameLogic.java                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 18:54:10 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/03 20:26:39 by ahernand         ###   ########.fr       */
+/*   Created: 2024/11/03 16:43:54 by ahernand          #+#    #+#             */
+/*   Updated: 2024/11/03 20:15:00 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package swingy;
+package Model;
 
-import Controller.ControllerGame;
+import Hero.heroCreator;
 
-/*
-** Hello world!
-*/
+public class ModelGameLogic {
 
-public class App 
-{
-	public static void main(String[] args )
+	/*
+	** Parameters
+	*/
+
+	heroCreator creator = new heroCreator();
+		
+	/*
+	** Methods
+	*/
+
+	public void ctNewHero(String p_class, String p_name)
 	{
-		ControllerGame controller = new ControllerGame();
-
-		controller.presentGame();
-		controller.setHero();
+		creator.newHero(p_class, p_name);
 	}
 }

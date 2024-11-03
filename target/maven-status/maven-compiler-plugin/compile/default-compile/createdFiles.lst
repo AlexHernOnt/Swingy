@@ -1,7 +1,10 @@
-hero/Archer.class
-hero/Wizard.class
-hero/Knight.class
-hero/Hero.class
-hero/Warrior.class
+Hero/Hero.class
+View/ViewGame.class
+Model/ModelGameLogic.class
+Hero/heroCreator.class
+Controller/ControllerGame.class
+Hero/Knight.class
+Hero/Warrior.class
+Hero/Archer.class
 swingy/App.class
-hero/heroCreator.class
+Hero/Wizard.class

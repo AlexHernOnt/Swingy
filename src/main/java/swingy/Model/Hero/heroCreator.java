@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:24:00 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/02 18:05:09 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:45:27 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package hero;
+package Hero;
 
 public class heroCreator {
     

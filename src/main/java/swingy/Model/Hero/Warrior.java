@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Hero.java                                          :+:      :+:    :+:   */
+/*   Warrior.java                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/02 18:57:33 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:45:25 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package hero;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+package Hero;
 
-public class Hero {
+public class Warrior extends Hero{
 
     /*
     ** Parameters
     */
     
-	@Size(min = 3, max = 15, message = "Name must be between 3 and 15 characters")
-    protected String name;
-    
-    protected String classType;
-    protected int level;
-    protected int experience;
-    protected int attack;
-    protected int defense;
-    protected int HP;
-        
     /*
     ** Methods
     */
 
-    public Hero(String p_class, String p_name)
+    Warrior(String p_class, String p_name)
     {
-        name = p_name;
-        classType = p_class;
+        super(p_class, p_name);
+        attack = 6;
+        defense = 4;
+        HP = 10;
     }
 }

@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/02 17:43:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:45:17 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package hero;
+package Hero;
 
 public class Archer extends Hero{
 
