@@ -6,12 +6,13 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/03 20:26:32 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:12:17 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 package Controller;
 
+import Hero.Hero;
 import Model.ModelGameLogic;
 import View.ViewGame;
 
@@ -38,19 +39,23 @@ public class ControllerGame {
 		String class_i;
 
 	    // Prompt for hero name until a valid one is provided
+
 		do {
 			name = view.promptForName();
-		} while (name.isEmpty());
+		} while (!nameOK(name));
 		view.printName(name);
 
 		// Prompt for hero class until a valid one is provided
+
 		do {
 			class_i = view.promptForClass();
-		} while (class_i.isEmpty() || !classOk(class_i));
+		} while (!classOk(class_i));
 		view.printClass(class_i);
 
    		// Create new hero in the model
-		model.ctNewHero(name, class_i);
+
+		Hero h = model.ctNewHero(class_i, name);
+		view.printHeroData(h);
 	}
 
 	/*
@@ -61,7 +66,18 @@ public class ControllerGame {
 		if (str.equals("Warrior") || str.equals("Wizard") || str.equals("Knight") || str.equals("Archer")) {
 			return true;
 		}
-		view.printErrorClass();
+		else if (!str.isEmpty()) {
+			view.printErrorClass();
+		}
+		view.cleanScreen();
 		return (false);
+	}
+
+	private boolean nameOK(String str) {
+		if (str.isEmpty()) {
+			view.printErrorName();
+			return (false);
+		}
+		return true;
 	}
 }
