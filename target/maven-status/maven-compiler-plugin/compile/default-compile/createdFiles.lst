@@ -1,0 +1,11 @@
+Hero/Hero.class
+View/ViewGame.class
+swingy/View/MyFrame.class
+Model/ModelGameLogic.class
+Hero/heroCreator.class
+Controller/ControllerGame.class
+Hero/Knight.class
+Hero/Warrior.class
+Hero/Archer.class
+swingy/App.class
+Hero/Wizard.class

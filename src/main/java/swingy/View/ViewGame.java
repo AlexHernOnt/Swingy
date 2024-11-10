@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/08 18:14:57 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/10 16:36:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@ package View;
 import java.util.Scanner;
 
 import Hero.Hero;
+import swingy.View.MyFrame;
 
 public class ViewGame {
 
@@ -21,11 +22,17 @@ public class ViewGame {
 	** Parameters
 	*/
 	
+	boolean GUI = true;
 	Scanner scanner = new Scanner(System.in);
-
+	MyFrame frame = new MyFrame();
+	
 	/*
 	** Methods
 	*/
+	
+	public ViewGame() {
+
+	}
 
 	public void cleanScreen() {
 		int i = 0;
@@ -41,8 +48,13 @@ public class ViewGame {
 	 */
 	
 	public void printPresentGame() {
-		cleanScreen();
-		System.err.println("Welcome to The Brighest Night");
+		if (GUI) {
+			
+		}
+		else {
+			cleanScreen();
+			System.err.println("Welcome to The Brighest Night");
+		}
 	}
 
 	public void printName(String str) {
