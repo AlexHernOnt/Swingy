@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:54:10 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/10 16:33:50 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:49:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ public class App
 {
 	public static void main(String[] args )
 	{
+		System.err.println(args);
 		ControllerGame controller = new ControllerGame();
 
 		controller.presentGame();
-		controller.setHero();
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/10 16:35:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:58:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,46 @@ public class ControllerGame {
 	** Methods
 	*/
 
+
+	/*
+	**  Start Screen & Select Hero
+	*/
+
 	public void presentGame() {
-		view.printPresentGame();
+
+		String str;
+		
+		view.printPresenteAndSelectHero();
+
+		// Prompt for hero name until a valid one is provided
+
+		do {
+			str = view.promptForSelectHero();
+		} while (!selectHeroOk(str));
+
+		// Redirects to creation or continue game
+		setHero();
 	}
+
+	private boolean selectHeroOk(String str) {
+		view.cleanScreen();
+		if (str.equals("Continue") || str.equals("New Game")) {
+			return true;
+		}
+		return (false);
+	}
+
+
+	/*
+	**  Create Hero
+	*/
 
 	public void setHero() {
 
 		String name;
 		String class_i;
 
-	    // Prompt for hero name until a valid one is provided
+		// Prompt for hero name until a valid one is provided
 
 		do {
 			name = view.promptForName();
@@ -52,16 +82,20 @@ public class ControllerGame {
 		} while (!classOk(class_i));
 		view.printClass(class_i);
 
-   		// Create new hero in the model
+		// Create new hero in the model
 
 		Hero h = model.ctNewHero(class_i, name);
 		view.printHeroData(h);
 	}
 
-	/*
-	** Parsing
-	*/
-	
+	private boolean nameOK(String str) {
+		if (str.isEmpty()) {
+			view.printErrorName();
+			return (false);
+		}
+		return true;
+	}
+
 	private boolean classOk(String str) {
 		if (str.equals("Warrior") || str.equals("Wizard") || str.equals("Knight") || str.equals("Archer")) {
 			return true;
@@ -71,13 +105,5 @@ public class ControllerGame {
 		}
 		view.cleanScreen();
 		return (false);
-	}
-
-	private boolean nameOK(String str) {
-		if (str.isEmpty()) {
-			view.printErrorName();
-			return (false);
-		}
-		return true;
 	}
 }
