@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/12 20:58:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/15 20:57:05 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ public class ControllerGame {
 	** Methods
 	*/
 
+	public ControllerGame() {
+		
+	}
 
 	/*
 	**  Start Screen & Select Hero
@@ -37,17 +40,21 @@ public class ControllerGame {
 	public void presentGame() {
 
 		String str;
-		
-		view.printPresenteAndSelectHero();
 
 		// Prompt for hero name until a valid one is provided
-
-		do {
+		
+		if (view.GUI) {
+			view.GUIpromptForSelectHero();
+		}
+		else {
+			view.printPresenteAndSelectHero();
 			str = view.promptForSelectHero();
-		} while (!selectHeroOk(str));
-
+			do {
+				str = view.promptForSelectHero();
+			} while (!selectHeroOk(str));
+			setHero();
+		}
 		// Redirects to creation or continue game
-		setHero();
 	}
 
 	private boolean selectHeroOk(String str) {

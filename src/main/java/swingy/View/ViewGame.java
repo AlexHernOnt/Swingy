@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/12 20:58:34 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/15 21:02:37 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ import java.util.Scanner;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import Hero.Hero;
 import swingy.View.MyFrame;
 
@@ -31,7 +33,7 @@ import java.awt.Image;
 
 import java.awt.FlowLayout;
 
-public class ViewGame {
+public class ViewGame extends JFrame implements ActionListener{
 
 	/*
 	** Parameters
@@ -66,36 +68,7 @@ public class ViewGame {
 
 	public void printPresenteAndSelectHero() {
 		if (GUI) {
-			ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/zelda.png");
-
-			// Panel Settings;
-	
-			JPanel panel = new JPanel();
-	
-			panel.setBounds((frame.WIDTH / 2) - 400, (frame.HEIGHT / 6), 800, 800);
-			
-			// Welcome Label
-	
-			JLabel welcome = new JLabel("Welcome to Swingy!");
-	
-			welcome.setIcon(img);
-			welcome.setHorizontalTextPosition(JLabel.CENTER);
-			welcome.setVerticalTextPosition(JLabel.TOP);
-			welcome.setFont(new Font("Monospaced", Font.PLAIN, 42));
-			welcome.setIconTextGap(20);
-			welcome.setHorizontalAlignment(JLabel.CENTER);
-			welcome.setVerticalAlignment(JLabel.CENTER);
-			welcome.setBackground(Color.decode(frame.COLOR));
-
-	
-			// chooseClass.setHorizontalAlignment(JLabel.CENTER);
-			// chooseClass.setVerticalAlignment(JLabel.BOTTOM);
-	
-			panel.add(welcome);
-
-			frame.add(panel);
-			frame.setVisible(true);
-			// frame.refresh();			
+		
 		}
 		else {
 			cleanScreen();
@@ -103,40 +76,78 @@ public class ViewGame {
 		}
 	}
 
+	public void GUIpromptForSelectHero() {
+
+		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/zelda.png");
+
+		// Panel Settings;
+
+		JPanel panel1 = new JPanel();
+		panel1.setBounds(0, 100, 1600, 300);
+
+
+		// Welcome Label
+
+		JLabel welcome = new JLabel("Welcome to Swingy!");
+	
+		welcome.setIcon(img);
+		welcome.setHorizontalTextPosition(JLabel.CENTER);
+		welcome.setVerticalTextPosition(JLabel.TOP);
+		welcome.setFont(new Font("Monospaced", Font.PLAIN, 42));
+		welcome.setIconTextGap(100);
+		welcome.setHorizontalAlignment(JLabel.CENTER);
+		welcome.setVerticalAlignment(JLabel.CENTER);
+		welcome.setBackground(Color.decode(frame.COLOR));
+		panel1.add(welcome);
+
+
+		// Choose menu
+
+		JPanel panel2 = new JPanel();
+		panel2.setBounds(0, 500, 1600, 100);
+
+		JLabel chooseSelectMode = new JLabel("Choose an option: ");
+		chooseSelectMode.setHorizontalTextPosition(JLabel.CENTER);
+		chooseSelectMode.setVerticalTextPosition(JLabel.BOTTOM);
+		chooseSelectMode.setFont(new Font("Monospaced", Font.PLAIN, 42));
+		chooseSelectMode.setBackground(Color.CYAN);
+		panel2.add(chooseSelectMode);
+
+		// Buttons
+
+		JPanel panel3 = new JPanel();
+		panel3.setBounds(0, 700, 1600, 500);
+
+
+		// JButton[] setHeroButton = new JButton[2];
+		JButton setHeroButtonContinue = new JButton("Continue");
+		JButton setHeroButtonNewGame = new JButton("New Game");
+		
+		setHeroButtonContinue.setBounds(550, 0, 200, 70);
+		setHeroButtonContinue.setFocusable(false);
+		setHeroButtonContinue.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		setHeroButtonContinue.addActionListener(this);
+
+		setHeroButtonNewGame.setBounds(850, 0, 200, 70);
+		setHeroButtonNewGame.setFocusable(false);
+		setHeroButtonNewGame.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		setHeroButtonNewGame.addActionListener(this);
+		
+		panel3.setLayout(null);
+		panel3.add(setHeroButtonContinue);
+		panel3.add(setHeroButtonNewGame);
+
+		frame.add(panel1);
+		frame.add(panel2);
+		frame.add(panel3);
+
+		frame.setVisible(true);
+	}
+
 	public String promptForSelectHero() {
-		if (GUI) {
-			JPanel panel2 = new JPanel();
-			panel2.setBounds((frame.WIDTH / 2) - 400, (frame.HEIGHT / 2), 800, 800); 
-
-			JLabel chooseClass = new JLabel("Choose a class: ");
-			chooseClass.setHorizontalTextPosition(JLabel.CENTER);
-			chooseClass.setVerticalTextPosition(JLabel.BOTTOM);
-			chooseClass.setFont(new Font("Monospaced", Font.PLAIN, 42));
-			chooseClass.setBackground(Color.CYAN);
-	
-			// Buttons
-	
-			JButton[] classButtons = new JButton[4];
-			classButtons[0] = new JButton("Warrior");
-			classButtons[1] = new JButton("Wizard");
-			classButtons[2] = new JButton("Knight");
-			classButtons[3] = new JButton("Archer");
-	
-			for (int i = 0; i < classButtons.length; ++i) {
-				panel2.add(classButtons[i]);
-			}
-
-			panel2.add(chooseClass);
-			frame.add(panel2);
-			frame.setVisible(true);
-			
-			return "Continue";
-		}
-		else {
-			System.err.println("Choose an option:\n- Continue\n- New Game");
-			String str = scanner.nextLine();
-			return str;
-		}
+		System.err.println("Choose an option:\n- Continue\n- New Game");
+		String str = scanner.nextLine();
+		return str;
 	}
 
 
@@ -173,11 +184,26 @@ public class ViewGame {
 	/*
 	**  Set Hero's Class
 	*/
+	public void promptForClassGUI() {
+		// Buttons
+		JPanel panel2 = new JPanel();
+
+		JButton[] classButtons = new JButton[4];
+		classButtons[0] = new JButton("Warrior");
+		classButtons[1] = new JButton("Wizard");
+		classButtons[2] = new JButton("Knight");
+		classButtons[3] = new JButton("Archer");
+
+		for (int i = 0; i < classButtons.length; ++i) {
+			panel2.add(classButtons[i]);
+		}
+	}
 
 	public String promptForClass() {
-		System.out.println("Choose a class: \n- Warrior\n- Wizard\n- Knight\n- Archer");
-		String str = scanner.nextLine();
-		return str;
+
+			System.out.println("Choose a class: \n- Warrior\n- Wizard\n- Knight\n- Archer");
+			String str = scanner.nextLine();
+			return str;
 	}
 
 	public void printClass(String str) {
