@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 15:24:56 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:19:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ public class Controller {
 	** Parameters
 	*/
  
-	public View view = new View();
-	public Model model = new Model();
-
+	public View view;
+	public Model model;
 	public States currentState;
 
 
@@ -39,13 +38,16 @@ public class Controller {
 	** M E T H O D S
 	*/
 
-	public Controller() {
-		view.controller = this;
-		view.VCHero.controller = this;
-		view.VCHero.frame.controller = this;
+	public Controller(String pGUI) {
 
+		// Initialize classes
+
+		view = new View(this, pGUI.equals("GUI") ? true : false);
+		model = new Model();
+		
 		currentState = States.PRESENTGAME;
 	}
+
 	public void presentGame() {
 		view.showPresentation();
 	}

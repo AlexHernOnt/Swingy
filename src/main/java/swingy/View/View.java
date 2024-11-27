@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 15:59:46 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:38:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ import java.util.Scanner;
 public class View {
 
 	/*
-	** Parameters
+	** Variables
 	*/
 
-	public ViewCreateHero VCHero = new ViewCreateHero();
+	public ViewCreateHero VCHero;
 	public Controller controller;
 
 	private Scanner scanner = new Scanner(System.in);
@@ -44,14 +44,22 @@ public class View {
 	** Methods
 	*/
 
-	public View() {
-		VCHero.view = this;
+	public View(Controller pController, boolean pGUI) {
+
+		// Assign Constructor Variables
+
+		controller = pController;
+		GUI = pGUI;
+
+		// Initialize variables
+
+		VCHero = new ViewCreateHero(pController, this);
 	}
 
 	public void cleanScreen() {
 		int i = 0;
 
-		while (i < 100) {
+		while (i < 8) { //100) {
 			System.err.println("\n");
 			++i;
 		}
@@ -69,12 +77,9 @@ public class View {
 	/*
 	**  Select Hero And Present Game
 	*/
-
 	public void showPresentation() {
 
 		String str;
-
-		// Prompt for hero name until a valid one is provided
 
 		if (GUI) {
 			VCHero.GUIpromptForSelectHero();
@@ -85,7 +90,6 @@ public class View {
 			do {
 				str = promptForSelectHero();
 			} while (!selectHeroOk(str));
-			viewSetHeroName();
 		}
 	}
 
@@ -96,14 +100,20 @@ public class View {
 
 	private boolean selectHeroOk(String str) {
 		cleanScreen();
-		if (str.equals("GUI")) {
-			GUI = true;
-			return true;
+		switch (str) {
+			case "GUI":
+				GUI = true;
+				VCHero.GUIpromptForSelectHero();
+				return true;
+			case "Continue":
+				viewSetHeroName();
+				return true;
+			case "New Game":
+				viewSetHeroName();
+				return true;
+			default:
+				return false;
 		}
-		else if (str.equals("Continue") || str.equals("New Game")) {
-			return true;
-		}
-		return (false);
 	}
 
 	public String promptForSelectHero() {

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:15:43 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 15:14:13 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:10:47 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ public class MyFrame extends JFrame {
 	public String COLOR = "#69614c";
 	public Controller controller;
 
-    public MyFrame()
+    public MyFrame(Controller pController)
     {
+		// Assign Constructor Variables
+
+		controller = pController;
+
 		// Window Settings
 		
 		setTitle("Swingy");

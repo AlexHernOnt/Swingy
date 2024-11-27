@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 15:27:19 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:35:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,21 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 
     // V A R I A B L E S
 
-    public MyFrame frame = new MyFrame();
     public View view;
     public Controller controller;
+    public MyFrame frame;
 
 
 
 
 
 
-	public ViewCreateHero() {
-		frame.controller = this.controller;
+	public ViewCreateHero(Controller pController,View pView) {
+
+		// Assign Constructor Variables
+
+		view = pView;
+		controller = pController;
 	}
 
 
@@ -64,6 +68,7 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 	
 	public void GUIpromptForSelectHero() {
 
+		reOpenWindow();
 		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/tools/intro_img.png");
 
 		// Panel Settings;
@@ -146,7 +151,8 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 	JTextField nameTextField;
 
 	public void GUIpromptForName() {
-		
+
+		reOpenWindow();
 		frame.getContentPane().removeAll();
 		frame.revalidate();
 		frame.repaint();
@@ -220,7 +226,8 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 	JButton ClassArcherButton;
 
 	public void GUIpromptForClass() {
-		
+
+		reOpenWindow();
 		frame.getContentPane().removeAll();
 		frame.revalidate();
 		frame.repaint();
@@ -315,6 +322,8 @@ public class ViewCreateHero extends JFrame implements ActionListener{
     */
 
     public void GUIStartGame() {
+
+		reOpenWindow();
 		frame.getContentPane().removeAll();
 		frame.revalidate();
 		frame.repaint();
@@ -354,7 +363,7 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == setHeroButtonContinue) {
 			System.out.println("Na, im not coding this yet lol");
 		}
@@ -388,10 +397,17 @@ public class ViewCreateHero extends JFrame implements ActionListener{
 	}
 
 
-	public void closeWindow()
-	{
+	public void closeWindow() {
 		view.GUI = false;
 		frame.dispose();
+		frame = null;
 		controller.StateSwitcher();
+	}
+
+	public void reOpenWindow() {
+		if (view.GUI == true) {
+			System.err.println("Opening Window Again");
+			frame = new MyFrame(controller);
+		}
 	}
 }
