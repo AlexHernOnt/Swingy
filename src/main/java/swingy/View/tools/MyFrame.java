@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:15:43 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/15 20:57:38 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:14:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import Controller.Controller;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class MyFrame extends JFrame implements ActionListener {
+
+public class MyFrame extends JFrame {
 
 	public int WIDTH = 1600;
 	public int HEIGHT = 1200;
 	public String COLOR = "#69614c";
+	public Controller controller;
 
     public MyFrame()
     {
@@ -35,14 +40,16 @@ public class MyFrame extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 
 		// getContentPane().setBackground(Color.decode(COLOR));
-		// setVisible(true);
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		repaint();
 		revalidate();
-    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-			System.out.println("Suicidate siii :)");
-	}
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+				if (controller != null) {
+					controller.view.VCHero.closeWindow();
+				}
+            }
+        });
+    }
 } 

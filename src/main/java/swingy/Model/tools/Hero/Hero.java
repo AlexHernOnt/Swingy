@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/07 16:13:45 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:17:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ public class Hero {
     ** Methods
     */
 
-    public Hero(String p_class, String p_name)
-    {
+    public Hero(String p_class, String p_name) {
         classType = p_class;
         name = p_name;
     }
@@ -47,6 +46,30 @@ public class Hero {
     
     public String getName() {
         return name;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
     }
 
     @Override

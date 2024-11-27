@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   App.java                                           :+:      :+:    :+:   */
+/*   States.java                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 18:54:10 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/25 17:10:08 by ahernand         ###   ########.fr       */
+/*   Created: 2024/11/25 18:27:43 by ahernand          #+#    #+#             */
+/*   Updated: 2024/11/25 18:34:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package swingy;
+package Controller;
 
-import Controller.Controller;
+public enum States {
 
-/*
-** Hello world!
-*/
-
-
-public class App 
-{
-
-	public static void main(String[] args )
-	{
-		Controller controller = new Controller();
-
-		controller.presentGame();
-	}
+	PRESENTGAME,
+	SETHERONAME,
+	SETHEROCLASS,
 }
