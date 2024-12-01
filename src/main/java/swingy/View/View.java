@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 20:38:07 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:15:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ package View;
 import Controller.Controller;
 import Controller.States;
 import Hero.Hero;
-import View.ViewCreateHero;
+import View.GuiCreateHero;
 import java.util.Scanner;
 
 
@@ -25,19 +25,20 @@ public class View {
 	** Variables
 	*/
 
-	public ViewCreateHero VCHero;
+	private GuiCreateHero GuiCH;
 	public Controller controller;
 
 	private Scanner scanner = new Scanner(System.in);
 
-	public boolean GUI = true;
+	protected boolean GUI = true;
 
 
 
 
 
 
-	
+
+
 
 
 	/*
@@ -53,13 +54,13 @@ public class View {
 
 		// Initialize variables
 
-		VCHero = new ViewCreateHero(pController, this);
+		GuiCH = new GuiCreateHero(pController, this);
 	}
 
 	public void cleanScreen() {
-		int i = 0;
+		int i = 99;
 
-		while (i < 8) { //100) {
+		while (i < 100) {
 			System.err.println("\n");
 			++i;
 		}
@@ -82,7 +83,7 @@ public class View {
 		String str;
 
 		if (GUI) {
-			VCHero.GUIpromptForSelectHero();
+			GuiCH.GUIpromptForSelectHero();
 		}
 		else {
 			printPresenteAndSelectHero();
@@ -101,9 +102,9 @@ public class View {
 	private boolean selectHeroOk(String str) {
 		cleanScreen();
 		switch (str) {
-			case "GUI":
+			case "gui":
 				GUI = true;
-				VCHero.GUIpromptForSelectHero();
+				GuiCH.GUIpromptForSelectHero();
 				return true;
 			case "Continue":
 				viewSetHeroName();
@@ -143,7 +144,7 @@ public class View {
 		controller.currentState = States.SETHERONAME;
 
 		if (GUI) {
-			VCHero.GUIpromptForName();
+			GuiCH.SetHeroName();
 		}
 		else {
 
@@ -153,19 +154,22 @@ public class View {
 				heroName = promptForName();
 			} while (!nameOK(heroName));
 			printName(heroName);
-			viewSetHeroClass();
 		}
 	}
 
 	private boolean nameOK(String str) {
-		if (str.isEmpty()) {
-			printErrorName();
-			return (false);
+		cleanScreen();
+		switch (str) {
+			case "gui":
+				GUI = true;
+				GuiCH.SetHeroName();
+				return true;
+			case "":
+				printErrorName();
+				return false;
+			default:
+				return true;
 		}
-		else if (str.equals("GUI")) {
-			GUI = true;
-		}
-		return true;
 	}
 
 	public String promptForName() {
@@ -176,8 +180,10 @@ public class View {
 
 	public void printName(String str) {
 		cleanScreen();
-		if (!str.equals("GUI"))
+		if (!str.equals("gui")) {
 			System.out.println("The hero's name is '" + str + "'");
+			viewSetHeroClass();
+		}
 	}
 
 	public void printErrorName() {
@@ -207,7 +213,7 @@ public class View {
 		// Prompt for hero class until a valid one is provided
 
 		if (GUI) {
-			VCHero.GUIpromptForClass();
+			GuiCH.SetHeroClass();
 		}
 		else
 		{
@@ -215,10 +221,6 @@ public class View {
 				heroClass = promptForClass();
 			} while (!classOk(heroClass));
 			printClass(heroClass);
-
-			// Create new hero in the model
-
-			printHeroData(controller.createHeroController(heroClass, heroName));
 		}
 	}
 
@@ -233,6 +235,11 @@ public class View {
 		if (str.equals("Warrior") || str.equals("Wizard") || str.equals("Knight") || str.equals("Archer")) {
 			return true;
 		}
+		else if (str.equals("gui")) {
+			GUI = true;
+			GuiCH.SetHeroClass();
+			return true;
+		}
 		else if (!str.isEmpty()) {
 			printErrorClass();
 		}
@@ -242,12 +249,24 @@ public class View {
 
 	private void printClass(String str) {
 		cleanScreen();
-		System.out.println("The hero's class is '" + str + "'");
+		if (!str.equals("gui")) {
+			System.out.println("The hero's class is '" + str + "'");
+			
+			// Create new hero in the model
+
+			printHeroData(controller.createHeroController(heroClass, heroName));
+		}
 	}
 
 	private void printErrorClass() {
 		cleanScreen();
 		System.out.println("Please, input a valid class name.");
+	}
+
+	public void printHeroData(Hero h) {
+		cleanScreen();
+		System.out.println("Here's your hero's stats: \n");
+		System.out.println(h);
 	}
 
 
@@ -260,13 +279,35 @@ public class View {
 
 
 	/*
-	**  Show Info
+	**  Utils
 	*/
 
-	public void printHeroData(Hero h) {
-		cleanScreen();
-		System.out.println("Here's your hero's stats: \n");
-		System.out.println(h);
+	public void closeWindows() 	{
+		GuiCH.closeWindow();
 	}
 
+
+
+
+
+
+
+
+
+
+	/*
+	**  Getters
+	*/
+
+	public boolean getGUIOnOff() {
+		return GUI;
+	}
+
+	public MyFrame getFrame() {
+		return GuiCH.getFrame();
+	}
+	
+	public boolean getActive() {
+		return GuiCH.getActive();
+	}
 }

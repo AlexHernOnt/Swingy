@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/27 20:19:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:11:47 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ import Hero.Hero;
 import Model.Model;
 import View.View;
 import Controller.States;
+import Controller.GameController;
 
 public class Controller {
 
@@ -24,7 +25,7 @@ public class Controller {
 	*/
  
 	public View view;
-	public Model model;
+	private Model model;
 	public States currentState;
 
 
@@ -42,7 +43,7 @@ public class Controller {
 
 		// Initialize classes
 
-		view = new View(this, pGUI.equals("GUI") ? true : false);
+		view = new View(this, pGUI.equals("gui") ? true : false);
 		model = new Model();
 		
 		currentState = States.PRESENTGAME;
@@ -64,6 +65,12 @@ public class Controller {
 		return model.ctNewHero(g_class, g_name);
 	}
 
+	public void goToGame() {
+		GameController GC;
+
+		GC = new GameController(model.getHero(), view.getGUIOnOff(), view.getFrame(), view.getActive());
+	}
+
 
 
 
@@ -78,6 +85,8 @@ public class Controller {
 	*/
 
 	public void StateSwitcher() {
+
+		view.closeWindows();
 		switch (currentState) {
 			case PRESENTGAME:
 				presentGame();
