@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 19:58:33 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:00:28 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,11 @@ public class GameController {
         view.welcomeScreen();        
     }
 
-    public void walk() {
-		view.walk();
+	public void walk() {
+		view.walk(model.getHero(), model.getMap());
 	}
 
-	// public void setHeroName() {
-	// 	view.viewSetHeroName();
-	// }
 
-	// public void setHeroClass() {
-	// 	view.viewSetHeroClass();
-	// }
 
 
 

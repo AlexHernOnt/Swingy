@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 20:57:03 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:00:34 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.GameController;
+import Model.GameMap;
 import View.MyFrame;
 import View.TmlGame;
 import View.GuiGame;
 import View.MyFrame;
+import Hero.Hero;
 
 public class GameView {
 
@@ -67,16 +69,15 @@ public class GameView {
 		}
 	}
 
-	public void walk() {
+	public void walk(Hero pHero, GameMap pMap) {
 		
 		if (GUI) {
-			GuiG.walk();
+			GuiG.walk(pHero, pMap);
 		}
 		else {
-			TmlG.walk();
+			TmlG.walk(pHero, pMap);
 		}
 	}
-
 
 
 

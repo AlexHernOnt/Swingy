@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:49:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 19:59:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:47:30 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ public class GameModel {
 	**		V A R I A B L E S
 	*/
 
-	private Hero _hero;
+	private Hero hero;
 	private GameMap map;
+
 
 
 
@@ -37,12 +38,16 @@ public class GameModel {
 	*/
 
 	public GameModel(Hero pHero) {
-		_hero = pHero;
-		map = new GameMap(_hero.getLevel());
+		hero = pHero;
+		map = new GameMap(hero.getLevel());
 		map.placeHero(pHero);
 	}
 
 	public Hero getHero() {
-		return _hero;
+		return hero;
+	}
+
+	public GameMap getMap() {
+		return map;
 	}
 }

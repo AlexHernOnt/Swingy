@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:43:54 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/29 19:53:25 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:43:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ public class Model {
 
 	private heroCreator creator = new heroCreator();
 	private SQLutils sql = new SQLutils();
-	public Hero _hero;
+	public Hero hero;
 		
 	/*
 	** Methods
@@ -32,12 +32,12 @@ public class Model {
 
 	public Hero ctNewHero(String p_class, String p_name) {
 
-		_hero = creator.newHero(p_class, p_name);
-		sql.createDB(_hero);
-		return _hero;
+		hero = creator.newHero(p_class, p_name);
+		sql.createDB(hero);
+		return hero;
 	}
 
 	public Hero getHero() {
-		return _hero;
+		return hero;
 	}
 }

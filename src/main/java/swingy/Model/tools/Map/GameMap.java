@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 19:55:41 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:49:56 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,12 @@ public class GameMap {
     **  C R E A T E     M A P
     */
 
-	public void placeHero(Hero _hero) {
+	public void placeHero(Hero hero) {
 
-		System.err.println(map.length / 3);
-
-		_hero.setPosX(0);
-		_hero.setPosY(0);
-
-
-
-
+		int pos = (int)Math.floor(map.length / 3);
+		
+		hero.setPosX(pos);
+		hero.setPosY(pos);
 	}
 
 

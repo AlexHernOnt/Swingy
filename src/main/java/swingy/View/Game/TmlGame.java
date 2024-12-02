@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 20:02:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:00:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ import javax.swing.JPanel;
 
 import View.MyFrame;
 import Controller.GameController;
+import Model.GameMap;
+import Hero.Hero;
+import Model.GameMap;
 
 public class TmlGame {
 
@@ -70,7 +73,7 @@ public class TmlGame {
 		// JLabel TextToPrint2 = new JLabel("Welcome to the world, you come out of your house looking for an adventure!.");
 	}
         
-    public void walk() {
+    public void walk(Hero pHero, GameMap pMap) {
 
 		// Text Prompt for name
 

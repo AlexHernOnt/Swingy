@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 16:17:55 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:05:06 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import Hero.Hero;
+import Model.GameMap;
 import Controller.GameController;
 import View.GameView;
 import View.MyFrame;
@@ -101,7 +102,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		JPanel panel1 = new JPanel();
 		panel1.setBounds(0, 100, 1600, 300);
-		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/Game/house.png");
+		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png");
 
 
 		// Text to say your name
@@ -162,9 +163,12 @@ public class GuiGame extends JFrame implements ActionListener {
     **  W A L K
     */
 
-	// JButton comenzarButton;
+	JButton NorthButton;
+	JButton EastButton;
+	JButton SouthButton;
+	JButton WestButton;
 
-    public void walk() {
+    public void walk(Hero pHero, GameMap pMap) {
 
 		reOpenWindow();
 		frame.getContentPane().removeAll();
@@ -176,9 +180,9 @@ public class GuiGame extends JFrame implements ActionListener {
 		JPanel panel1 = new JPanel();
 		panel1.setBounds(0, 100, 1600, 300);
 
-		// Text to say your name
+		// Text to present
 
-		JLabel textName = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
+		JLabel textName = new JLabel("You're standing in an open field.");
 
 		textName.setHorizontalTextPosition(JLabel.CENTER);
 		textName.setVerticalTextPosition(JLabel.TOP);
@@ -188,33 +192,67 @@ public class GuiGame extends JFrame implements ActionListener {
 		textName.setBackground(Color.decode(frame.COLOR));
 		panel1.add(textName);
 
-
-		// Text to give some setting
+		// Text to ask
 
 		JPanel panel2 = new JPanel();
 		panel2.setBounds(0, 500, 1600, 100);
-
-		JLabel textSetting = new JLabel("You come out of your house looking for an adventure!.");
-
+		JLabel textSetting = new JLabel("Which direction will you walk?");
 		textSetting.setHorizontalTextPosition(JLabel.CENTER);
 		textSetting.setVerticalTextPosition(JLabel.BOTTOM);
 		textSetting.setFont(new Font("Monospaced", Font.PLAIN, 42));
 		textSetting.setBackground(Color.CYAN);
 		panel2.add(textSetting);
 
-		// Buttom to start
+		// Buttons
 
-		comenzarButton = new JButton("Comenzar");
-		comenzarButton.setBounds(1200, 0, 200, 70);
-		comenzarButton.setFocusable(false);
-		comenzarButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		comenzarButton.addActionListener(this);
-		panel2.add(comenzarButton);
+		JPanel panel3 = new JPanel();
+		panel3.setBounds(0, 700, 1600, 300);
+
+		NorthButton = new JButton("North");
+		NorthButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		NorthButton.setBounds(350, 0, 200, 70);
+		NorthButton.addActionListener(this);
+		NorthButton.setFocusable(false);
+		
+		EastButton = new JButton("East");
+		EastButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		EastButton.setBounds(600, 0, 200, 70);
+		EastButton.addActionListener(this);
+		EastButton.setFocusable(false);
+
+		SouthButton = new JButton("South");
+		SouthButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		SouthButton.setBounds(850, 0, 200, 70);
+		SouthButton.addActionListener(this);
+		SouthButton.setFocusable(false);
+
+		WestButton = new JButton("West");
+		WestButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		WestButton.setBounds(1100, 0, 200, 70);
+		WestButton.addActionListener(this);
+		WestButton.setFocusable(false);
+
+		panel3.setLayout(null);
+		panel3.add(NorthButton);
+		panel3.add(EastButton);
+		panel3.add(SouthButton);
+		panel3.add(WestButton);
 
 		frame.add(panel1);
 		frame.add(panel2);
+		frame.add(panel3);
 		frame.setVisible(true);
 	}
+
+
+
+
+
+
+
+
+
+
 
 
 
