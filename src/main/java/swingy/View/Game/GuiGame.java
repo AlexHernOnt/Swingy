@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 20:57:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:17:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,47 +173,47 @@ public class GuiGame extends JFrame implements ActionListener {
 		
 		// Panel Settings;
 
-	// 	JPanel panel1 = new JPanel();
-	// 	panel1.setBounds(0, 100, 1600, 300);
+		JPanel panel1 = new JPanel();
+		panel1.setBounds(0, 100, 1600, 300);
 
-	// 	// Text to say your name
+		// Text to say your name
 
-	// 	JLabel textName = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
+		JLabel textName = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
 
-	// 	textName.setHorizontalTextPosition(JLabel.CENTER);
-	// 	textName.setVerticalTextPosition(JLabel.TOP);
-	// 	textName.setFont(new Font("Monospaced", Font.PLAIN, 42));
-	// 	textName.setHorizontalAlignment(JLabel.CENTER);
-	// 	textName.setVerticalAlignment(JLabel.CENTER);
-	// 	textName.setBackground(Color.decode(frame.COLOR));
-	// 	panel1.add(textName);
+		textName.setHorizontalTextPosition(JLabel.CENTER);
+		textName.setVerticalTextPosition(JLabel.TOP);
+		textName.setFont(new Font("Monospaced", Font.PLAIN, 42));
+		textName.setHorizontalAlignment(JLabel.CENTER);
+		textName.setVerticalAlignment(JLabel.CENTER);
+		textName.setBackground(Color.decode(frame.COLOR));
+		panel1.add(textName);
 
 
-	// 	// Text to give some setting
+		// Text to give some setting
 
-	// 	JPanel panel2 = new JPanel();
-	// 	panel2.setBounds(0, 500, 1600, 100);
+		JPanel panel2 = new JPanel();
+		panel2.setBounds(0, 500, 1600, 100);
 
-	// 	JLabel textSetting = new JLabel("You come out of your house looking for an adventure!.");
+		JLabel textSetting = new JLabel("You come out of your house looking for an adventure!.");
 
-	// 	textSetting.setHorizontalTextPosition(JLabel.CENTER);
-	// 	textSetting.setVerticalTextPosition(JLabel.BOTTOM);
-	// 	textSetting.setFont(new Font("Monospaced", Font.PLAIN, 42));
-	// 	textSetting.setBackground(Color.CYAN);
-	// 	panel2.add(textSetting);
+		textSetting.setHorizontalTextPosition(JLabel.CENTER);
+		textSetting.setVerticalTextPosition(JLabel.BOTTOM);
+		textSetting.setFont(new Font("Monospaced", Font.PLAIN, 42));
+		textSetting.setBackground(Color.CYAN);
+		panel2.add(textSetting);
 
-	// 	// Buttom to start
+		// Buttom to start
 
-	// 	comenzarButton = new JButton("Comenzar");
-	// 	comenzarButton.setBounds(1200, 0, 200, 70);
-	// 	comenzarButton.setFocusable(false);
-	// 	comenzarButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-	// 	comenzarButton.addActionListener(this);
-	// 	panel2.add(comenzarButton);
+		comenzarButton = new JButton("Comenzar");
+		comenzarButton.setBounds(1200, 0, 200, 70);
+		comenzarButton.setFocusable(false);
+		comenzarButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		comenzarButton.addActionListener(this);
+		panel2.add(comenzarButton);
 
-	// 	frame.add(panel1);
-	// 	frame.add(panel2);
-	// 	frame.setVisible(true);
+		frame.add(panel1);
+		frame.add(panel2);
+		frame.setVisible(true);
 	}
 
 

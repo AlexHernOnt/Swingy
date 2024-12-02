@@ -6,11 +6,12 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/25 15:17:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:54:28 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 package Hero;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,7 +30,21 @@ public class Hero {
     protected int HP;
     protected int attack;
     protected int defense;
-        
+    
+    //  Map
+
+    protected int posX;
+    protected int posY;
+
+
+
+
+
+
+
+
+
+
     /*
     ** Methods
     */
@@ -38,6 +53,14 @@ public class Hero {
         classType = p_class;
         name = p_name;
     }
+
+
+
+
+
+
+
+
 
 
     /*
@@ -71,6 +94,40 @@ public class Hero {
     public int getDefense() {
         return defense;
     }
+
+
+
+
+
+
+
+
+
+
+    /*
+    ** S E T T E R S
+    */
+
+
+    public void setPosX(int num) {
+        posX = num;
+    }
+
+    public void setPosY(int num) {
+        posY = num;
+    }
+
+
+
+
+    
+
+
+
+
+    /*
+    ** P R I N T 
+    */
 
     @Override
     public String toString() {

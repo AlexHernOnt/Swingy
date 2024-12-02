@@ -14,6 +14,7 @@
 /home/ahernand/swingy/src/main/java/swingy/App.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Hero.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Archer.java
+/home/ahernand/swingy/src/main/java/swingy/Model/tools/Map/GameMap.java
 /home/ahernand/swingy/src/main/java/swingy/Controller/tools/StatesGame.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Wizard.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Warrior.java
