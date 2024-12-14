@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 20:46:29 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:12:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ import java.awt.event.WindowEvent;
 
 import Hero.Hero;
 import View.View;
+import View.ToolsGUI;
 import View.MyFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -52,6 +54,8 @@ public class GuiCreateHero extends JFrame implements ActionListener {
     private Controller controller;
     private MyFrame frame;
 	private boolean active;
+	private ToolsGUI toolsGui;
+
 
 
 
@@ -73,6 +77,8 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		view = pView;
 		controller = pController;
 		active = false;
+
+		toolsGui = new ToolsGUI();
 	}
 
 
@@ -90,13 +96,15 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 	JButton setHeroButtonContinue;
 	JButton setHeroButtonNewGame;
-	
+	JButton exitButton;
+
+
 	public void GUIpromptForSelectHero() {
 
-		reOpenWindow();
+		toolsGui.reOpenWindow(this);
 		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/intro_img.png");
 
-		// Panel Settings;
+		// Panel Settings
 
 		JPanel panel1 = new JPanel();
 		panel1.setBounds(0, 100, 1600, 300);
@@ -134,21 +142,27 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 		// JButton[] setHeroButton = new JButton[2];
 		setHeroButtonContinue = new JButton("Continue");
-		setHeroButtonNewGame = new JButton("New Game");
-		
-		setHeroButtonContinue.setBounds(550, 0, 200, 70);
+		setHeroButtonContinue.setBounds(450, 0, 200, 70);
 		setHeroButtonContinue.setFocusable(false);
 		setHeroButtonContinue.setFont(new Font("Monospaced", Font.PLAIN, 21));
 		setHeroButtonContinue.addActionListener(this);
 
-		setHeroButtonNewGame.setBounds(850, 0, 200, 70);
+		setHeroButtonNewGame = new JButton("New Game");
+		setHeroButtonNewGame.setBounds(700, 0, 200, 70);
 		setHeroButtonNewGame.setFocusable(false);
 		setHeroButtonNewGame.setFont(new Font("Monospaced", Font.PLAIN, 21));
 		setHeroButtonNewGame.addActionListener(this);
-		
+
+		exitButton = new JButton("Exit");
+		exitButton.setBounds(950, 0, 200, 70);
+		exitButton.setFocusable(false);
+		exitButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		exitButton.addActionListener(this);
+
 		panel3.setLayout(null);
 		panel3.add(setHeroButtonContinue);
 		panel3.add(setHeroButtonNewGame);
+		panel3.add(exitButton);
 
 		frame.add(panel1);
 		frame.add(panel2);
@@ -175,10 +189,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 	public void SetHeroName() {
 
-		reOpenWindow();
-		frame.getContentPane().removeAll();
-		frame.revalidate();
-		frame.repaint();
+		toolsGui.reOpenWindow(this);
 		
 		// Panel Settings;
 
@@ -250,10 +261,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 	public void SetHeroClass() {
 
-		reOpenWindow();
-		frame.getContentPane().removeAll();
-		frame.revalidate();
-		frame.repaint();
+		toolsGui.reOpenWindow(this);
 		
 		// Panel Settings;
 
@@ -347,12 +355,20 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		// Start
+
 		if (e.getSource() == setHeroButtonContinue) {
 			System.out.println("Na, im not coding this yet lol");
 		}
 		else if (e.getSource() == setHeroButtonNewGame) {
 			controller.setHeroName();
 		}
+		else if (e.getSource() == exitButton) {
+			System.exit(0);
+		}
+
+		// Set name
+
 		else if (e.getSource() == nameHeroButton) {
 			view.heroName = nameTextField.getText();
 			if (nameTextField.getText().trim().isEmpty()) {
@@ -362,6 +378,9 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 				controller.setHeroClass();
 			}
 		}
+
+		// Set class
+
 		else if (e.getSource() == ClassWarriorButton) {
 			view.heroClass = "Warrior";
 			controller.createHeroController("Warrior", view.heroName);
@@ -392,17 +411,9 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		// controller.StateSwitcher();
 	}
 
-	public void reOpenWindow() {
-		if (view.GUI == true && !active) {
-			System.err.println("Opening Window Again");
-			frame = new MyFrame();
-			active = true;
-			frame.setController(controller);
-		}
-	}
 
 	/*
-	 * Getters
+	** Getters
 	*/
 
 	public MyFrame getFrame() {
@@ -411,5 +422,17 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 	public boolean getActive() {
 		return active;
+	}
+
+	public void setActive(boolean newActive) {
+		active = newActive;
+	}
+
+	public void setFrame(MyFrame newFrame) {
+		frame = newFrame;
+	}
+
+	public boolean getGUI() {
+		return view.GUI;
 	}
 }

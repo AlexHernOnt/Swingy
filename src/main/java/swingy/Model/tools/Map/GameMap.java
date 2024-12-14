@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 21:49:56 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:10:45 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ public class GameMap {
 		int size;
 
 		size = (lvl - 1) * 5 + 10 - (lvl % 2);
-		System.err.println("Size of my dick = " + size + ".");
+		System.err.println("Size of map = " + size + ".");
 		
 		map = new int[size][size];
 	}
@@ -84,7 +84,15 @@ public class GameMap {
 		}
 	}
 
+	public boolean offLimits(int x, int y) {
 
+		int size = map.length;
+		
+		if (x <= 0 || x >= size || y <= 0 || y >= size ) {
+			return true;
+		}
+		return false;
+	}
 
 
 
@@ -97,12 +105,20 @@ public class GameMap {
     **  C R E A T E     M A P
     */
 
-	public void placeHero(Hero hero) {
+	public void placeHeroStart(Hero hero) {
 
-		int pos = (int)Math.floor(map.length / 3);
+		int pos = (int)Math.floor(map.length / 2);
 		
 		hero.setPosX(pos);
 		hero.setPosY(pos);
+	}
+
+	public void placeHero(Hero hero, int x, int y) {
+
+		// hero.setPosX(y);
+		
+		// hero.setPosX(pos);
+		// hero.setPosY(pos);
 	}
 
 
@@ -122,5 +138,22 @@ public class GameMap {
 				System.err.print(map[i][j] + " ");
 			System.err.println();
 		}
+	}
+
+
+
+
+
+
+
+
+
+
+    /*
+    **  G E T T E R S
+    */
+
+	public int getSize() {
+		return map.length;
 	}
 }

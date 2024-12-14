@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:49:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 21:47:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:30:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ public class GameModel {
 	public GameModel(Hero pHero) {
 		hero = pHero;
 		map = new GameMap(hero.getLevel());
-		map.placeHero(pHero);
 	}
 
 	public Hero getHero() {
@@ -49,5 +48,9 @@ public class GameModel {
 
 	public GameMap getMap() {
 		return map;
+	}
+
+	public void resetHeroInMap() {
+		map.placeHeroStart(hero);
 	}
 }

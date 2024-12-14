@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 22:00:34 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:33:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ public class GameView {
 	protected boolean GUI;
 	private GuiGame GuiG;
 	private TmlGame TmlG;
+	private Hero hero;
+	private GameMap map;
 
-	public GameView(GameController _controller, boolean pGUI, MyFrame pFrame, boolean pActive) {
+
+	public GameView(GameController _controller, boolean pGUI, MyFrame pFrame, boolean pActive, Hero pHero, GameMap pMap) {
 
 		// Constructor Variables
 
@@ -43,8 +46,8 @@ public class GameView {
 
 		// Initialization
 
-		GuiG = new GuiGame(controller, this, pFrame, pActive);
-		TmlG = new TmlGame(controller, this);
+		GuiG = new GuiGame(controller, this, pFrame, pActive, pHero, pMap);
+		TmlG = new TmlGame(controller, this, pHero, pMap);
 	}
 
 
@@ -69,13 +72,23 @@ public class GameView {
 		}
 	}
 
-	public void walk(Hero pHero, GameMap pMap) {
+	public void walk() {
 		
 		if (GUI) {
-			GuiG.walk(pHero, pMap);
+			GuiG.walk();
 		}
 		else {
-			TmlG.walk(pHero, pMap);
+			TmlG.walk();
+		}
+	}
+
+	public void win() {
+		
+		if (GUI) {
+			GuiG.win();
+		}
+		else {
+			TmlG.win();
 		}
 	}
 
@@ -85,8 +98,9 @@ public class GameView {
 
 
 
-
 	
+
+
 	/*
 	**  Utils
 	*/

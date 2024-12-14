@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 22:00:28 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:32:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ import Hero.Hero;
 import Model.GameModel;
 import View.GameView;
 import View.MyFrame;
+import Controller.Controller;
 import Controller.StatesGame;
 
 public class GameController {
@@ -26,6 +27,7 @@ public class GameController {
  
 	private GameView view;
 	private GameModel model;
+	private Controller mainController;
 	public StatesGame currentState;
 
 
@@ -41,27 +43,35 @@ public class GameController {
 	** M E T H O D S
 	*/
 
-	public GameController(Hero pH, boolean pGUI, MyFrame frame, boolean active) {
+	public GameController(Hero pH, boolean pGUI, MyFrame frame, boolean active, Controller pMainController) {
 
 		// Initialize classes
 
-		view = new GameView(this, pGUI, frame, active);
 		model = new GameModel(pH);
-		
+		view = new GameView(this, pGUI, frame, active, pH, model.getMap());
+		mainController = pMainController;
+
 		welcomeScreen();
 		// currentState = States.PRESENTGAME;
 	}
 
     public void welcomeScreen() {
-        view.welcomeScreen();        
+	
+		model.resetHeroInMap();
+        view.welcomeScreen();
     }
 
 	public void walk() {
-		view.walk(model.getHero(), model.getMap());
+		view.walk();
 	}
 
+	public void win() {
+		view.win();
+	}
 
-
+	public void goStart() {
+		mainController.presentGame();
+	}
 
 
 
@@ -78,6 +88,8 @@ public class GameController {
 	public Hero getHero() {
 		return model.getHero();
 	}
+
+
 
 
 

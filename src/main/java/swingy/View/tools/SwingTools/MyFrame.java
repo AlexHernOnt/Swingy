@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:15:43 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 19:33:04 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:20:10 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ public class MyFrame extends JFrame {
 		controller = p_controller;
 	}
 
-	public void setGameController(GameController p_controller) {
+	public void setController(GameController p_controller) {
 		GController = p_controller;
 	}
 } 

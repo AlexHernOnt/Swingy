@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 19:11:47 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:54:19 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ public class Controller {
 	public void goToGame() {
 		GameController GC;
 
-		GC = new GameController(model.getHero(), view.getGUIOnOff(), view.getFrame(), view.getActive());
+		GC = new GameController(model.getHero(), view.getGUIOnOff(), view.getFrame(), view.getActive(), this);
 	}
 
 

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 22:05:06 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:50:56 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ import Model.GameMap;
 import Controller.GameController;
 import View.GameView;
 import View.MyFrame;
+import View.ToolsGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.Font; // DELETE AFTER TO GUI
 import java.awt.GridLayout;
 import java.awt.Image;
+
+
+
 
 public class GuiGame extends JFrame implements ActionListener {
 
@@ -48,17 +52,25 @@ public class GuiGame extends JFrame implements ActionListener {
     **	V A R I A B L E S
 	*/
 	
+	private static final String winImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/win.png";
+	private static final String houseImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png";
+	private static final String worldImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/world.png";
+
     private GameView view;
     private GameController controller;
     private MyFrame frame;
 	private boolean active;
+	private GameMap ptr_map;
+	private Hero h;
+	private ToolsGUI toolsGui;
+
+	public JPanel panelOnTop;
+	public JPanel panelMiddle;
+	public JPanel panelBottom;
 
 
-
-
-
-
-
+	JLabel labelOnTop;
+	JLabel labelMiddle;
 
 
 
@@ -66,7 +78,7 @@ public class GuiGame extends JFrame implements ActionListener {
     **  C O N S T R U C T O R 
     */
 	
-	public GuiGame(GameController pController, GameView pView, MyFrame pFrame, boolean pActive) {
+	public GuiGame(GameController pController, GameView pView, MyFrame pFrame, boolean pActive, Hero pHero, GameMap pMap) {
 
 		// Assign Constructor Variables
 
@@ -74,7 +86,27 @@ public class GuiGame extends JFrame implements ActionListener {
 		controller = pController;
 		frame = pFrame;
 		active = pActive;
+		h = pHero;
+		ptr_map = pMap;
+
+		toolsGui = new ToolsGUI();
+
+		panelOnTop = new JPanel();
+		panelMiddle = new JPanel();
+		panelBottom = new JPanel();
+
+		labelOnTop = new JLabel();
+		labelMiddle = new JLabel();
+
+		toolsGui.confLabel(labelOnTop, null);
+		toolsGui.confLabel(labelMiddle, null);
+		
+		panelOnTop.setBounds(0, 100,1600, 300);
+		panelMiddle.setBounds(0, 500, 1600, 100);
+		panelBottom.setBounds(0, 700, 1600, 300);
+
 	}
+
 
 
 
@@ -93,66 +125,33 @@ public class GuiGame extends JFrame implements ActionListener {
 
     public void welcomeScreen() {
 
-		reOpenWindow();
-		frame.getContentPane().removeAll();
-		frame.revalidate();
-		frame.repaint();
+		toolsGui.reOpenWindow(this);
 		
-		// Panel Settings;
+		// Making Text
 
-		JPanel panel1 = new JPanel();
-		panel1.setBounds(0, 100, 1600, 300);
-		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png");
+		labelOnTop.setIcon(new ImageIcon(houseImg));
+		labelOnTop.setText("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
+		labelMiddle.setText("You come out of your house looking for an adventure!");
 
+		// Making Buttons
+		
+		comenzarButton = toolsGui.confButton(comenzarButton, " Start!", 697, 0, this);
 
-		// Text to say your name
+		// Adding to panels
 
-		JLabel textName = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
 
-		textName.setIcon(img);
-		textName.setHorizontalTextPosition(JLabel.CENTER);
-		textName.setVerticalTextPosition(JLabel.TOP);
-		textName.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		textName.setIconTextGap(100);
-		textName.setHorizontalAlignment(JLabel.CENTER);
-		textName.setVerticalAlignment(JLabel.CENTER);
-		textName.setBackground(Color.decode(frame.COLOR));
-		panel1.add(textName);
+		panelBottom.setLayout(null);
+		panelBottom.add(comenzarButton);
 
+		// Adding to frames
 
-		// Text to give some setting
-
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 500, 1600, 100);
-		JLabel textSetting = new JLabel("You come out of your house looking for an adventure!");
-		textSetting.setHorizontalTextPosition(JLabel.CENTER);
-		textSetting.setVerticalTextPosition(JLabel.BOTTOM);
-		textSetting.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		textSetting.setBackground(Color.CYAN);
-		panel2.add(textSetting);
-
-		// Buttom to start
-
-		JPanel panel3 = new JPanel();
-		panel3.setBounds(0, 700, 1600, 500);
-
-		comenzarButton = new JButton("Start!");
-		comenzarButton.setBounds(697, 0, 200, 70);
-		comenzarButton.setFocusable(false);
-		comenzarButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		comenzarButton.addActionListener(this);
-		panel3.add(comenzarButton);
-		panel3.setLayout(null);
-
-		frame.add(panel1);
-		frame.add(panel2);
-		frame.add(panel3);
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
-
-
-
-
 
 
 
@@ -162,85 +161,46 @@ public class GuiGame extends JFrame implements ActionListener {
     /*
     **  W A L K
     */
+	
 
 	JButton NorthButton;
 	JButton EastButton;
 	JButton SouthButton;
 	JButton WestButton;
 
-    public void walk(Hero pHero, GameMap pMap) {
+    public void walk() {
 
-		reOpenWindow();
-		frame.getContentPane().removeAll();
-		frame.revalidate();
-		frame.repaint();
+		toolsGui.reOpenWindow(this);
 		
-		// Panel Settings;
+		// Making Text
 
-		JPanel panel1 = new JPanel();
-		panel1.setBounds(0, 100, 1600, 300);
-
-		// Text to present
-
-		JLabel textName = new JLabel("You're standing in an open field.");
-
-		textName.setHorizontalTextPosition(JLabel.CENTER);
-		textName.setVerticalTextPosition(JLabel.TOP);
-		textName.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		textName.setHorizontalAlignment(JLabel.CENTER);
-		textName.setVerticalAlignment(JLabel.CENTER);
-		textName.setBackground(Color.decode(frame.COLOR));
-		panel1.add(textName);
-
-		// Text to ask
-
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 500, 1600, 100);
-		JLabel textSetting = new JLabel("Which direction will you walk?");
-		textSetting.setHorizontalTextPosition(JLabel.CENTER);
-		textSetting.setVerticalTextPosition(JLabel.BOTTOM);
-		textSetting.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		textSetting.setBackground(Color.CYAN);
-		panel2.add(textSetting);
-
-		// Buttons
-
-		JPanel panel3 = new JPanel();
-		panel3.setBounds(0, 700, 1600, 300);
-
-		NorthButton = new JButton("North");
-		NorthButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		NorthButton.setBounds(350, 0, 200, 70);
-		NorthButton.addActionListener(this);
-		NorthButton.setFocusable(false);
+		labelOnTop.setIcon(new ImageIcon(worldImg));
+		labelOnTop.setText("You are at X " + h.getPosX() + " / " + ptr_map.getSize() + ". And Y " + h.getPosY() + " / " + ptr_map.getSize() + ".");
+		labelMiddle.setText("Which direction will you walk?");
 		
-		EastButton = new JButton("East");
-		EastButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		EastButton.setBounds(600, 0, 200, 70);
-		EastButton.addActionListener(this);
-		EastButton.setFocusable(false);
+		// Making Buttons
 
-		SouthButton = new JButton("South");
-		SouthButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		SouthButton.setBounds(850, 0, 200, 70);
-		SouthButton.addActionListener(this);
-		SouthButton.setFocusable(false);
+		NorthButton = toolsGui.confButton(NorthButton, "North", 350, 0, this);
+		EastButton = toolsGui.confButton(EastButton, "East", 600, 0, this);
+		SouthButton = toolsGui.confButton(SouthButton, "South", 850, 0, this);
+		WestButton = toolsGui.confButton(WestButton, "West", 1100, 0, this);
 
-		WestButton = new JButton("West");
-		WestButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		WestButton.setBounds(1100, 0, 200, 70);
-		WestButton.addActionListener(this);
-		WestButton.setFocusable(false);
+		// Adding to panels
 
-		panel3.setLayout(null);
-		panel3.add(NorthButton);
-		panel3.add(EastButton);
-		panel3.add(SouthButton);
-		panel3.add(WestButton);
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
 
-		frame.add(panel1);
-		frame.add(panel2);
-		frame.add(panel3);
+		panelBottom.setLayout(null);
+		panelBottom.add(NorthButton);
+		panelBottom.add(EastButton);
+		panelBottom.add(SouthButton);
+		panelBottom.add(WestButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
 
@@ -251,21 +211,58 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     /*
-    ** O N     M A P
+    **  C O M B A T
     */
+
+
+
+
+
+
+
+
+
+
+
+	/*
+    **  W I N
+    */
+
+	JButton NextLevelButton;
+	JButton MainMenuButton;
+
+    public void win() {
+
+		toolsGui.reOpenWindow(this);
+		
+		// Making Text
+
+		labelOnTop.setIcon(new ImageIcon(winImg));
+		labelOnTop.setText("You have discovered the end frontier.");
+		labelMiddle.setText("Will you start a new adventure?");
+
+		// Making Buttons
+
+		NextLevelButton = toolsGui.confButton(NextLevelButton, "Yes!", 550, 0, this);
+		MainMenuButton = toolsGui.confButton(MainMenuButton, "Main Menu", 850, 0, this);
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
+
+		panelBottom.setLayout(null);
+		panelBottom.add(NextLevelButton);
+		panelBottom.add(MainMenuButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
+		frame.setVisible(true);
+	}
 
 
 
@@ -283,47 +280,43 @@ public class GuiGame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		// Walk
+
 		if (e.getSource() == comenzarButton) {
-			System.out.println("Kill yourself");
 			controller.walk();
+			positionCheck();
 		}
 
-		// if (e.getSource() == setHeroButtonContinue) {
-		// 	System.out.println("Na, im not coding this yet lol");
-		// }
-		// else if (e.getSource() == setHeroButtonNewGame) {
-		// 	controller.setHeroName();
-		// }
-		// else if (e.getSource() == nameHeroButton) {
-		// 	view.heroName = nameTextField.getText();
-		// 	if (nameTextField.getText().trim().isEmpty()) {
- 		// 	   JOptionPane.showMessageDialog(this, "Name cannot be empty!");
-		// 	}
-		// 	else {
-		// 		controller.setHeroClass();
-		// 	}
-		// }
-		// else if (e.getSource() == ClassWarriorButton) {
-		// 	view.heroClass = "Warrior";
-		// 	controller.createHeroController("Warrior", view.heroName);
-		// 	controller.goToGame();
-		// }
-		// else if (e.getSource() == ClassWizardButton) {
-		// 	view.heroClass = "Wizard";
-		// 	controller.createHeroController("Wizard", view.heroName);
-		// 	controller.goToGame();
-		// }
-		// else if (e.getSource() == ClassKnightButton) {
-		// 	view.heroClass = "Knight";
-		// 	controller.createHeroController("Knight", view.heroName);
-		// 	controller.goToGame();
-		// }
-		// else if (e.getSource() == ClassArcherButton) {
-		// 	view.heroClass = "Archer";
-		// 	controller.createHeroController("Archer", view.heroName);
-		// 	controller.goToGame();
-		// }
+		// Directions
+		
+		else if (e.getSource() == NorthButton) {
+			h.goNorth();
+			positionCheck();
+		}
+		else if (e.getSource() == EastButton) {
+			h.goEast();
+			positionCheck();
+		}
+		else if (e.getSource() == SouthButton) {
+			h.goSouth();
+			positionCheck();
+		}
+		else if (e.getSource() == WestButton) {
+			h.goWest();
+			positionCheck();
+		}
+
+		// Win
+
+		else if (e.getSource() == NextLevelButton) {
+			controller.welcomeScreen();
+		}
+		else if (e.getSource() == MainMenuButton) {
+			controller.goStart();
+		}
 	}
+
+
 
 
 
@@ -347,12 +340,45 @@ public class GuiGame extends JFrame implements ActionListener {
 		// controller.StateSwitcher();
 	}
 
-	public void reOpenWindow() {
-		if (view.GUI == true && !active) {
-			System.err.println("Opening Window Again");
-			active = true;
-			frame = new MyFrame();
-			frame.setGameController(controller);
+	private void positionCheck() {
+		
+		if (ptr_map.offLimits(h.getPosX(), h.getPosY())) {
+			controller.win();
+		} else {
+			controller.walk();
 		}
+		// if (ptr_map.enemy())
 	}
+
+
+
+
+
+
+
+
+	/*
+	** Getters
+	*/
+
+	public MyFrame getFrame() {
+		return frame;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean newActive) {
+		active = newActive;
+	}
+
+	public void setFrame(MyFrame newFrame) {
+		frame = newFrame;
+	}
+
+	public boolean getGUI() {
+		return view.GUI;
+	}
+
 }
