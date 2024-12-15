@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/14 20:50:56 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:21:25 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ public class GuiGame extends JFrame implements ActionListener {
 	/*
     **	V A R I A B L E S
 	*/
-	
+
 	private static final String winImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/win.png";
 	private static final String houseImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png";
 	private static final String worldImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/world.png";
@@ -64,13 +64,12 @@ public class GuiGame extends JFrame implements ActionListener {
 	private Hero h;
 	private ToolsGUI toolsGui;
 
-	public JPanel panelOnTop;
-	public JPanel panelMiddle;
-	public JPanel panelBottom;
+	private JPanel panelOnTop;
+	private JPanel panelMiddle;
+	private JPanel panelBottom;
 
-
-	JLabel labelOnTop;
-	JLabel labelMiddle;
+	private JLabel labelOnTop;
+	private JLabel labelMiddle;
 
 
 
@@ -158,6 +157,10 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
+
+
+
+
     /*
     **  W A L K
     */
@@ -175,7 +178,7 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(worldImg));
-		labelOnTop.setText("You are at X " + h.getPosX() + " / " + ptr_map.getSize() + ". And Y " + h.getPosY() + " / " + ptr_map.getSize() + ".");
+		labelOnTop.setText("You are at X " + (h.getPosX() + 1) + " / " + (ptr_map.getSize() + 1) + ". And Y " + (h.getPosY() + 1) + " / " + (ptr_map.getSize() + 1) + ".");
 		labelMiddle.setText("Which direction will you walk?");
 		
 		// Making Buttons
@@ -212,10 +215,43 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
     /*
-    **  C O M B A T
+    **  C O N F R O N T A T I O N
     */
 
+	JButton FightButton;
+	JButton RunButton;
 
+    public void confrontation() {
+
+		toolsGui.reOpenWindow(this);
+		
+		// Making Text
+
+		labelOnTop.setIcon(new ImageIcon("nothing"));
+		labelOnTop.setText("You face a terrible creature before you.");
+		labelMiddle.setText("Do you want to face it?");
+
+		// Making Buttons
+
+		FightButton = toolsGui.confButton(FightButton, "Yes, Fight!", 550, 0, this);
+		RunButton = toolsGui.confButton(RunButton, "No, Run!", 850, 0, this);
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
+
+		panelBottom.setLayout(null);
+		panelBottom.add(FightButton);
+		panelBottom.add(RunButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
+		frame.setVisible(true);
+	}
 
 
 
@@ -306,6 +342,15 @@ public class GuiGame extends JFrame implements ActionListener {
 			positionCheck();
 		}
 
+		// Confrontation
+
+		else if (e.getSource() == FightButton) {
+			positionCheck();
+		}
+		else if (e.getSource() == RunButton) {
+			controller.walk();
+		}
+
 		// Win
 
 		else if (e.getSource() == NextLevelButton) {
@@ -315,8 +360,6 @@ public class GuiGame extends JFrame implements ActionListener {
 			controller.goStart();
 		}
 	}
-
-
 
 
 
@@ -342,13 +385,19 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	private void positionCheck() {
 		
+		System.err.println(h.getPosX() + " _ " + h.getPosY());
+
 		if (ptr_map.offLimits(h.getPosX(), h.getPosY())) {
 			controller.win();
+		} else if (ptr_map.enemie(h.getPosX(), h.getPosY()) != -1) {
+			controller.confrontation();
 		} else {
 			controller.walk();
 		}
 		// if (ptr_map.enemy())
 	}
+
+
 
 
 
@@ -381,4 +430,28 @@ public class GuiGame extends JFrame implements ActionListener {
 		return view.GUI;
 	}
 
+
+
+
+
+
+
+
+
+
+	/*
+	**	Panel Getters
+	*/
+
+	public JPanel getPanelOnTop() {
+		return panelOnTop;
+	}
+
+	public JPanel getPanelMiddle() {
+		return panelMiddle;
+	}
+
+	public JPanel getPanelBottom() {
+		return panelBottom;
+	}
 }

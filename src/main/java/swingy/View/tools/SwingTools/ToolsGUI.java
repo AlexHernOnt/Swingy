@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:52:57 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/14 20:26:37 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:22:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ import View.MyFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import Controller.Controller;
 import Controller.GameController;
+import java.awt.Dimension;
 import java.awt.Font;
 
 public class ToolsGUI {
@@ -29,8 +31,6 @@ public class ToolsGUI {
     /*
     ** W I N D O W     M A N A G M E N T
     */
-
-	// Open frame if it's closed
 
 	public void reOpenWindow(GuiCreateHero gui) {
 		if (gui.getGUI() == true &&  gui.getActive() == false) {
@@ -50,27 +50,49 @@ public class ToolsGUI {
 		cleanScreen(gui);
 	}
 
-	// Remove all from screen
+
+
+
+
+
+
+
+
+	/* 
+	**	Remove all from screen
+	*/
 
 	protected void cleanScreen(GuiGame gui) {
 		gui.getFrame().getContentPane().removeAll();
 		gui.getFrame().revalidate();
 		gui.getFrame().repaint();
 
-		gui.panelOnTop.removeAll();
-		gui.panelMiddle.removeAll();
-		gui.panelBottom.removeAll();
-
-
+		gui.getPanelOnTop().removeAll();
+		gui.getPanelMiddle().removeAll();
+		gui.getPanelBottom().removeAll();
 	}
 
 	protected void cleanScreen(GuiCreateHero gui) {
 		gui.getFrame().getContentPane().removeAll();
 		gui.getFrame().revalidate();
 		gui.getFrame().repaint();
+
+		gui.getPanelOnTop().removeAll();
+		gui.getPanelMiddle().removeAll();
+		gui.getPanelBottom().removeAll();
 	}
-    
-	// Set Buttons Position and settings
+
+	
+
+
+
+
+
+
+
+	/* 
+	**	Set Buttons Position and settings
+	*/
 
 	public JButton confButton(JButton button, String text, int x, int y, GuiGame gui) {
 
@@ -83,8 +105,29 @@ public class ToolsGUI {
 		return button;
 	}
 
-	// Set Label's position
+	public JButton confButton(JButton button, String text, int x, int y, GuiCreateHero gui) {
 
+		button = new JButton();
+		button.setText(text);
+		button.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		button.setBounds(x, y, 200, 70);
+		button.addActionListener(gui);
+		button.setFocusable(false);
+		return button;
+	}
+
+
+
+
+
+
+
+
+
+	/*
+	**	Set Label's position
+	*/
+	
 	public JLabel confLabel(JLabel label, ImageIcon img) {
 		
 		label.setIconTextGap(100);
@@ -97,5 +140,27 @@ public class ToolsGUI {
 			label.setIcon(img);
 		}
 		return label;
+	}
+
+
+
+
+
+
+
+
+
+	/*
+	**	Set TextField's position
+	*/
+
+	public JTextField confTextField(JTextField TF, int x, int y, int sizeX) {
+		
+		TF = new JTextField();
+		TF.setBounds(x, y, sizeX, 70); 
+		TF.setPreferredSize(new Dimension(sizeX, 70));
+		TF.setFont(new Font("Monospaced", Font.PLAIN, 42));
+		TF.setHorizontalAlignment(JLabel.CENTER);
+		return TF;
 	}
 }

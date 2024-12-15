@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/10 18:10:45 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:19:41 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,43 @@ public class GameMap {
 		for (int i = 0; i < map.length; ++i) {
 			for (int j = 0; j < map[i].length; j++) {
 
-				int rnd = rand.nextInt(8) + 1;
+				int rnd = rand.nextInt(20) + 1;
 				
-				if (rnd == 3) {
+				if (rnd == 1) {
 					map[i][j] = 1;
+				}
+				if (rnd == 5) {
+					map[i][j] = 2;
+				}
+				if (rnd == 10) {
+					map[i][j] = 3;
+				}
+				if (rnd == 15) {
+					map[i][j] = 4;
 				}
 			}
 		}
+		printMap();
 	}
 
 	public boolean offLimits(int x, int y) {
 
 		int size = map.length;
 		
-		if (x <= 0 || x >= size || y <= 0 || y >= size ) {
+		if (x < 0 || x >= size || y < 0 || y >= size ) {
 			return true;
 		}
 		return false;
 	}
 
+	public int enemie(int x, int y) {
+		
+		if (map[x][y] != 0) {
+			System.err.println("Enemies");
+			return map[x][y];
+		}
+		return -1;
+	}
 
 
 

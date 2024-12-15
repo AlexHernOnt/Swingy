@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/14 14:12:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:56:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ import View.MyFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Dimension; // delete this too after clean up
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -50,12 +50,22 @@ public class GuiCreateHero extends JFrame implements ActionListener {
     **  V A R I A B L E S
     */
 
+	private static final String introImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/intro.png";
+	private static final String inputImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/input.png";
+	private static final String classImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/class.png";
+
     private View view;
     private Controller controller;
     private MyFrame frame;
 	private boolean active;
 	private ToolsGUI toolsGui;
 
+	private JPanel panelOnTop;
+	private JPanel panelMiddle;
+	private JPanel panelBottom;
+
+	private JLabel labelOnTop;
+	private JLabel labelMiddle;
 
 
 
@@ -79,6 +89,20 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		active = false;
 
 		toolsGui = new ToolsGUI();
+
+		panelOnTop = new JPanel();
+		panelMiddle = new JPanel();
+		panelBottom = new JPanel();
+
+		labelOnTop = new JLabel();
+		labelMiddle = new JLabel();
+
+		toolsGui.confLabel(labelOnTop, null);
+		toolsGui.confLabel(labelMiddle, null);
+
+		panelOnTop.setBounds(0, 100,1600, 300);
+		panelMiddle.setBounds(0, 500, 1600, 100);
+		panelBottom.setBounds(0, 700, 1600, 300);
 	}
 
 
@@ -94,80 +118,42 @@ public class GuiCreateHero extends JFrame implements ActionListener {
     **  N E W     G A M E     O R     C O N T I N U E
     */
 
-	JButton setHeroButtonContinue;
-	JButton setHeroButtonNewGame;
-	JButton exitButton;
+	JButton ContinueButton;
+	JButton NewGameButton;
+	JButton exitGameButton;
 
 
 	public void GUIpromptForSelectHero() {
 
 		toolsGui.reOpenWindow(this);
-		ImageIcon img = new ImageIcon("/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/intro_img.png");
+		
+		// Making Text
 
-		// Panel Settings
+		labelOnTop.setIcon(new ImageIcon(introImg));
+		labelOnTop.setText("Welcome to Swingy!");
+		labelMiddle.setText("Choose an option: ");
 
-		JPanel panel1 = new JPanel();
-		panel1.setBounds(0, 100, 1600, 300);
+		// Making Buttons
+		
+		ContinueButton = toolsGui.confButton(ContinueButton, "Continue", 450, 0, this);
+		NewGameButton = toolsGui.confButton(NewGameButton, "New Game", 700, 0, this);
+		exitGameButton = toolsGui.confButton(exitGameButton, "Exit", 950, 0, this);
 
+		// Adding to panels
 
-		// Welcome Label
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
 
-		JLabel welcome = new JLabel("Welcome to Swingy!");
-	
-		welcome.setIcon(img);
-		welcome.setHorizontalTextPosition(JLabel.CENTER);
-		welcome.setVerticalTextPosition(JLabel.TOP);
-		welcome.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		welcome.setIconTextGap(100);
-		welcome.setHorizontalAlignment(JLabel.CENTER);
-		welcome.setVerticalAlignment(JLabel.CENTER);
-		welcome.setBackground(Color.decode(frame.COLOR));
-		panel1.add(welcome);
+		panelBottom.setLayout(null);
+		panelBottom.add(ContinueButton);
+		panelBottom.add(NewGameButton);
+		panelBottom.add(exitGameButton);
 
-		// Choose menu
+		// Adding to frames
 
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 500, 1600, 100);
-		JLabel chooseSelectMode = new JLabel("Choose an option: ");
-		chooseSelectMode.setHorizontalTextPosition(JLabel.CENTER);
-		chooseSelectMode.setVerticalTextPosition(JLabel.BOTTOM);
-		chooseSelectMode.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		chooseSelectMode.setBackground(Color.CYAN);
-		panel2.add(chooseSelectMode);
-
-		// Buttons
-
-		JPanel panel3 = new JPanel();
-		panel3.setBounds(0, 700, 1600, 500);
-
-		// JButton[] setHeroButton = new JButton[2];
-		setHeroButtonContinue = new JButton("Continue");
-		setHeroButtonContinue.setBounds(450, 0, 200, 70);
-		setHeroButtonContinue.setFocusable(false);
-		setHeroButtonContinue.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		setHeroButtonContinue.addActionListener(this);
-
-		setHeroButtonNewGame = new JButton("New Game");
-		setHeroButtonNewGame.setBounds(700, 0, 200, 70);
-		setHeroButtonNewGame.setFocusable(false);
-		setHeroButtonNewGame.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		setHeroButtonNewGame.addActionListener(this);
-
-		exitButton = new JButton("Exit");
-		exitButton.setBounds(950, 0, 200, 70);
-		exitButton.setFocusable(false);
-		exitButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		exitButton.addActionListener(this);
-
-		panel3.setLayout(null);
-		panel3.add(setHeroButtonContinue);
-		panel3.add(setHeroButtonNewGame);
-		panel3.add(exitButton);
-
-		frame.add(panel1);
-		frame.add(panel2);
-		frame.add(panel3);
-
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
 
@@ -181,7 +167,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
 	/*
-	**  S E T H E R ' S     N A M E
+	**  H E R O ' S     N A M E
 	*/
 
 	JButton nameHeroButton;
@@ -191,53 +177,30 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 		
-		// Panel Settings;
+		// Making Text
 
-		JPanel panel1 = new JPanel();
-		panel1.setBounds(0, 100, 1600, 300);
-
-		// Text Prompt for name
-
-		JLabel herosName = new JLabel("Write your hero's name:");
-	
-		herosName.setHorizontalTextPosition(JLabel.CENTER);
-		herosName.setVerticalTextPosition(JLabel.TOP);
-		herosName.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		herosName.setHorizontalAlignment(JLabel.CENTER);
-		herosName.setVerticalAlignment(JLabel.CENTER);
-		herosName.setBackground(Color.decode(frame.COLOR));
-		panel1.add(herosName);
-
-		// Panel 2
-
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 700, 1600, 300);
-
-		// TextField 
-
-		nameTextField = new JTextField();
-		nameTextField.setBounds(450, 0, 500, 70); 
-		nameTextField.setPreferredSize(new Dimension(500, 70));
-		nameTextField.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		nameTextField.setHorizontalAlignment(JLabel.CENTER);
-
-		// Buttons
-
-		nameHeroButton = new JButton("Confirmar");
-		nameHeroButton.setBounds(1000, 0, 200, 70);
-		nameHeroButton.setFocusable(false);
-		nameHeroButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		nameHeroButton.addActionListener(this);
-
-		// Induction
+		labelOnTop.setIcon(new ImageIcon(inputImg));
+		labelOnTop.setText("Write your hero's name:");
 		
-		panel2.setLayout(null);
-		panel2.add(nameTextField);
-		panel2.add(nameHeroButton);
+		// Button
 
-		frame.add(panel1);
-		frame.add(panel2);
+		nameHeroButton = toolsGui.confButton(nameHeroButton, "Confirmar", 1000, 0, this);
 
+		// TextField
+
+		nameTextField = toolsGui.confTextField(nameTextField, 450, 0, 500);
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		panelBottom.setLayout(null);
+		panelBottom.add(nameTextField);
+		panelBottom.add(nameHeroButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
 
@@ -263,82 +226,38 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 		
-		// Panel Settings;
+		// Making Text
 
-		JPanel panel1 = new JPanel();
-		panel1.setBounds(0, 100, 1600, 300);
+		labelOnTop.setIcon(new ImageIcon(classImg));
+		labelOnTop.setText("Your name is : " + view.heroName);
+		labelMiddle.setText("Choose a class:");
 
-		// Text Prompt for name
+		// Making Buttons
 
-		JLabel herosName = new JLabel("Your name is : " + view.heroName);
-	
-		herosName.setHorizontalTextPosition(JLabel.CENTER);
-		herosName.setVerticalTextPosition(JLabel.TOP);
-		herosName.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		herosName.setHorizontalAlignment(JLabel.CENTER);
-		herosName.setVerticalAlignment(JLabel.CENTER);
-		herosName.setBackground(Color.decode(frame.COLOR));
-		panel1.add(herosName);
+		ClassWarriorButton = toolsGui.confButton(ClassWarriorButton, "Warrior", 350, 0, this);
+		ClassWizardButton = toolsGui.confButton(ClassWizardButton, "Wizard", 600, 0, this);
+		ClassKnightButton = toolsGui.confButton(ClassKnightButton, "Knight", 850, 0, this);
+		ClassArcherButton = toolsGui.confButton(ClassArcherButton, "Archer", 1100, 0, this);
 
-		// Panel 2
-
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 500, 1600, 100);
-
-		// Label: Choose a Class
-
-		JLabel chooseClass = new JLabel("Choose a class:");
-		chooseClass.setHorizontalTextPosition(JLabel.CENTER);
-		chooseClass.setVerticalTextPosition(JLabel.BOTTOM);
-		chooseClass.setFont(new Font("Monospaced", Font.PLAIN, 42));
-		panel2.add(chooseClass);
-
-		// Panel 3
-
-		JPanel panel3 = new JPanel();
-		panel3.setBounds(0, 700, 1600, 300);
-
-		// Buttons
-
-		ClassWarriorButton = new JButton("Warrior");
-		ClassWarriorButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		ClassWarriorButton.setBounds(350, 0, 200, 70);
-		ClassWarriorButton.addActionListener(this);
-		ClassWarriorButton.setFocusable(false);
+		// Adding to panels
 		
-		ClassWizardButton = new JButton("Wizard");
-		ClassWizardButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		ClassWizardButton.setBounds(600, 0, 200, 70);
-		ClassWizardButton.addActionListener(this);
-		ClassWizardButton.setFocusable(false);
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
 
-		ClassKnightButton = new JButton("Knight");
-		ClassKnightButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		ClassKnightButton.setBounds(850, 0, 200, 70);
-		ClassKnightButton.addActionListener(this);
-		ClassKnightButton.setFocusable(false);
+		panelBottom.setLayout(null);
+		panelBottom.add(ClassWarriorButton);
+		panelBottom.add(ClassWizardButton);
+		panelBottom.add(ClassKnightButton);
+		panelBottom.add(ClassArcherButton);
 
-		ClassArcherButton = new JButton("Archer");
-		ClassArcherButton.setFont(new Font("Monospaced", Font.PLAIN, 21));
-		ClassArcherButton.setBounds(1100, 0, 200, 70);
-		ClassArcherButton.addActionListener(this);
-		ClassArcherButton.setFocusable(false);
 
-		// Induction
-		
-		panel3.setLayout(null);
-		panel3.add(ClassWarriorButton);
-		panel3.add(ClassWizardButton);
-		panel3.add(ClassKnightButton);
-		panel3.add(ClassArcherButton);
+		// Adding to frames
 
-		frame.add(panel1);
-		frame.add(panel2);
-		frame.add(panel3);
-
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
-
 
 
 
@@ -357,24 +276,25 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 		// Start
 
-		if (e.getSource() == setHeroButtonContinue) {
+		if (e.getSource() == ContinueButton) {
 			System.out.println("Na, im not coding this yet lol");
 		}
-		else if (e.getSource() == setHeroButtonNewGame) {
+		else if (e.getSource() == NewGameButton) {
 			controller.setHeroName();
 		}
-		else if (e.getSource() == exitButton) {
+		else if (e.getSource() == exitGameButton) {
 			System.exit(0);
 		}
 
 		// Set name
 
 		else if (e.getSource() == nameHeroButton) {
-			view.heroName = nameTextField.getText();
+			
 			if (nameTextField.getText().trim().isEmpty()) {
  			   JOptionPane.showMessageDialog(this, "Name cannot be empty!");
 			}
 			else {
+				view.heroName = nameTextField.getText();
 				controller.setHeroClass();
 			}
 		}
@@ -435,4 +355,21 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	public boolean getGUI() {
 		return view.GUI;
 	}
+
+	/*
+	**	Panel Getters
+	*/
+
+	public JPanel getPanelOnTop() {
+		return panelOnTop;
+	}
+
+	public JPanel getPanelMiddle() {
+		return panelMiddle;
+	}
+
+	public JPanel getPanelBottom() {
+		return panelBottom;
+	}
+
 }
