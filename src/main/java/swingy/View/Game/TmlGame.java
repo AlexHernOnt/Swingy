@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 18:07:00 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:27:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ public class TmlGame {
 	}
 
 	public void confrontation() {
+
+		// Text Prompt for name
+
+		// JLabel labelOnToprint = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClass() + ".");
+		// JLabel labelOnToprint2 = new JLabel("Welcome to the world, you come out of your house looking for an adventure!.");
+	}
+
+
+	public void fight() {
 
 		// Text Prompt for name
 

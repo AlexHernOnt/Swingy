@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/10 17:58:45 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/16 21:05:53 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ public class Hero {
 	public Hero(String p_class, String p_name) {
 		classType = p_class;
 		name = p_name;
+		level = 0;
 	}
 
 

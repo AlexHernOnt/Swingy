@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 19:03:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:27:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,15 @@ public class GameView {
 		}
 	}
 
+	public void fight() {
+		
+		if (GUI) {
+			GuiG.fight();
+		}
+		else {
+			TmlG.fight();
+		}
+	}
 
 
 	

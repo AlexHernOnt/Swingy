@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 20:21:25 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/16 21:02:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
 
 import Hero.Hero;
 import Model.GameMap;
@@ -52,10 +53,13 @@ public class GuiGame extends JFrame implements ActionListener {
     **	V A R I A B L E S
 	*/
 
+	private Random rand = new Random();
+
 	private static final String winImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/win.png";
 	private static final String houseImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png";
 	private static final String worldImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/world.png";
-
+	private static final String enemyImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/enemy.png";
+	
     private GameView view;
     private GameController controller;
     private MyFrame frame;
@@ -227,9 +231,9 @@ public class GuiGame extends JFrame implements ActionListener {
 		
 		// Making Text
 
-		labelOnTop.setIcon(new ImageIcon("nothing"));
-		labelOnTop.setText("You face a terrible creature before you.");
-		labelMiddle.setText("Do you want to face it?");
+		labelOnTop.setIcon(new ImageIcon(enemyImg));
+		labelOnTop.setText("You face a terrible lvl " + ptr_map.enemy(h.getPosX(), h.getPosY()) + " creature before you.");
+		labelMiddle.setText("Do you want to face it? (You're level) " + h.getLevel() + ".");
 
 		// Making Buttons
 
@@ -254,6 +258,79 @@ public class GuiGame extends JFrame implements ActionListener {
 	}
 
 
+
+
+
+
+
+
+
+
+    /*
+    **  F I G H T
+    */
+
+	JButton FightResult;
+	boolean fightWon;
+
+    public void fight() {
+
+		toolsGui.reOpenWindow(this);
+
+		if (fightAlgo(h) == true) {
+
+			fightWon = true;
+			
+			// Making Text
+		
+			labelOnTop.setIcon(new ImageIcon("enemyImg"));
+			labelOnTop.setText("The fight was fierced, intense and deadly.");
+			labelMiddle.setText("You see your foe's desecreated body.");
+
+			// Making Buttons
+
+			FightResult = toolsGui.confButton(FightResult, "Loot it", 697, 0, this);
+		
+		} else {
+
+			fightWon = false;
+
+			// Making Text
+
+			labelOnTop.setIcon(new ImageIcon("nothing"));
+			labelOnTop.setText("You gave all you had in the fight, however you failed");
+			labelMiddle.setText("You know this is the last second of your life.");
+			
+			// Making Buttons
+
+			FightResult = toolsGui.confButton(FightResult, "Bye...", 697, 0, this);
+		}
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
+
+		panelBottom.setLayout(null);
+		panelBottom.add(FightResult);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
+		frame.setVisible(true);
+	}
+
+	private boolean fightAlgo(Hero h) {
+
+
+
+
+
+		
+		return (false);
+	}
 
 
 
@@ -317,7 +394,7 @@ public class GuiGame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		// Walk
-
+System.err.println("Clicked!");
 		if (e.getSource() == comenzarButton) {
 			controller.walk();
 			positionCheck();
@@ -345,10 +422,26 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Confrontation
 
 		else if (e.getSource() == FightButton) {
-			positionCheck();
+			controller.fight();
 		}
 		else if (e.getSource() == RunButton) {
-			controller.walk();
+			
+			if (rand.nextInt(2) == 1) { // from 0 includive to 2 exclusive)
+				controller.fight();
+			} else {
+				controller.walk();
+			}
+		}
+
+		// Fight
+		
+		else if (e.getSource() == FightResult) {
+			if (fightWon == true) {
+				controller.walk();
+			}
+			else {
+				controller.goStart();
+			}
 		}
 
 		// Win
@@ -385,16 +478,17 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	private void positionCheck() {
 		
-		System.err.println(h.getPosX() + " _ " + h.getPosY());
+		System.err.println("Y: " + h.getPosY() + " _ X: " + h.getPosX());
 
-		if (ptr_map.offLimits(h.getPosX(), h.getPosY())) {
+		if (ptr_map.offLimits(h.getPosY(), h.getPosX())) {
 			controller.win();
-		} else if (ptr_map.enemie(h.getPosX(), h.getPosY()) != -1) {
+		} else if (ptr_map.enemy(h.getPosY(), h.getPosX()) >= 0) {
+			System.out.println("got into confrontation");
 			controller.confrontation();
 		} else {
+			System.out.println("got into walk");
 			controller.walk();
 		}
-		// if (ptr_map.enemy())
 	}
 
 

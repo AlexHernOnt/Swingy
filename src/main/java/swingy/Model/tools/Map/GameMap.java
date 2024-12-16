@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 20:19:41 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/16 21:07:11 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ public class GameMap {
     **  C O N S T R U C T O R 
     */
 	
-	public GameMap(int lvl) {
+	public GameMap() {
 
 		// Assign Constructor Variables
-		createMap(lvl);
-		fillWithEnemies();
 	}
 
 
@@ -58,7 +56,7 @@ public class GameMap {
 
 	private Random rand = new Random();
 
-	private void createMap(int lvl) {
+	public void createMap(int lvl) {
 
 		int size;
 
@@ -66,9 +64,14 @@ public class GameMap {
 		System.err.println("Size of map = " + size + ".");
 		
 		map = new int[size][size];
+
+		for (int i = 0; i < map.length; ++i) {
+			for (int j = 0; j < map[i].length; j++)
+				map[i][j] = -9;
+		}
 	}
 
-	private void fillWithEnemies() {
+	private void fillWithEnemys(int lvl) {
 
 		// Fill, baby, fill
 
@@ -78,16 +81,14 @@ public class GameMap {
 				int rnd = rand.nextInt(20) + 1;
 				
 				if (rnd == 1) {
-					map[i][j] = 1;
+					map[i][j] = (lvl - 1) < 0 ? 0 : lvl - 1;
 				}
 				if (rnd == 5) {
-					map[i][j] = 2;
+					map[i][j] = lvl;
+
 				}
 				if (rnd == 10) {
-					map[i][j] = 3;
-				}
-				if (rnd == 15) {
-					map[i][j] = 4;
+					map[i][j] = lvl + 1;
 				}
 			}
 		}
@@ -104,12 +105,13 @@ public class GameMap {
 		return false;
 	}
 
-	public int enemie(int x, int y) {
+	public int enemy(int y, int x) {
 		
-		if (map[x][y] != 0) {
-			System.err.println("Enemies");
-			return map[x][y];
+		if (map[y][x] >= 0) {
+			System.err.println("Enemy: " + map[y][x]);
+			return map[y][x];
 		}
+		System.err.println("No enemy at: " +  map[y][x]);
 		return -1;
 	}
 
@@ -125,6 +127,8 @@ public class GameMap {
 
 	public void placeHeroStart(Hero hero) {
 
+		createMap(hero.getLevel());
+		fillWithEnemys(hero.getLevel());
 		int pos = (int)Math.floor(map.length / 2);
 		
 		hero.setPosX(pos);
@@ -151,9 +155,19 @@ public class GameMap {
     */
 
 	public void printMap() {
-		for (int i = 0; i < map.length; ++i) {
-			for (int j = 0; j < map[i].length; j++)
-				System.err.print(map[i][j] + " ");
+		for (int y = 0; y < map.length; ++y) {
+			System.err.print("Y "+ y + ": ");
+
+			for (int x = 0; x < map[y].length; x++)
+			{
+				if (map[y][x] >= 0 )
+				{
+					System.err.print(" " + map[y][x] + " ");
+				}
+				else
+					System.err.print(map[y][x] + " ");
+
+			}
 			System.err.println();
 		}
 	}
