@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:54:10 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 19:38:51 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:06:24 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ import Controller.Controller;
 
 public class App 
 {
-	public static void main(String[] args )
-	{
+	public static void main(String[] args ) {
+
 		Controller controller;
 
 		if (args.length == 1 && (args[0].equals("gui")|| args[0].equals("console"))) {

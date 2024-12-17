@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/16 21:05:53 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:06:34 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ public class Hero {
 		classType = p_class;
 		name = p_name;
 		level = 0;
+	}
+
+	public void addXP(int xp) {
+		System.err.println("XP rexeived: " + xp);
+
+		experience =+ xp;
+		levelUp();
+	}
+
+	private void levelUp() {
+		System.err.println("Current xp: " + experience + " / " + ((level + 1) * 1000 + (int)Math.pow(((level + 1) - 1), 2) * 450));
+		
+		if (experience > ((level + 1) * 1000 + (int) Math.pow(((level + 1) - 1), 2) * 450)) {
+			level++;
+			experience = 0;
+		}
 	}
 
 

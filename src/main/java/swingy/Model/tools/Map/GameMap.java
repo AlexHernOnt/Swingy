@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/16 21:07:11 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:52:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ public class GameMap {
 		for (int i = 0; i < map.length; ++i) {
 			for (int j = 0; j < map[i].length; j++) {
 
-				int rnd = rand.nextInt(20) + 1;
+				int rnd = rand.nextInt(15) + 1;
 				
 				if (rnd == 1) {
 					map[i][j] = (lvl - 1) < 0 ? 0 : lvl - 1;
@@ -108,10 +108,8 @@ public class GameMap {
 	public int enemy(int y, int x) {
 		
 		if (map[y][x] >= 0) {
-			System.err.println("Enemy: " + map[y][x]);
 			return map[y][x];
 		}
-		System.err.println("No enemy at: " +  map[y][x]);
 		return -1;
 	}
 

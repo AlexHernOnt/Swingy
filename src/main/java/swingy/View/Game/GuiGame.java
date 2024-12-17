@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/16 21:02:07 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:33:51 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
+
+
     /*
     **  C O N F R O N T A T I O N
     */
@@ -232,7 +234,7 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(enemyImg));
-		labelOnTop.setText("You face a terrible lvl " + ptr_map.enemy(h.getPosX(), h.getPosY()) + " creature before you.");
+		labelOnTop.setText("You face a terrible lvl " + ptr_map.enemy(h.getPosY(), h.getPosX()) + " creature before you.");
 		labelMiddle.setText("Do you want to face it? (You're level) " + h.getLevel() + ".");
 
 		// Making Buttons
@@ -324,13 +326,81 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	private boolean fightAlgo(Hero h) {
 
-
-
-
-
+		int lvlDif = h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX());
 		
-		return (false);
+		/*
+		**	Algo Logic:
+		**	0, 1, 2 -> (66%)
+		**	+ 1 ?   -> (75%)
+		**	- 1 ?   -> (50%)  
+		*/
+		
+		if (rand.nextInt(3 + lvlDif) > 0) { // from 0 inclusive to 3 exclusive)
+			if (h.getLevel() == 0)
+				h.addXP(400 + (lvlDif * 30));
+			else
+				h.addXP(h.getLevel() * 400 + (lvlDif * 30));
+			return true;
+		}
+		return false;
 	}
+
+
+
+
+
+
+
+
+
+
+    /*
+    **  L O O T I N G 
+    */
+
+	JButton TakeItButton;
+	JButton LeaveItButton;
+
+    public void looting() {
+
+		toolsGui.reOpenWindow(this);
+		
+		// Making Text
+
+		if () { // 30 % 
+
+
+			
+		}
+
+		labelOnTop.setIcon(new ImageIcon(enemyImg));
+		labelOnTop.setText("You got a  " +  s + " creature before you.");
+		labelMiddle.setText("Do you want to face it? (You're level) " + h.getLevel() + ".");
+
+		// Making Buttons
+
+		TakeItButton = toolsGui.confButton(TakeItButton, "I'll take it", 550, 0, this);
+		LeaveItButton = toolsGui.confButton(LeaveItButton, "I'll leave it", 850, 0, this);
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		panelMiddle.add(labelMiddle);
+
+		panelBottom.setLayout(null);
+		panelBottom.add(TakeItButton);
+		panelBottom.add(LeaveItButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
+		frame.setVisible(true);
+	}
+
+
+
 
 
 
@@ -394,7 +464,6 @@ public class GuiGame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		// Walk
-System.err.println("Clicked!");
 		if (e.getSource() == comenzarButton) {
 			controller.walk();
 			positionCheck();
@@ -437,7 +506,7 @@ System.err.println("Clicked!");
 		
 		else if (e.getSource() == FightResult) {
 			if (fightWon == true) {
-				controller.walk();
+				controller.looting();
 			}
 			else {
 				controller.goStart();
@@ -483,10 +552,8 @@ System.err.println("Clicked!");
 		if (ptr_map.offLimits(h.getPosY(), h.getPosX())) {
 			controller.win();
 		} else if (ptr_map.enemy(h.getPosY(), h.getPosX()) >= 0) {
-			System.out.println("got into confrontation");
 			controller.confrontation();
 		} else {
-			System.out.println("got into walk");
 			controller.walk();
 		}
 	}

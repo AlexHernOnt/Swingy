@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/16 17:27:40 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:31:31 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,17 @@ public class GameView {
 		}
 	}
 
+	public void looting() {
+		
+		if (GUI) {
+			GuiG.looting();
+		}
+		else {
+			TmlG.looting();
+		}
+	}
 
+	
 	
 
 

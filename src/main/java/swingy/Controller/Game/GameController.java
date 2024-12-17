@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/16 17:28:16 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:30:42 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ public class GameController {
 		view.fight();
 	}
 
+	public void looting() {
+		view.looting();
+	}
+	
 	public void goStart() {
 		mainController.presentGame();
 	}
