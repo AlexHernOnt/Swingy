@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/17 18:52:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:33:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ public class GameMap {
 		int size;
 
 		size = (lvl - 1) * 5 + 10 - (lvl % 2);
-		System.err.println("Size of map = " + size + ".");
+		System.out.println("Size of map = " + size + ".");
 		
 		map = new int[size][size];
 
@@ -78,14 +78,13 @@ public class GameMap {
 		for (int i = 0; i < map.length; ++i) {
 			for (int j = 0; j < map[i].length; j++) {
 
-				int rnd = rand.nextInt(15) + 1;
+				int rnd = rand.nextInt(12) + 1;
 				
-				if (rnd == 1) {
+				if (rnd < 2  ) {
 					map[i][j] = (lvl - 1) < 0 ? 0 : lvl - 1;
 				}
 				if (rnd == 5) {
 					map[i][j] = lvl;
-
 				}
 				if (rnd == 10) {
 					map[i][j] = lvl + 1;
@@ -166,7 +165,7 @@ public class GameMap {
 					System.err.print(map[y][x] + " ");
 
 			}
-			System.err.println();
+			System.out.println();
 		}
 	}
 

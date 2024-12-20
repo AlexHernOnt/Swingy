@@ -2,6 +2,7 @@
 /home/ahernand/swingy/src/main/java/swingy/View/View.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Knight.java
 /home/ahernand/swingy/src/main/java/swingy/Controller/Game/GameController.java
+/home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/Artifacts/Artifact.java
 /home/ahernand/swingy/src/main/java/swingy/Model/tools/Hero/heroCreator.java
 /home/ahernand/swingy/src/main/java/swingy/Model/Game/GameModel.java
 /home/ahernand/swingy/src/main/java/swingy/View/tools/SwingTools/MyFrame.java

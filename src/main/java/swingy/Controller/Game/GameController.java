@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/17 20:30:42 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:28:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public class GameController {
 		mainController = pMainController;
 
 		welcomeScreen();
-		// currentState = States.PRESENTGAME;
+		// currentState = States.STARTGAME;
 	}
 
     public void welcomeScreen() {
@@ -82,7 +82,7 @@ public class GameController {
 	}
 	
 	public void goStart() {
-		mainController.presentGame();
+		mainController.startGame();
 	}
 
 
@@ -119,8 +119,8 @@ public class GameController {
 		System.out.println("INCREDIBLE WORK !");
 		// view.closeWindows();
 		// switch (currentState) {
-		// 	case PRESENTGAME:
-		// 		presentGame();
+		// 	case STARTGAME:
+		// 		startGame();
 		// 		break;
 		// 	case SETHERONAME:
 		// 		setHeroName();

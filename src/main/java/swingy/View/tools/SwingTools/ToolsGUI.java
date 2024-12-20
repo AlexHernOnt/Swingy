@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:52:57 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 17:22:07 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:44:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ public class ToolsGUI {
 
 	public void reOpenWindow(GuiCreateHero gui) {
 		if (gui.getGUI() == true &&  gui.getActive() == false) {
-			System.err.println("Opening Window Again");
+			System.out.println("Opening Window Again");
 			gui.setActive(true);
 			gui.setFrame(new MyFrame());
 		}
@@ -43,7 +43,7 @@ public class ToolsGUI {
 
 	public void reOpenWindow(GuiGame gui) {
 		if (gui.getGUI() == true &&  gui.getActive() == false) {
-			System.err.println("Opening Window Again");
+			System.out.println("Opening Window Again");
 			gui.setActive(true);
 			gui.setFrame(new MyFrame());
 		}
@@ -111,6 +111,17 @@ public class ToolsGUI {
 		button.setText(text);
 		button.setFont(new Font("Monospaced", Font.PLAIN, 21));
 		button.setBounds(x, y, 200, 70);
+		button.addActionListener(gui);
+		button.setFocusable(false);
+		return button;
+	}
+
+	public JButton confFullButton(JButton button, String text, int x, int y, int width, int height, GuiCreateHero gui) {
+
+		button = new JButton();
+		button.setText(text);
+		button.setFont(new Font("Monospaced", Font.PLAIN, 21));
+		button.setBounds(x, y, width, height);
 		button.addActionListener(gui);
 		button.setFocusable(false);
 		return button;

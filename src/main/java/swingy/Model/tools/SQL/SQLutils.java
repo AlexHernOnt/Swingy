@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/25 17:23:52 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:54:41 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.naming.spi.DirStateFactory.Result;
+
 import Hero.Hero;
 
 public class SQLutils {
 
 	private static final String DATABASE_URL = "jdbc:sqlite:hero.db";
 
+
+
+
+
+
+
+
+
+
+	/*
+	**	D B     C R E A T I O N
+	*/
+	
 	public void createDB(Hero h) {
 
 		Connection conn;
@@ -33,7 +49,6 @@ public class SQLutils {
 			conn = DriverManager.getConnection(DATABASE_URL);
 			System.out.println("Database connected or created successfully!");
 			createTable(conn);
-			cleanTable(conn);
 			insertHero(conn, h);
 			showDB(conn);
 		} catch (ClassNotFoundException e) {
@@ -43,6 +58,18 @@ public class SQLutils {
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+	/*
+	**	C R E A T E     T A B L E
+	*/
 
 	public void createTable(Connection conn) throws SQLException {
 		String createTableSQL = """
@@ -59,16 +86,36 @@ public class SQLutils {
 		""";
 		
 		try (Statement statement = conn.createStatement()) {
+
 			statement.execute(createTableSQL);
 			System.out.println("Hero table created or already exists!");
+
 		} catch (SQLException e) {
 			System.out.println("Error while creating Hero table: " + e.getMessage());
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+	/*
+	**	I N S E R T     E L E M E N T
+	*/
+
 	public void insertHero(Connection conn, Hero hero) {
 		
+		if (checkHeroEntries(conn) > 2) {
+			deleteOldestEntry(conn);
+		}
+
 		String insertSQL = "INSERT INTO Hero (name, classType, level, experience, HP, attack, defense) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
 		try (PreparedStatement statement = conn.prepareStatement(insertSQL)) {
 			statement.setString(1, hero.getName());
 			statement.setString(2, hero.getClassType());
@@ -82,10 +129,68 @@ public class SQLutils {
 			if (rowsInserted > 0) {
 				System.out.println("Hero inserted successfully!");
 			}
+			
 		} catch (SQLException e) {
 			System.out.println("Error inserting hero: " + e.getMessage());
 		}
 	}
+
+
+
+
+
+	public int checkHeroEntries(Connection conn) {
+
+		String countEntriesSQL = "SELECT COUNT(*) AS total FROM Hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(countEntriesSQL)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				System.out.println("Successfully read " + resultSet.getInt("total") + " elements.");
+				return resultSet.getInt("total");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error counting on hero: " + e.getMessage());
+		}
+		return 0;
+	}
+
+
+
+	/*
+	**	D E L E A T E     T H E     O L D E S T 
+	*/
+
+	public void deleteOldestEntry(Connection conn) {
+		
+		String deleteSQL = "DELETE FROM Hero WHERE id = (SELECT MIN(id) FROM Hero)";
+		
+		try (PreparedStatement statement = conn.prepareStatement(deleteSQL)) {
+			
+			statement.executeUpdate();
+			System.out.println("Successfully deleated the oldest entry.");
+
+		} catch (SQLException e) {
+			System.out.println("Error deleting the oldest entry: " + e.getMessage());
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	/*
+	**	P R I N T     D B
+	*/
 
 	public void showDB(Connection conn) {
 		String query = "SELECT * FROM Hero";
@@ -113,6 +218,19 @@ public class SQLutils {
 			System.out.println("Error displaying database: " + e.getMessage());
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**	C L E A N
+	*/
 
 	public void cleanTable(Connection conn) {
 		String deleteSQL = "DELETE FROM Hero";

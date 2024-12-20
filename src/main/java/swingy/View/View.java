@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/01 19:15:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:32:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ public class View {
 	** Variables
 	*/
 
-	private GuiCreateHero GuiCH;
+	private GuiCreateHero Gui;
 	public Controller controller;
 
 	private Scanner scanner = new Scanner(System.in);
@@ -54,15 +54,35 @@ public class View {
 
 		// Initialize variables
 
-		GuiCH = new GuiCreateHero(pController, this);
+		Gui = new GuiCreateHero(pController, this);
 	}
 
 	public void cleanScreen() {
 		int i = 99;
 
 		while (i < 100) {
-			System.err.println("\n");
+			System.out.println("\n");
 			++i;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**  Continue Game
+	*/
+
+	public void loadSave() {
+
+		if (GUI) {
+			Gui.loadSave();
 		}
 	}
 
@@ -78,15 +98,16 @@ public class View {
 	/*
 	**  Select Hero And Present Game
 	*/
-	public void showPresentation() {
+
+	public void startGame() {
 
 		String str;
 
 		if (GUI) {
-			GuiCH.GUIpromptForSelectHero();
+			Gui.startGame();
 		}
 		else {
-			printPresenteAndSelectHero();
+			printStartGame();
 
 			do {
 				str = promptForSelectHero();
@@ -94,9 +115,9 @@ public class View {
 		}
 	}
 
-	public void printPresenteAndSelectHero() {
+	public void printStartGame() {
 		cleanScreen();
-		System.err.println("Welcome to The Brighest Night");
+		System.out.println("Welcome to Swingy");
 	}
 
 	private boolean selectHeroOk(String str) {
@@ -104,7 +125,7 @@ public class View {
 		switch (str) {
 			case "gui":
 				GUI = true;
-				GuiCH.GUIpromptForSelectHero();
+				Gui.startGame();
 				return true;
 			case "Continue":
 				viewSetHeroName();
@@ -118,7 +139,7 @@ public class View {
 	}
 
 	public String promptForSelectHero() {
-		System.err.println("Choose an option:\n- Continue\n- New Game");
+		System.out.println("Choose an option:\n- Continue\n- New Game");
 		String str = scanner.nextLine();
 		return str;
 	}
@@ -144,7 +165,7 @@ public class View {
 		controller.currentState = States.SETHERONAME;
 
 		if (GUI) {
-			GuiCH.SetHeroName();
+			Gui.SetHeroName();
 		}
 		else {
 
@@ -162,7 +183,7 @@ public class View {
 		switch (str) {
 			case "gui":
 				GUI = true;
-				GuiCH.SetHeroName();
+				Gui.SetHeroName();
 				return true;
 			case "":
 				printErrorName();
@@ -213,7 +234,7 @@ public class View {
 		// Prompt for hero class until a valid one is provided
 
 		if (GUI) {
-			GuiCH.SetHeroClass();
+			Gui.SetHeroClass();
 		}
 		else
 		{
@@ -237,7 +258,7 @@ public class View {
 		}
 		else if (str.equals("gui")) {
 			GUI = true;
-			GuiCH.SetHeroClass();
+			Gui.SetHeroClass();
 			return true;
 		}
 		else if (!str.isEmpty()) {
@@ -283,7 +304,7 @@ public class View {
 	*/
 
 	public void closeWindows() 	{
-		GuiCH.closeWindow();
+		Gui.closeWindow();
 	}
 
 
@@ -304,10 +325,10 @@ public class View {
 	}
 
 	public MyFrame getFrame() {
-		return GuiCH.getFrame();
+		return Gui.getFrame();
 	}
 	
 	public boolean getActive() {
-		return GuiCH.getActive();
+		return Gui.getActive();
 	}
 }

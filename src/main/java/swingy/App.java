@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:54:10 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/17 18:06:24 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:28:05 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ public class App
 
 		if (args.length == 1 && (args[0].equals("gui")|| args[0].equals("console"))) {
 			controller = new Controller(args[0]);
-			controller.presentGame();
+			controller.startGame();
 		}
 		else {
 			System.err.println("Input error: \"java - jar console/gui\"");

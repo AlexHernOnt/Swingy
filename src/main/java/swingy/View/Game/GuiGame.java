@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/17 20:33:51 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:41:48 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ import java.awt.event.WindowEvent;
 import java.util.Random;
 
 import Hero.Hero;
+import Hero.Artifact;
 import Model.GameMap;
 import Controller.GameController;
 import View.GameView;
@@ -59,6 +60,8 @@ public class GuiGame extends JFrame implements ActionListener {
 	private static final String houseImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/house.png";
 	private static final String worldImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/world.png";
 	private static final String enemyImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/enemy.png";
+	private static final String prizeImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/prize.png";
+	private static final String gameOverImg = "/home/ahernand/swingy/src/main/java/swingy/View/Game/imgs/gameOver.png";
 	
     private GameView view;
     private GameController controller;
@@ -285,8 +288,8 @@ public class GuiGame extends JFrame implements ActionListener {
 			
 			// Making Text
 		
-			labelOnTop.setIcon(new ImageIcon("enemyImg"));
-			labelOnTop.setText("The fight was fierced, intense and deadly.");
+			labelOnTop.setIcon(new ImageIcon(prizeImg));
+			labelOnTop.setText("Victory! Current XP " + h.getExperience() + " / " + h.formulaLevelUp() + "." );
 			labelMiddle.setText("You see your foe's desecreated body.");
 
 			// Making Buttons
@@ -299,7 +302,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 			// Making Text
 
-			labelOnTop.setIcon(new ImageIcon("nothing"));
+			labelOnTop.setIcon(new ImageIcon(gameOverImg));
 			labelOnTop.setText("You gave all you had in the fight, however you failed");
 			labelMiddle.setText("You know this is the last second of your life.");
 			
@@ -324,27 +327,31 @@ public class GuiGame extends JFrame implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	/*
+	**	Algo Logic:
+	**	0, 1, 2 -> (66%)
+	**	+ 1 ?   -> (75%)
+	**	- 1 ?   -> (50%)  
+	*/
+
 	private boolean fightAlgo(Hero h) {
 
 		int lvlDif = h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX());
-		
-		/*
-		**	Algo Logic:
-		**	0, 1, 2 -> (66%)
-		**	+ 1 ?   -> (75%)
-		**	- 1 ?   -> (50%)  
-		*/
-		
-		if (rand.nextInt(3 + lvlDif) > 0) { // from 0 inclusive to 3 exclusive)
-			if (h.getLevel() == 0)
+				
+		if (rand.nextInt(5 + lvlDif) > 0 ||	// from 0 inclusive to 3 exclusive)
+			(h.getArmorArtifact() != null && rand.nextInt(2) > 0) ||
+			(h.getWeaponArtifact() != null && rand.nextInt(2) > 0) ||
+			(h.getHelmArtifact() != null && rand.nextInt(2) > 0)) {
+			if (h.getLevel() == 0) {
 				h.addXP(400 + (lvlDif * 30));
-			else
+			}
+			else {
 				h.addXP(h.getLevel() * 400 + (lvlDif * 30));
+			}
 			return true;
 		}
 		return false;
 	}
-
 
 
 
@@ -360,36 +367,87 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	JButton TakeItButton;
 	JButton LeaveItButton;
+	String artifactType;
+	int statChanged;
 
     public void looting() {
 
 		toolsGui.reOpenWindow(this);
 		
 		// Making Text
+		int rnd = rand.nextInt(3);
+		if (rnd == 1) { // 30 % 
 
-		if () { // 30 % 
+			labelOnTop.setIcon(new ImageIcon(enemyImg));
+			labelOnTop.setText("You only found blood and skin.");
+			labelMiddle.setText("");
 
+			// Adding to panels
 
+			panelOnTop.add(labelOnTop);
+			panelMiddle.add(labelMiddle);
 			
+			// Making Buttons
+
+			LeaveItButton = toolsGui.confButton(TakeItButton, "I'll move on", 697, 0, this);
+
+			panelBottom.setLayout(null);
+			panelBottom.add(LeaveItButton);
+			
+		} else {
+
+			statChanged = (h.getLevel() - (h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX()))) + 1;
+			statChanged = statChanged < 1 ? 1 : statChanged;
+			
+			labelOnTop.setIcon(new ImageIcon(prizeImg));
+
+			switch (rnd) {
+				case 0:
+					artifactType = "Weapon";
+					labelOnTop.setText("You found a Weapon. Level " + statChanged + ".");
+					if (h.getWeaponArtifact() != null) {
+						labelMiddle.setText("You have a Weapon level " + h.getWeaponArtifact().getStat() + ". ");
+					}
+					else {
+						labelMiddle.setText("You don't have an Artifact of this type.");
+					}
+					break;
+				case 1:
+					artifactType = "Armor";
+					labelOnTop.setText("You found a Armour. Level " + statChanged + ".");
+					if (h.getWeaponArtifact() != null) {
+						labelMiddle.setText("You have an Armour level " + h.getArmorArtifact().getStat() + ". ");
+					}
+					else {
+						labelMiddle.setText("You don't have an Artifact of this type.");
+					}
+					break;
+				case 2:
+					artifactType = "Helm";
+					labelOnTop.setText("You found a Helm. Level " + statChanged + ".");
+					if (h.getWeaponArtifact() != null) {
+						labelMiddle.setText("You have a Helm level " + h.getHelmArtifact().getStat() + ". ");
+					}
+					else {
+						labelMiddle.setText("You don't have an Artifact of this type.");
+					}
+					break;
+			}
+
+			// Making Buttons
+	
+			TakeItButton = toolsGui.confButton(TakeItButton, "Take it", 550, 0, this);
+			LeaveItButton = toolsGui.confButton(LeaveItButton, "Leave it", 850, 0, this);
+
+			// Adding to panels
+
+			panelOnTop.add(labelOnTop);
+			panelMiddle.add(labelMiddle);
+
+			panelBottom.setLayout(null);
+			panelBottom.add(TakeItButton);
+			panelBottom.add(LeaveItButton);
 		}
-
-		labelOnTop.setIcon(new ImageIcon(enemyImg));
-		labelOnTop.setText("You got a  " +  s + " creature before you.");
-		labelMiddle.setText("Do you want to face it? (You're level) " + h.getLevel() + ".");
-
-		// Making Buttons
-
-		TakeItButton = toolsGui.confButton(TakeItButton, "I'll take it", 550, 0, this);
-		LeaveItButton = toolsGui.confButton(LeaveItButton, "I'll leave it", 850, 0, this);
-
-		// Adding to panels
-
-		panelOnTop.add(labelOnTop);
-		panelMiddle.add(labelMiddle);
-
-		panelBottom.setLayout(null);
-		panelBottom.add(TakeItButton);
-		panelBottom.add(LeaveItButton);
 
 		// Adding to frames
 
@@ -422,8 +480,8 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(winImg));
-		labelOnTop.setText("You have discovered the end frontier.");
-		labelMiddle.setText("Will you start a new adventure?");
+		labelOnTop.setText("You have reached the end of level " + h.getLevel() + ".");
+		labelMiddle.setText("Will you continue to level " + (h.getLevel() + 1) + "?");
 
 		// Making Buttons
 
@@ -513,6 +571,27 @@ public class GuiGame extends JFrame implements ActionListener {
 			}
 		}
 
+		// Looting
+
+		else if (e.getSource() == TakeItButton) {
+
+			switch (artifactType) {
+				case "Weapon":
+					h.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
+					break;
+				case "Armor":
+					h.setArmorArtifact(new Artifact(statChanged, "Armor"));
+					break;
+				case "Helm":
+					h.setHelmArtifact(new Artifact(statChanged, "Helm"));
+					break;
+				}
+			controller.walk();
+		}
+		else if (e.getSource() == LeaveItButton) {
+			controller.walk();
+		}
+
 		// Win
 
 		else if (e.getSource() == NextLevelButton) {
@@ -547,7 +626,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	private void positionCheck() {
 		
-		System.err.println("Y: " + h.getPosY() + " _ X: " + h.getPosX());
+		System.out.println("Y: " + h.getPosY() + " _ X: " + h.getPosX());
 
 		if (ptr_map.offLimits(h.getPosY(), h.getPosX())) {
 			controller.win();

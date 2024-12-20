@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/17 18:06:34 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:41:11 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@ package Hero;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import Hero.Artifact;
 
 public class Hero {
 
@@ -30,6 +32,10 @@ public class Hero {
 	protected int HP;
 	protected int attack;
 	protected int defense;
+
+	protected Artifact weaponArtifact;
+	protected Artifact armorArtifact;
+	protected Artifact helmArtifact;
 	
 	//  Map
 
@@ -56,16 +62,20 @@ public class Hero {
 	}
 
 	public void addXP(int xp) {
-		System.err.println("XP rexeived: " + xp);
+		System.out.println("XP received: " + xp);
 
-		experience =+ xp;
+		experience += xp;
 		levelUp();
 	}
 
+	public int formulaLevelUp() {
+		return ((level + 1) * 1000 + (int) Math.pow(((level + 1) - 1), 2) * 450);
+	}
+
 	private void levelUp() {
-		System.err.println("Current xp: " + experience + " / " + ((level + 1) * 1000 + (int)Math.pow(((level + 1) - 1), 2) * 450));
+		System.out.println("Current xp: " + experience + " / " + formulaLevelUp());
 		
-		if (experience > ((level + 1) * 1000 + (int) Math.pow(((level + 1) - 1), 2) * 450)) {
+		if (experience > formulaLevelUp()) {
 			level++;
 			experience = 0;
 		}
@@ -120,8 +130,19 @@ public class Hero {
 		return posY;
 	}
 
+	// Artifacts
 
+	public Artifact getWeaponArtifact() {
+		return weaponArtifact;
+	}
+	
+	public Artifact getArmorArtifact() {
+		return armorArtifact;
+	}
 
+	public Artifact getHelmArtifact() {
+		return helmArtifact;
+	}
 
 
 
@@ -138,6 +159,27 @@ public class Hero {
 
 	public void setPosY(int num) {
 		posY = num;
+	}
+	
+	public void setWeaponArtifact(Artifact art) {
+
+		if (art.getType().equals("Weapon")) {
+			weaponArtifact = art;
+		}
+	}
+
+	public void setArmorArtifact(Artifact art) {
+
+		if (art.getType().equals("Armor")) {
+			armorArtifact = art;
+		}
+	}
+
+	public void setHelmArtifact(Artifact art) {
+
+		if (art.getType().equals("Helm")) {
+			helmArtifact = art;
+		}
 	}
 
 

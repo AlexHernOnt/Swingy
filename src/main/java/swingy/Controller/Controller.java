@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/10 19:54:19 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:28:42 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ public class Controller {
 		view = new View(this, pGUI.equals("gui") ? true : false);
 		model = new Model();
 		
-		currentState = States.PRESENTGAME;
+		currentState = States.STARTGAME;
 	}
 
-	public void presentGame() {
-		view.showPresentation();
+	public void startGame() {
+		view.startGame();
+	}
+
+	public void loadSave() {
+		view.loadSave();
 	}
 
 	public void setHeroName() {
@@ -87,9 +91,10 @@ public class Controller {
 	public void StateSwitcher() {
 
 		view.closeWindows();
+
 		switch (currentState) {
-			case PRESENTGAME:
-				presentGame();
+			case STARTGAME:
+				startGame();
 				break;
 			case SETHERONAME:
 				setHeroName();

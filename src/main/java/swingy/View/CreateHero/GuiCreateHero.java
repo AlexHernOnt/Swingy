@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/15 17:56:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:57:27 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		toolsGui.confLabel(labelOnTop, null);
 		toolsGui.confLabel(labelMiddle, null);
 
-		panelOnTop.setBounds(0, 100,1600, 300);
+		panelOnTop.setBounds(0, 100, 1600, 500);
 		panelMiddle.setBounds(0, 500, 1600, 100);
 		panelBottom.setBounds(0, 700, 1600, 300);
 	}
@@ -115,7 +115,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
     /*
-    **  N E W     G A M E     O R     C O N T I N U E
+    **  S T A R T     G A M E
     */
 
 	JButton ContinueButton;
@@ -123,7 +123,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	JButton exitGameButton;
 
 
-	public void GUIpromptForSelectHero() {
+	public void startGame() {
 
 		toolsGui.reOpenWindow(this);
 		
@@ -148,6 +148,61 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		panelBottom.add(ContinueButton);
 		panelBottom.add(NewGameButton);
 		panelBottom.add(exitGameButton);
+
+		// Adding to frames
+
+		frame.add(panelOnTop);
+		frame.add(panelMiddle);
+		frame.add(panelBottom);
+		frame.setVisible(true);
+	}
+
+
+
+
+
+
+
+
+
+
+    /*
+    **  L O A D     S A V E
+    */
+
+	JButton GoBack;
+	JButton saveFile1;
+	JButton saveFile2;
+	JButton saveFile3;
+
+	public void loadSave() {
+
+		toolsGui.reOpenWindow(this);
+		
+		// Making Text
+		
+		labelOnTop.setIcon(new ImageIcon("nothing"));
+		labelOnTop.setText("Choose a save file.");
+
+
+		// Making Buttons
+		saveFile1 = toolsGui.confFullButton(saveFile1, "Save 1", 465, 200, 650, 70, this);
+		saveFile2 = toolsGui.confFullButton(saveFile2, "Save 2", 465, 300, 650, 70, this);
+		saveFile3 = toolsGui.confFullButton(saveFile3, "Save 3", 465, 400, 650, 70, this);
+		
+		GoBack = toolsGui.confButton(GoBack, "Go back", 697, 0, this);
+
+		// Adding to panels
+
+		panelOnTop.add(labelOnTop);
+		
+		panelOnTop.setLayout(null);
+		panelOnTop.add(saveFile1);
+		panelOnTop.add(saveFile2);
+		panelOnTop.add(saveFile3);
+
+		panelBottom.setLayout(null);
+		panelBottom.add(GoBack);
 
 		// Adding to frames
 
@@ -277,13 +332,19 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		// Start
 
 		if (e.getSource() == ContinueButton) {
-			System.out.println("Na, im not coding this yet lol");
+			controller.loadSave();
 		}
 		else if (e.getSource() == NewGameButton) {
 			controller.setHeroName();
 		}
 		else if (e.getSource() == exitGameButton) {
 			System.exit(0);
+		}
+
+		// Continue Game
+		
+		else if (e.getSource() == GoBack) {
+			controller.startGame();
 		}
 
 		// Set name
