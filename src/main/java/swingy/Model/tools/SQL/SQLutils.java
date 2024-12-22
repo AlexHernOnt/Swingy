@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:30:38 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:49:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -531,7 +531,55 @@ public class SQLutils {
 	}
 
 
-	
+
+
+
+
+
+
+
+
+	/*
+	**	GET ARTIFACTS
+	*/
+
+	public String getArtifactsPrintable(int order) {
+
+		String getAll = "SELECT * FROM hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(getAll)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			int i = 1;
+			
+			while (resultSet.next()) {
+
+				if (i == order) {
+
+					boolean boolWeaponArtifact = resultSet.getInt("weaponArtifact") == 1 ? true : false;
+					int	finalStatWeaponArtifact = boolWeaponArtifact ? resultSet.getInt("weaponArtifactStat") : 0;
+
+					boolean boolArmorArtifact = resultSet.getInt("armorArtifact") == 1 ? true : false;
+					int finalStatarmorArtifact = boolArmorArtifact ? resultSet.getInt("armorArtifactStat") : 0;
+
+					boolean boolHelmArtifact = resultSet.getInt("helmArtifact") == 1 ? true : false;
+					int finalStathelmArtifact = boolHelmArtifact ? resultSet.getInt("helmArtifactStat") : 0;
+
+					return("( " + finalStatWeaponArtifact + ", "+ finalStatarmorArtifact + ", "+ finalStathelmArtifact + " )");
+				}
+				++i;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting tables" + e.getMessage());
+		}
+		return null;
+	}
+
+
+
+
 
 
 
