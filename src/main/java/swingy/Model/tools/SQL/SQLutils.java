@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:49:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:51:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,7 +566,7 @@ public class SQLutils {
 					boolean boolHelmArtifact = resultSet.getInt("helmArtifact") == 1 ? true : false;
 					int finalStathelmArtifact = boolHelmArtifact ? resultSet.getInt("helmArtifactStat") : 0;
 
-					return("( " + finalStatWeaponArtifact + ", "+ finalStatarmorArtifact + ", "+ finalStathelmArtifact + " )");
+					return("(" + finalStatWeaponArtifact + ", "+ finalStatarmorArtifact + ", "+ finalStathelmArtifact + ")");
 				}
 				++i;
 			}

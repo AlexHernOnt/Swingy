@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:46:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:50:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,9 +189,9 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 		// Making Buttons
 
-		saveFile1 = toolsGui.confFullButton(saveFile1, sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + sql.getArtifactsPrintable(1), 465, 200, 650, 70, this);
-		saveFile2 = toolsGui.confFullButton(saveFile2, sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + sql.getArtifactsPrintable(2), 465, 300, 650, 70, this);
-		saveFile3 = toolsGui.confFullButton(saveFile3, sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + sql.getArtifactsPrintable(3), 465, 400, 650, 70, this);
+		saveFile1 = toolsGui.confFullButton(saveFile1, sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + " " + sql.getArtifactsPrintable(1), 465, 200, 650, 70, this);
+		saveFile2 = toolsGui.confFullButton(saveFile2, sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + " " + sql.getArtifactsPrintable(2), 465, 300, 650, 70, this);
+		saveFile3 = toolsGui.confFullButton(saveFile3, sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + " " + sql.getArtifactsPrintable(3), 465, 400, 650, 70, this);
 		
 		GoBack = toolsGui.confButton(GoBack, "Go back", 697, 0, this);
 
