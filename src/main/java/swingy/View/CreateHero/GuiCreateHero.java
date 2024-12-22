@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 16:57:27 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:45:33 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
-
+import Model.SQLutils;
 
 
 public class GuiCreateHero extends JFrame implements ActionListener {
@@ -53,6 +53,8 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	private static final String introImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/intro.png";
 	private static final String inputImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/input.png";
 	private static final String classImg = "/home/ahernand/swingy/src/main/java/swingy/View/CreateHero/imgs/class.png";
+
+	private SQLutils sql = new SQLutils();
 
     private View view;
     private Controller controller;
@@ -167,7 +169,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
     /*
-    **  L O A D     S A V E
+    **  C O N T I N U E
     */
 
 	JButton GoBack;
@@ -186,9 +188,10 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
 		// Making Buttons
-		saveFile1 = toolsGui.confFullButton(saveFile1, "Save 1", 465, 200, 650, 70, this);
-		saveFile2 = toolsGui.confFullButton(saveFile2, "Save 2", 465, 300, 650, 70, this);
-		saveFile3 = toolsGui.confFullButton(saveFile3, "Save 3", 465, 400, 650, 70, this);
+
+		saveFile1 = toolsGui.confFullButton(saveFile1, sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + , 465, 200, 650, 70, this);
+		saveFile2 = toolsGui.confFullButton(saveFile2, sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + , 465, 300, 650, 70, this);
+		saveFile3 = toolsGui.confFullButton(saveFile3, sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + , 465, 400, 650, 70, this);
 		
 		GoBack = toolsGui.confButton(GoBack, "Go back", 697, 0, this);
 
@@ -345,6 +348,21 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		
 		else if (e.getSource() == GoBack) {
 			controller.startGame();
+		}
+
+		// Continue. Choose file
+
+		else if (e.getSource() == saveFile1) {
+			controller.saveHero(sql.createHeroObjFromEntry(1));
+			controller.goToGame();
+
+		} else if (e.getSource() == saveFile2) {
+			controller.saveHero(sql.createHeroObjFromEntry(2));
+			controller.goToGame();
+
+		} else if (e.getSource() == saveFile3) {
+			controller.saveHero(sql.createHeroObjFromEntry(3));
+			controller.goToGame();
 		}
 
 		// Set name

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 15:28:42 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:42:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,32 @@ public class Controller {
 		view.viewSetHeroClass();
 	}
 
+
+
+
+
+	/*
+	**  Create hero before starting game
+	*/
+
 	public Hero createHeroController(String g_class, String g_name) {
 		return model.ctNewHero(g_class, g_name);
 	}
 
-	public void goToGame() {
-		GameController GC;
+	public void saveHero(Hero pHero) {
+		model.saveHero(pHero);
+	}
 
-		GC = new GameController(model.getHero(), view.getGUIOnOff(), view.getFrame(), view.getActive(), this);
+
+
+
+
+	/*
+	**  Starting game
+	*/
+
+	public void goToGame() {
+		new GameController(model.getHero(), view.getGUIOnOff(), view.getFrame(), view.getActive(), this);
 	}
 
 

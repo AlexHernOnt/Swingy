@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 18:54:41 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:30:38 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ import Hero.Hero;
 public class SQLutils {
 
 	private static final String DATABASE_URL = "jdbc:sqlite:hero.db";
+	private Connection conn;
+
+
+
+
+	/*
+	**	C O N S T R U C T O R
+	*/
+
+	public SQLutils() {
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(DATABASE_URL);
+			System.out.println("Database connected or created successfully!");
+		} catch (ClassNotFoundException e) {
+			System.out.println("SQLite JDBC driver not found: " + e.getMessage());
+		} catch (SQLException e) {
+			System.out.println("Error while connecting or creating the database: " + e.getMessage());
+		}
+	}
 
 
 
@@ -42,15 +63,13 @@ public class SQLutils {
 	
 	public void createDB(Hero h) {
 
-		Connection conn;
-
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(DATABASE_URL);
 			System.out.println("Database connected or created successfully!");
-			createTable(conn);
-			insertHero(conn, h);
-			showDB(conn);
+			createTable();
+			insertHero( h);
+			showDB();
 		} catch (ClassNotFoundException e) {
 			System.out.println("SQLite JDBC driver not found: " + e.getMessage());
 		} catch (SQLException e) {
@@ -71,17 +90,32 @@ public class SQLutils {
 	**	C R E A T E     T A B L E
 	*/
 
-	public void createTable(Connection conn) throws SQLException {
+	public void createTable() throws SQLException {
 		String createTableSQL = """
 			CREATE TABLE IF NOT EXISTS Hero (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
+
 				name TEXT NOT NULL,
 				classType TEXT NOT NULL,
+
 				level INTEGER NOT NULL,
 				experience INTEGER NOT NULL,
+				
 				HP INTEGER NOT NULL,
 				attack INTEGER NOT NULL,
-				defense INTEGER NOT NULL
+				defense INTEGER NOT NULL,
+
+				weaponArtifact INTEGER NOT NULL,
+				weaponArtifactStat INTEGER NOT NULL,
+				weaponArtifactType TEXT NOT NULL,
+				
+				armorArtifact INTEGER NOT NULL,
+				armorArtifactStat INTEGER NOT NULL,
+				armorArtifactType TEXT NOT NULL,
+				
+				helmArtifact INTEGER NOT NULL,
+				helmArtifactStat INTEGER NOT NULL,
+				helmArtifactType TEXT NOT NULL
 			);
 		""";
 		
@@ -108,13 +142,21 @@ public class SQLutils {
 	**	I N S E R T     E L E M E N T
 	*/
 
-	public void insertHero(Connection conn, Hero hero) {
+	public void insertHero(Hero hero) {
 		
-		if (checkHeroEntries(conn) > 2) {
-			deleteOldestEntry(conn);
+		if (checkHeroEntries() > 2) {
+			deleteOldestEntry();
 		}
 
-		String insertSQL = "INSERT INTO Hero (name, classType, level, experience, HP, attack, defense) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insertSQL =
+			"""
+			INSERT INTO Hero
+				(name, classType, level, experience, HP, attack, defense,
+				weaponArtifact, weaponArtifactStat, weaponArtifactType,
+				armorArtifact, armorArtifactStat, armorArtifactType,
+				helmArtifact, helmArtifactStat, helmArtifactType)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			""";
 
 		try (PreparedStatement statement = conn.prepareStatement(insertSQL)) {
 			statement.setString(1, hero.getName());
@@ -125,6 +167,42 @@ public class SQLutils {
 			statement.setInt(6, hero.getAttack());
 			statement.setInt(7, hero.getDefense());
 
+			// Set Weapon if excist
+
+			if (hero.getWeaponArtifact() != null) {
+				statement.setInt(8, 1);
+				statement.setInt(9, hero.getWeaponArtifact().getStat());
+				statement.setString(10, hero.getWeaponArtifact().getType());
+			} else {
+				statement.setInt(8, 0);
+				statement.setInt(9, 0);
+				statement.setInt(10, 0);
+			}
+			
+			// Set Armor if exist
+
+			if (hero.getArmorArtifact() != null) {
+				statement.setInt(11, 1);
+				statement.setInt(12, hero.getArmorArtifact().getStat());
+				statement.setString(13, hero.getArmorArtifact().getType());
+			} else {
+				statement.setInt(11, 0);
+				statement.setInt(12, 0);
+				statement.setInt(13, 0);
+			}
+
+			// Set Helm if exist
+
+			if (hero.getHelmArtifact() != null) {
+				statement.setInt(14, 1);
+				statement.setInt(15, hero.getHelmArtifact().getStat());
+				statement.setString(16, hero.getHelmArtifact().getType());
+			} else {
+				statement.setInt(14, 0);
+				statement.setInt(15, 0);
+				statement.setInt(16, 0);
+			}
+
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				System.out.println("Hero inserted successfully!");
@@ -133,13 +211,20 @@ public class SQLutils {
 		} catch (SQLException e) {
 			System.out.println("Error inserting hero: " + e.getMessage());
 		}
+		giveIdtoHero(hero);
 	}
 
 
 
 
 
-	public int checkHeroEntries(Connection conn) {
+	/*
+	** Count the entries
+	*/
+
+
+
+	public int checkHeroEntries() {
 
 		String countEntriesSQL = "SELECT COUNT(*) AS total FROM Hero";
 
@@ -160,18 +245,45 @@ public class SQLutils {
 
 
 
+
+
 	/*
-	**	D E L E A T E     T H E     O L D E S T 
+	** Count the entries
 	*/
 
-	public void deleteOldestEntry(Connection conn) {
+	public void giveIdtoHero(Hero hero) {
+
+		String getNewestId = "SELECT MAX(id) as newestId FROM Hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(getNewestId)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				hero.setId(resultSet.getInt("newestId"));
+				System.out.println("Successfully set hero's id to " + hero.getId() + ".");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting id" + e.getMessage());
+		}
+	}
+
+
+
+
+	/*
+	**	Delete the oldest
+	*/
+
+	public void deleteOldestEntry() {
 		
 		String deleteSQL = "DELETE FROM Hero WHERE id = (SELECT MIN(id) FROM Hero)";
 		
 		try (PreparedStatement statement = conn.prepareStatement(deleteSQL)) {
 			
 			statement.executeUpdate();
-			System.out.println("Successfully deleated the oldest entry.");
+			System.out.println("Successfully deleted the oldest entry.");
 
 		} catch (SQLException e) {
 			System.out.println("Error deleting the oldest entry: " + e.getMessage());
@@ -187,35 +299,93 @@ public class SQLutils {
 
 
 
-
 	/*
-	**	P R I N T     D B
+	**	U P D A T E     E N T R Y
 	*/
 
-	public void showDB(Connection conn) {
-		String query = "SELECT * FROM Hero";
+	public void updateHero(Hero hero) {
 
-		try (Statement statement = conn.createStatement();
-			 ResultSet resultSet = statement.executeQuery(query)) {
-
-			System.out.println("ID | Name      | ClassType | Level | Experience | HP  | Attack | Defense");
-			System.out.println("-------------------------------------------------------------");
+		String insertSQL =
+			"""
+			UPDATE Hero
 			
-			while (resultSet.next()) {
-				int id = resultSet.getInt("id");
-				String name = resultSet.getString("name");
-				String classType = resultSet.getString("classType");
-				int level = resultSet.getInt("level");
-				int experience = resultSet.getInt("experience");
-				int hp = resultSet.getInt("HP");
-				int attack = resultSet.getInt("attack");
-				int defense = resultSet.getInt("defense");
+			SET
+			
+				level = ?,
+				experience = ?,
+			
+				HP = ?,
+				attack = ?,
+				defense = ?,
 
-				System.out.printf("%-3d| %-9s| %-10s| %-5d| %-11d| %-4d| %-7d| %-7d%n",
-						id, name, classType, level, experience, hp, attack, defense);
+				weaponArtifact = ?,
+				weaponArtifactStat = ?,
+				weaponArtifactType = ?,
+
+				armorArtifact = ?,
+				armorArtifactStat = ?,
+				armorArtifactType = ?,
+			
+				helmArtifact = ?,
+				helmArtifactStat = ?,
+				helmArtifactType = ?
+			
+			WHERE id = ?
+			""";
+
+		try (PreparedStatement stmUpdate = conn.prepareStatement(insertSQL)) {
+
+			stmUpdate.setInt(1, hero.getLevel());
+			stmUpdate.setInt(2, hero.getExperience());
+			
+			stmUpdate.setInt(3, hero.getHP());
+			stmUpdate.setInt(4, hero.getAttack());
+			stmUpdate.setInt(5, hero.getDefense());
+
+			// Set Weapon if excist
+
+			if (hero.getWeaponArtifact() != null) {
+				stmUpdate.setInt(6, 1);
+				stmUpdate.setInt(7, hero.getWeaponArtifact().getStat());
+				stmUpdate.setString(8, hero.getWeaponArtifact().getType());
+			} else {
+				stmUpdate.setInt(6, 0);
+				stmUpdate.setInt(7, 0);
+				stmUpdate.setInt(8, 0);
 			}
+			
+			// Set Armor if exist
+
+			if (hero.getArmorArtifact() != null) {
+				stmUpdate.setInt(9, 1);
+				stmUpdate.setInt(10, hero.getArmorArtifact().getStat());
+				stmUpdate.setString(11, hero.getArmorArtifact().getType());
+			} else {
+				stmUpdate.setInt(9, 0);
+				stmUpdate.setInt(10, 0);
+				stmUpdate.setInt(11, 0);
+			}
+
+			// Set Helm if exist
+
+			if (hero.getHelmArtifact() != null) {
+				stmUpdate.setInt(12, 1);
+				stmUpdate.setInt(13, hero.getHelmArtifact().getStat());
+				stmUpdate.setString(14, hero.getHelmArtifact().getType());
+			} else {
+				stmUpdate.setInt(12, 0);
+				stmUpdate.setInt(13, 0);
+				stmUpdate.setInt(14, 0);
+			}
+			stmUpdate.setInt(15, hero.getId());
+
+			int rowsInserted = stmUpdate.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("Hero updated successfully!");
+			}
+			
 		} catch (SQLException e) {
-			System.out.println("Error displaying database: " + e.getMessage());
+			System.out.println("Error updating hero: " + e.getMessage());
 		}
 	}
 
@@ -229,10 +399,216 @@ public class SQLutils {
 
 
 	/*
+	**	G E T     N A M E
+	*/
+
+	public String getNameFromSave(int order) {
+	
+		String getAll = "SELECT * FROM hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(getAll)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			int i = 1;
+			
+			while (resultSet.next()) {
+
+				if (i == order) {
+					return resultSet.getString("name");
+				}
+				++i;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting id" + e.getMessage());
+		}
+		return null;
+	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**	G E T     L E V E L
+	*/
+
+	public String getLevelFromSave(int order) {
+	
+		String getAll = "SELECT * FROM hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(getAll)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			int i = 1;
+			
+			while (resultSet.next()) {
+
+				if (i == order) {
+					return resultSet.getString("level");
+				}
+				++i;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting id" + e.getMessage());
+		}
+		return null;
+	}
+
+
+
+
+
+
+
+
+
+	/*
+	**	C R E A T E     H E R O     O B J     F R O M     E N T R Y
+	*/
+
+	public Hero createHeroObjFromEntry(int order) {
+	
+		String getAll = "SELECT * FROM hero";
+
+		try (PreparedStatement statement = conn.prepareStatement(getAll)) {
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			int i = 1;
+			
+			while (resultSet.next()) {
+
+				if (i == order) {
+
+					boolean boolWeaponArtifact = resultSet.getInt("weaponArtifact") == 1 ? true : false;
+					int	finalStatWeaponArtifact = boolWeaponArtifact ? resultSet.getInt("weaponArtifactStat") : 0;
+
+					boolean boolArmorArtifact = resultSet.getInt("armorArtifact") == 1 ? true : false;
+					int finalStatarmorArtifact = boolArmorArtifact ? resultSet.getInt("armorArtifactStat") : 0;
+
+					boolean boolHelmArtifact = resultSet.getInt("helmArtifact") == 1 ? true : false;
+					int finalStathelmArtifact = boolHelmArtifact ? resultSet.getInt("helmArtifactStat") : 0;
+
+
+					return new Hero(
+						resultSet.getInt("id"),
+						resultSet.getString("name"),
+						resultSet.getString("classType"),
+
+						resultSet.getInt("level"),
+						resultSet.getInt("experience"),
+						
+						resultSet.getInt("HP"),
+						resultSet.getInt("attack"),
+						resultSet.getInt("defense"),
+
+						boolWeaponArtifact,
+						finalStatWeaponArtifact,
+
+						boolArmorArtifact,
+						finalStatarmorArtifact,
+				
+						boolHelmArtifact,
+						finalStathelmArtifact
+					);
+				}
+				++i;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting id" + e.getMessage());
+		}
+		return null;
+	}
+
+
+	
+
+
+
+
+
+
+	/*
+	**	P R I N T     D B
+	*/
+
+	public void showDB() {
+		String query = "SELECT * FROM Hero";
+
+		try (Statement statement = conn.createStatement();
+			 ResultSet resultSet = statement.executeQuery(query)) {
+
+			System.out.println("ID | Name      | ClassType | Level| Experience | HP  | Attack | Defense | Weapon  | Armor  | Helm");
+			System.out.println("----------------------------------------------------------------------------------------------------------");
+			
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				String classType = resultSet.getString("classType");
+				int level = resultSet.getInt("level");
+				int experience = resultSet.getInt("experience");
+				int hp = resultSet.getInt("HP");
+				int attack = resultSet.getInt("attack");
+				int defense = resultSet.getInt("defense");
+
+				String weapon;
+				String armor;
+				String helm;
+
+				// Fetch artifact details (using null checks for optional data)
+				if (resultSet.getInt("weaponArtifact") == 1){
+					weapon = String.valueOf(resultSet.getInt("weaponArtifactStat"));
+				}
+				else {
+					weapon = "none";
+				}
+
+				if (resultSet.getInt("armorArtifact") == 1){
+					armor = String.valueOf(resultSet.getInt("armorArtifactStat"));
+				}
+				else {
+					armor = "none";
+				}
+				
+				if (resultSet.getInt("helmArtifact") == 1){
+					helm = String.valueOf(resultSet.getInt("helmArtifactStat"));
+				}
+				else {
+					helm = "none";
+				}
+				System.out.printf(
+                    "%-3d| %-10s| %-10s| %-5d| %-10d| %-5d| %-7d| %-10d| %-10s| %-10s| %-10s%n",
+                    id, name, classType, level, experience, hp, attack, defense, weapon, armor, helm);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error displaying database: " + e.getMessage());
+		}
+	}
+
+	
+	
+
+	
+	
+
+
+
+
+	/*
 	**	C L E A N
 	*/
 
-	public void cleanTable(Connection conn) {
+	public void cleanTable() {
 		String deleteSQL = "DELETE FROM Hero";
 		
 		try (Statement statement = conn.createStatement()) {

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:43:54 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/02 21:43:02 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:49:41 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ public class Model {
 		hero = creator.newHero(p_class, p_name);
 		sql.createDB(hero);
 		return hero;
+	}
+
+	public void saveHero(Hero pHero) {
+		hero = pHero;
 	}
 
 	public Hero getHero() {

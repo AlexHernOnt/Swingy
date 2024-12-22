@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 15:41:48 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:35:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,6 +396,8 @@ public class GuiGame extends JFrame implements ActionListener {
 			
 		} else {
 
+			rnd = rand.nextInt(3);
+			
 			statChanged = (h.getLevel() - (h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX()))) + 1;
 			statChanged = statChanged < 1 ? 1 : statChanged;
 			
@@ -415,7 +417,7 @@ public class GuiGame extends JFrame implements ActionListener {
 				case 1:
 					artifactType = "Armor";
 					labelOnTop.setText("You found a Armour. Level " + statChanged + ".");
-					if (h.getWeaponArtifact() != null) {
+					if (h.getArmorArtifact() != null) {
 						labelMiddle.setText("You have an Armour level " + h.getArmorArtifact().getStat() + ". ");
 					}
 					else {
@@ -425,7 +427,7 @@ public class GuiGame extends JFrame implements ActionListener {
 				case 2:
 					artifactType = "Helm";
 					labelOnTop.setText("You found a Helm. Level " + statChanged + ".");
-					if (h.getWeaponArtifact() != null) {
+					if (h.getHelmArtifact() != null) {
 						labelMiddle.setText("You have a Helm level " + h.getHelmArtifact().getStat() + ". ");
 					}
 					else {

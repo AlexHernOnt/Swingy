@@ -6,12 +6,13 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 14:41:11 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:44:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 package Hero;
 
+import Model.SQLutils;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -25,7 +26,8 @@ public class Hero {
 	
 	@Size(min = 3, max = 15, message = "Name must be between 3 and 15 characters")
 	protected String name;
-	
+	protected int id;
+
 	protected String classType;
 	protected int level;
 	protected int experience;
@@ -41,6 +43,9 @@ public class Hero {
 
 	protected int posX;
 	protected int posY;
+
+	private SQLutils sql = new SQLutils();
+
 
 
 
@@ -61,6 +66,43 @@ public class Hero {
 		level = 0;
 	}
 
+	public Hero(String p_class, String p_name, Artifact pWeaponArtifact, Artifact pArmorArtifact, Artifact pHelmArtifact) {
+		classType = p_class;
+		name = p_name;
+		level = 0;
+
+		weaponArtifact = pWeaponArtifact;
+		armorArtifact = pArmorArtifact;
+		helmArtifact = pHelmArtifact;
+	}
+
+	public Hero (int pId, String g_name, String g_class, int pLevel, int pXp, int pHp, int pAttack, int pDefense,
+			boolean pWeaponArtifact, int weaponArtifactStat,
+			boolean pArmorArtifact, int armorArtifactStat,
+			boolean pHelmArtifact, int helmArtifactStat) {
+
+		id = pId;
+		name = g_name;
+		classType = g_class;
+
+		level = pLevel;
+		experience = pXp;
+		
+		HP = pHp;
+		attack = pAttack;
+		defense = pDefense;
+
+		if (pWeaponArtifact) {
+			weaponArtifact = new Artifact(weaponArtifactStat, "Weapon");
+		}
+		if (pArmorArtifact) {
+			armorArtifact = new Artifact(armorArtifactStat, "Armor");
+		}
+		if (pHelmArtifact) {
+			helmArtifact = new Artifact(helmArtifactStat, "Helm");
+		}
+	}
+
 	public void addXP(int xp) {
 		System.out.println("XP received: " + xp);
 
@@ -79,6 +121,7 @@ public class Hero {
 			level++;
 			experience = 0;
 		}
+		sql.updateHero(this);
 	}
 
 
@@ -93,7 +136,11 @@ public class Hero {
 	/*
 	** Getters
 	*/
-	
+
+	public int getId() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -152,7 +199,9 @@ public class Hero {
 	** S E T T E R S
 	*/
 
-
+	public void setId(int num) {
+		id = num;
+	}
 	public void setPosX(int num) {
 		posX = num;
 	}
@@ -160,11 +209,12 @@ public class Hero {
 	public void setPosY(int num) {
 		posY = num;
 	}
-	
+
 	public void setWeaponArtifact(Artifact art) {
 
 		if (art.getType().equals("Weapon")) {
 			weaponArtifact = art;
+			sql.updateHero(this);
 		}
 	}
 
@@ -172,6 +222,7 @@ public class Hero {
 
 		if (art.getType().equals("Armor")) {
 			armorArtifact = art;
+			sql.updateHero(this);
 		}
 	}
 
@@ -179,6 +230,7 @@ public class Hero {
 
 		if (art.getType().equals("Helm")) {
 			helmArtifact = art;
+			sql.updateHero(this);
 		}
 	}
 
