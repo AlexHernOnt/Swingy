@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 17:13:51 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:04:08 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,20 @@ public class Hero {
 	** Methods
 	*/
 
-	public Hero(String p_class, String p_name) {
-		classType = p_class;
-		name = p_name;
+	public Hero(String Class, String name) {
+		this.classType = Class;
+		this.name = name;
 		level = 0;
 	}
 
-	public Hero(String p_class, String p_name, Artifact pWeaponArtifact, Artifact pArmorArtifact, Artifact pHelmArtifact) {
-		classType = p_class;
-		name = p_name;
+	public Hero(String Class, String name, Artifact WeaponArtifact, Artifact ArmorArtifact, Artifact HelmArtifact) {
+		this.classType = Class;
+		this.name = name;
 		level = 0;
 
-		weaponArtifact = pWeaponArtifact;
-		armorArtifact = pArmorArtifact;
-		helmArtifact = pHelmArtifact;
+		this.weaponArtifact = WeaponArtifact;
+		this.armorArtifact = ArmorArtifact;
+		this.helmArtifact = HelmArtifact;
 	}
 
 	public Hero (int pId, String g_name, String g_class, int pLevel, int pXp, int pHp, int pAttack, int pDefense,
@@ -81,25 +81,25 @@ public class Hero {
 			boolean pArmorArtifact, int armorArtifactStat,
 			boolean pHelmArtifact, int helmArtifactStat) {
 
-		id = pId;
-		name = g_name;
-		classType = g_class;
+		this.id = pId;
+		this.name = g_name;
+		this.classType = g_class;
 
-		level = pLevel;
-		experience = pXp;
+		this.level = pLevel;
+		this.experience = pXp;
 		
-		HP = pHp;
-		attack = pAttack;
-		defense = pDefense;
+		this.HP = pHp;
+		this.attack = pAttack;
+		this.defense = pDefense;
 
 		if (pWeaponArtifact) {
-			weaponArtifact = new Artifact(weaponArtifactStat, "Weapon");
+			this.weaponArtifact = new Artifact(weaponArtifactStat, "Weapon");
 		}
 		if (pArmorArtifact) {
-			armorArtifact = new Artifact(armorArtifactStat, "Armor");
+			this.armorArtifact = new Artifact(armorArtifactStat, "Armor");
 		}
 		if (pHelmArtifact) {
-			helmArtifact = new Artifact(helmArtifactStat, "Helm");
+			this.helmArtifact = new Artifact(helmArtifactStat, "Helm");
 		}
 	}
 
