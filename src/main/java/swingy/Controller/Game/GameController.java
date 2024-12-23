@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:41:33 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:54:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ public class GameController {
 	** M E T H O D S
 	*/
 
-	public GameController(Hero pH, boolean pGUI, MyFrame frame, boolean active, Controller pMainController) {
+	public GameController(Hero hero, boolean isGUI, MyFrame frame, boolean active, Controller mainController) {
 
 		// Initialize classes
 
-		model = new GameModel(pH);
-		view = new GameView(this, pGUI, frame, active, pH, model.getMap());
-		mainController = pMainController;
+		this.model = new GameModel(this, hero);
+		this.view = new GameView(this, isGUI, frame, active, hero, model.getMap());
+		this.mainController = mainController;
 
 		welcomeScreen();
 		// currentState = States.STARTGAME;
 	}
 
     public void welcomeScreen() {
-	
+
 		model.resetHeroInMap();
         view.welcomeScreen();
     }
@@ -89,6 +89,21 @@ public class GameController {
 
 
 
+
+
+
+
+	/*
+	** Connect with logic
+	*/
+
+	public void positionCheck() {
+		model.positionCheck();
+	}
+
+	public void runChancesResolve() {
+		model.runChancesResolve();
+	}
 
 
 

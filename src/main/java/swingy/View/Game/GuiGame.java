@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:35:26 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:56:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ public class GuiGame extends JFrame implements ActionListener {
     private GameController controller;
     private MyFrame frame;
 	private boolean active;
-	private GameMap ptr_map;
-	private Hero h;
+	
+	private GameMap map;
+	private Hero hero;
+	
 	private ToolsGUI toolsGui;
 
 	private JPanel panelOnTop;
@@ -84,16 +86,18 @@ public class GuiGame extends JFrame implements ActionListener {
     **  C O N S T R U C T O R 
     */
 	
-	public GuiGame(GameController pController, GameView pView, MyFrame pFrame, boolean pActive, Hero pHero, GameMap pMap) {
+	public GuiGame(GameController controller, GameView view, MyFrame frame, boolean active, Hero hero, GameMap map) {
 
 		// Assign Constructor Variables
 
-		view = pView;
-		controller = pController;
-		frame = pFrame;
-		active = pActive;
-		h = pHero;
-		ptr_map = pMap;
+		this.view = view;
+		this.controller = controller;
+		
+		this.frame = frame;
+		this.active = active;
+
+		this.hero = hero;
+		this.map = map;
 
 		toolsGui = new ToolsGUI();
 
@@ -185,7 +189,7 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(worldImg));
-		labelOnTop.setText("You are at X " + (h.getPosX() + 1) + " / " + (ptr_map.getSize() + 1) + ". And Y " + (h.getPosY() + 1) + " / " + (ptr_map.getSize() + 1) + ".");
+		labelOnTop.setText("You are at X " + (hero.getPosX() + 1) + " / " + (map.getSize() + 1) + ". And Y " + (hero.getPosY() + 1) + " / " + (map.getSize() + 1) + ".");
 		labelMiddle.setText("Which direction will you walk?");
 		
 		// Making Buttons
@@ -237,8 +241,8 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(enemyImg));
-		labelOnTop.setText("You face a terrible lvl " + ptr_map.enemy(h.getPosY(), h.getPosX()) + " creature before you.");
-		labelMiddle.setText("Do you want to face it? (You're level) " + h.getLevel() + ".");
+		labelOnTop.setText("You face a terrible lvl " + map.enemy(hero.getPosY(), hero.getPosX()) + " creature before you.");
+		labelMiddle.setText("Do you want to face it? (You're level) " + hero.getLevel() + ".");
 
 		// Making Buttons
 
@@ -282,14 +286,14 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 
-		if (fightAlgo(h) == true) {
+		if (fightAlgo(hero) == true) {
 
 			fightWon = true;
 			
 			// Making Text
 		
 			labelOnTop.setIcon(new ImageIcon(prizeImg));
-			labelOnTop.setText("Victory! Current XP " + h.getExperience() + " / " + h.formulaLevelUp() + "." );
+			labelOnTop.setText("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + "." );
 			labelMiddle.setText("You see your foe's desecreated body.");
 
 			// Making Buttons
@@ -336,17 +340,17 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	private boolean fightAlgo(Hero h) {
 
-		int lvlDif = h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX());
+		int lvlDif = hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX());
 				
 		if (rand.nextInt(5 + lvlDif) > 0 ||	// from 0 inclusive to 3 exclusive)
-			(h.getArmorArtifact() != null && rand.nextInt(2) > 0) ||
-			(h.getWeaponArtifact() != null && rand.nextInt(2) > 0) ||
-			(h.getHelmArtifact() != null && rand.nextInt(2) > 0)) {
-			if (h.getLevel() == 0) {
-				h.addXP(400 + (lvlDif * 30));
+			(hero.getArmorArtifact() != null && rand.nextInt(2) > 0) ||
+			(hero.getWeaponArtifact() != null && rand.nextInt(2) > 0) ||
+			(hero.getHelmArtifact() != null && rand.nextInt(2) > 0)) {
+			if (hero.getLevel() == 0) {
+				hero.addXP(400 + (lvlDif * 30));
 			}
 			else {
-				h.addXP(h.getLevel() * 400 + (lvlDif * 30));
+				hero.addXP(hero.getLevel() * 400 + (lvlDif * 30));
 			}
 			return true;
 		}
@@ -398,7 +402,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 			rnd = rand.nextInt(3);
 			
-			statChanged = (h.getLevel() - (h.getLevel() - ptr_map.enemy(h.getPosY(), h.getPosX()))) + 1;
+			statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
 			statChanged = statChanged < 1 ? 1 : statChanged;
 			
 			labelOnTop.setIcon(new ImageIcon(prizeImg));
@@ -407,8 +411,8 @@ public class GuiGame extends JFrame implements ActionListener {
 				case 0:
 					artifactType = "Weapon";
 					labelOnTop.setText("You found a Weapon. Level " + statChanged + ".");
-					if (h.getWeaponArtifact() != null) {
-						labelMiddle.setText("You have a Weapon level " + h.getWeaponArtifact().getStat() + ". ");
+					if (hero.getWeaponArtifact() != null) {
+						labelMiddle.setText("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ". ");
 					}
 					else {
 						labelMiddle.setText("You don't have an Artifact of this type.");
@@ -417,8 +421,8 @@ public class GuiGame extends JFrame implements ActionListener {
 				case 1:
 					artifactType = "Armor";
 					labelOnTop.setText("You found a Armour. Level " + statChanged + ".");
-					if (h.getArmorArtifact() != null) {
-						labelMiddle.setText("You have an Armour level " + h.getArmorArtifact().getStat() + ". ");
+					if (hero.getArmorArtifact() != null) {
+						labelMiddle.setText("You have an Armour level " + hero.getArmorArtifact().getStat() + ". ");
 					}
 					else {
 						labelMiddle.setText("You don't have an Artifact of this type.");
@@ -427,8 +431,8 @@ public class GuiGame extends JFrame implements ActionListener {
 				case 2:
 					artifactType = "Helm";
 					labelOnTop.setText("You found a Helm. Level " + statChanged + ".");
-					if (h.getHelmArtifact() != null) {
-						labelMiddle.setText("You have a Helm level " + h.getHelmArtifact().getStat() + ". ");
+					if (hero.getHelmArtifact() != null) {
+						labelMiddle.setText("You have a Helm level " + hero.getHelmArtifact().getStat() + ". ");
 					}
 					else {
 						labelMiddle.setText("You don't have an Artifact of this type.");
@@ -482,8 +486,8 @@ public class GuiGame extends JFrame implements ActionListener {
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(winImg));
-		labelOnTop.setText("You have reached the end of level " + h.getLevel() + ".");
-		labelMiddle.setText("Will you continue to level " + (h.getLevel() + 1) + "?");
+		labelOnTop.setText("You have reached the end of level " + hero.getLevel() + ".");
+		labelMiddle.setText("Will you continue to level " + (hero.getLevel() + 1) + "?");
 
 		// Making Buttons
 
@@ -523,47 +527,63 @@ public class GuiGame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// Walk
+		/*
+		**	welcomeScreen()
+		*/
+
 		if (e.getSource() == comenzarButton) {
 			controller.walk();
-			positionCheck();
+			controller.positionCheck();
 		}
 
-		// Directions
-		
+
+
+
+
+		/*
+		**	walk()
+		*/
+
 		else if (e.getSource() == NorthButton) {
-			h.goNorth();
-			positionCheck();
+			hero.goNorth();
+			controller.positionCheck();
 		}
 		else if (e.getSource() == EastButton) {
-			h.goEast();
-			positionCheck();
+			hero.goEast();
+			controller.positionCheck();
 		}
 		else if (e.getSource() == SouthButton) {
-			h.goSouth();
-			positionCheck();
+			hero.goSouth();
+			controller.positionCheck();
 		}
 		else if (e.getSource() == WestButton) {
-			h.goWest();
-			positionCheck();
+			hero.goWest();
+			controller.positionCheck();
 		}
 
-		// Confrontation
+
+
+
+
+		/*
+		**	confrontation()
+		*/
 
 		else if (e.getSource() == FightButton) {
 			controller.fight();
 		}
 		else if (e.getSource() == RunButton) {
-			
-			if (rand.nextInt(2) == 1) { // from 0 includive to 2 exclusive)
-				controller.fight();
-			} else {
-				controller.walk();
-			}
+			controller.runChancesResolve();
 		}
 
-		// Fight
-		
+
+
+
+
+		/*
+		**	fight()
+		*/
+
 		else if (e.getSource() == FightResult) {
 			if (fightWon == true) {
 				controller.looting();
@@ -573,19 +593,25 @@ public class GuiGame extends JFrame implements ActionListener {
 			}
 		}
 
-		// Looting
+
+
+
+
+		/*
+		**	looting()
+		*/
 
 		else if (e.getSource() == TakeItButton) {
 
 			switch (artifactType) {
 				case "Weapon":
-					h.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
+					hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
 					break;
 				case "Armor":
-					h.setArmorArtifact(new Artifact(statChanged, "Armor"));
+					hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
 					break;
 				case "Helm":
-					h.setHelmArtifact(new Artifact(statChanged, "Helm"));
+					hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
 					break;
 				}
 			controller.walk();
@@ -594,7 +620,13 @@ public class GuiGame extends JFrame implements ActionListener {
 			controller.walk();
 		}
 
-		// Win
+
+
+
+
+		/*
+		**	win()
+		*/
 
 		else if (e.getSource() == NextLevelButton) {
 			controller.welcomeScreen();
@@ -626,19 +658,6 @@ public class GuiGame extends JFrame implements ActionListener {
 		// controller.StateSwitcher();
 	}
 
-	private void positionCheck() {
-		
-		System.out.println("Y: " + h.getPosY() + " _ X: " + h.getPosX());
-
-		if (ptr_map.offLimits(h.getPosY(), h.getPosX())) {
-			controller.win();
-		} else if (ptr_map.enemy(h.getPosY(), h.getPosX()) >= 0) {
-			controller.confrontation();
-		} else {
-			controller.walk();
-		}
-	}
-
 
 
 
@@ -666,6 +685,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 	public void setFrame(MyFrame newFrame) {
 		frame = newFrame;
+		frame.setController(controller);
 	}
 
 	public boolean getGUI() {

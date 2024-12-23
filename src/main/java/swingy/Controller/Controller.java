@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:42:55 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:01:27 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ public class Controller {
 	** M E T H O D S
 	*/
 
-	public Controller(String pGUI) {
+	public Controller(String GUI) {
 
 		// Initialize classes
 
-		view = new View(this, pGUI.equals("gui") ? true : false);
+		view = new View(this, GUI.equals("gui") ? true : false);
 		model = new Model();
 		
 		currentState = States.STARTGAME;
@@ -70,11 +70,11 @@ public class Controller {
 
 
 	/*
-	**  Create hero before starting game
+	**  Communicate with model to create hero before starting game
 	*/
 
-	public Hero createHeroController(String g_class, String g_name) {
-		return model.ctNewHero(g_class, g_name);
+	public Hero createHeroController(String Class, String name) {
+		return model.ctNewHero(Class, name);
 	}
 
 	public void saveHero(Hero pHero) {

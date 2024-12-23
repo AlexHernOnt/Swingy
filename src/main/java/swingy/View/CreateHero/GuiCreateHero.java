@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:50:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:48:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
     private View view;
     private Controller controller;
+
     private MyFrame frame;
 	private boolean active;
 	private ToolsGUI toolsGui;
@@ -169,7 +170,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
     /*
-    **  C O N T I N U E
+    **  L A O D     S A V E
     */
 
 	JButton GoBack;
@@ -225,7 +226,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
 	/*
-	**  H E R O ' S     N A M E
+	**  S E T    H E R O     N A M E
 	*/
 
 	JButton nameHeroButton;
@@ -272,7 +273,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
 	/*
-	**  S E T     H E R O ' S     C L A S S
+	**  S E T     H E R O     C L A S S
 	*/
 
 	JButton ClassWarriorButton;
@@ -332,7 +333,9 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// Start
+		/*
+		**	tartGame()
+		*/
 
 		if (e.getSource() == ContinueButton) {
 			controller.loadSave();
@@ -344,13 +347,13 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 
-		// Continue Game
-		
-		else if (e.getSource() == GoBack) {
-			controller.startGame();
-		}
 
-		// Continue. Choose file
+
+
+
+		/*
+		**	loadSave()
+		*/
 
 		else if (e.getSource() == saveFile1) {
 			controller.saveHero(sql.createHeroObjFromEntry(1));
@@ -363,9 +366,17 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		} else if (e.getSource() == saveFile3) {
 			controller.saveHero(sql.createHeroObjFromEntry(3));
 			controller.goToGame();
+		} else if (e.getSource() == GoBack) {
+			controller.startGame();
 		}
 
-		// Set name
+
+
+
+
+		/*
+		**	SetHeroName()
+		*/
 
 		else if (e.getSource() == nameHeroButton) {
 			
@@ -378,7 +389,13 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 			}
 		}
 
-		// Set class
+
+
+
+
+		/*
+		**	SetHeroClass()
+		*/
 
 		else if (e.getSource() == ClassWarriorButton) {
 			view.heroClass = "Warrior";
@@ -411,6 +428,14 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	}
 
 
+
+
+
+
+
+
+
+
 	/*
 	** Getters
 	*/
@@ -429,15 +454,18 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 	public void setFrame(MyFrame newFrame) {
 		frame = newFrame;
+		frame.setController(controller);
 	}
 
 	public boolean getGUI() {
 		return view.GUI;
 	}
 
-	/*
-	**	Panel Getters
-	*/
+
+
+
+
+	// 	Panel Getters
 
 	public JPanel getPanelOnTop() {
 		return panelOnTop;

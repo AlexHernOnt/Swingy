@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:52:57 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 15:44:39 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:38:53 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ public class ToolsGUI {
 	}
 
 	public void reOpenWindow(GuiGame gui) {
-		if (gui.getGUI() == true &&  gui.getActive() == false) {
+		if (gui.getGUI() == true && gui.getActive() == false) {
 			System.out.println("Opening Window Again");
 			gui.setActive(true);
 			gui.setFrame(new MyFrame());

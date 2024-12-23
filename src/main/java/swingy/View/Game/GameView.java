@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:41:02 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:23:58 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,25 @@ public class GameView {
 	**	V A R I A B L E S
 	*/
 
-    private GameController controller;
-	protected boolean GUI;
-	private GuiGame GuiG;
+    public GameController controller;
+	public boolean GUI;
+	public GuiGame GuiG;
 	private TmlGame TmlG;
 	private Hero hero;
 	private GameMap map;
 
 
-	public GameView(GameController _controller, boolean pGUI, MyFrame pFrame, boolean pActive, Hero pHero, GameMap pMap) {
+	public GameView(GameController controller, boolean GUI, MyFrame frame, boolean active, Hero hero, GameMap map) {
 
 		// Constructor Variables
 
-		controller = _controller;
-		GUI = pGUI;
+		this.controller = controller;
+		this.GUI = GUI;
 
 		// Initialization
 
-		GuiG = new GuiGame(controller, this, pFrame, pActive, pHero, pMap);
-		TmlG = new TmlGame(controller, this, pHero, pMap);
+		GuiG = new GuiGame(controller, this, frame, active, hero, map);
+		TmlG = new TmlGame(controller, this, hero, map);
 	}
 
 
@@ -149,5 +149,9 @@ public class GameView {
 
 	public boolean getGUI() {
 		return GUI;
+	}
+
+	public GameController getController() {
+		return controller;
 	}
 }

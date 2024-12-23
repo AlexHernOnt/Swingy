@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/11/03 16:45:17 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:01:58 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ public class Archer extends Hero{
     ** Methods
     */
 
-    Archer(String p_class, String p_name)
+    Archer(String Class, String name)
     {
-        super(p_class, p_name);
+        super(Class, name);
         attack = 7;
         defense = 3;
         HP = 10;

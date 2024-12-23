@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/20 15:32:40 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:39:46 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ public class View {
 	** Variables
 	*/
 
-	private GuiCreateHero Gui;
 	public Controller controller;
-
-	private Scanner scanner = new Scanner(System.in);
-
+	private GuiCreateHero Gui;
+	private Scanner scanner;
 	protected boolean GUI = true;
 
 
@@ -42,29 +40,23 @@ public class View {
 
 
 	/*
-	** Methods
+	**	Methods
 	*/
 
-	public View(Controller pController, boolean pGUI) {
+	public View(Controller controller, boolean GUI) {
 
 		// Assign Constructor Variables
 
-		controller = pController;
-		GUI = pGUI;
+		this.controller = controller;
+		this.GUI = GUI;
 
 		// Initialize variables
 
-		Gui = new GuiCreateHero(pController, this);
+		Gui = new GuiCreateHero(controller, this);
+		scanner = new Scanner(System.in);
 	}
 
-	public void cleanScreen() {
-		int i = 99;
 
-		while (i < 100) {
-			System.out.println("\n");
-			++i;
-		}
-	}
 
 
 
@@ -107,17 +99,13 @@ public class View {
 			Gui.startGame();
 		}
 		else {
-			printStartGame();
+			cleanScreen();
+			System.out.println("Welcome to Swingy");
 
 			do {
 				str = promptForSelectHero();
 			} while (!selectHeroOk(str));
 		}
-	}
-
-	public void printStartGame() {
-		cleanScreen();
-		System.out.println("Welcome to Swingy");
 	}
 
 	private boolean selectHeroOk(String str) {
@@ -174,7 +162,14 @@ public class View {
 			do {
 				heroName = promptForName();
 			} while (!nameOK(heroName));
-			printName(heroName);
+
+			// Print for name
+
+			cleanScreen();
+			if (!heroName.equals("gui")) {
+				System.out.println("The hero's name is '" + heroName + "'");
+				viewSetHeroClass();
+			}
 		}
 	}
 
@@ -182,12 +177,17 @@ public class View {
 		cleanScreen();
 		switch (str) {
 			case "gui":
+			{
 				GUI = true;
 				Gui.SetHeroName();
 				return true;
+			}
 			case "":
-				printErrorName();
+			{
+				cleanScreen();
+				System.out.println("Please, input a name.");
 				return false;
+			}
 			default:
 				return true;
 		}
@@ -197,19 +197,6 @@ public class View {
 		System.out.println("Write your hero's name:");
 		String str = scanner.nextLine();
 		return str;
-	}
-
-	public void printName(String str) {
-		cleanScreen();
-		if (!str.equals("gui")) {
-			System.out.println("The hero's name is '" + str + "'");
-			viewSetHeroClass();
-		}
-	}
-
-	public void printErrorName() {
-		cleanScreen();
-		System.out.println("Please, input a name.");
 	}
 
 
@@ -262,33 +249,33 @@ public class View {
 			return true;
 		}
 		else if (!str.isEmpty()) {
-			printErrorClass();
+			cleanScreen();
+			System.out.println("Please, input a valid class name.");
 		}
 		cleanScreen();
 		return (false);
 	}
 
+
+
+
+
+
+
+	/*
+	** Print and end
+	*/
+
 	private void printClass(String str) {
 		cleanScreen();
 		if (!str.equals("gui")) {
-			System.out.println("The hero's class is '" + str + "'");
-			
-			// Create new hero in the model
-
-			printHeroData(controller.createHeroController(heroClass, heroName));
+			cleanScreen();
+			System.out.println("Here's your hero's stats: \n");
+			System.out.println(controller.createHeroController(heroClass, heroName));
+			controller.goToGame();
 		}
 	}
 
-	private void printErrorClass() {
-		cleanScreen();
-		System.out.println("Please, input a valid class name.");
-	}
-
-	public void printHeroData(Hero h) {
-		cleanScreen();
-		System.out.println("Here's your hero's stats: \n");
-		System.out.println(h);
-	}
 
 
 
@@ -306,7 +293,15 @@ public class View {
 	public void closeWindows() 	{
 		Gui.closeWindow();
 	}
+	
+	public void cleanScreen() {
+		int i = 0;
 
+		while (i < 100) {
+			System.out.println("\n");
+			++i;
+		}
+	}
 
 
 
