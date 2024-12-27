@@ -22,6 +22,8 @@ import View.MyFrame;
 import Controller.GameController;
 import Model.GameMap;
 import Hero.Hero;
+import Hero.Artifact;
+import java.util.Random;
 import Model.GameMap;
 
 public class TmlGame {
@@ -94,10 +96,8 @@ public class TmlGame {
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
 				view.GuiG.welcomeScreen();
-				break;
 			} else if (userInput.equalsIgnoreCase("start")) {
 				walk();
-				break;
 			}
 		} while (true);
 	}
@@ -133,23 +133,18 @@ public class TmlGame {
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
 				view.GuiG.walk();
-				break;
 			} else if (userInput.equalsIgnoreCase("North")) {
 				hero.goNorth();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("East")) {
 				hero.goEast();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("South")) {
 				hero.goSouth();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("West")) {
 				hero.goWest();
 				view.getController().positionCheck();
-				break;
 			}
 		} while (true);
 	}
@@ -182,12 +177,11 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-				view.GuiG.walk();
-				break;
+				view.GuiG.confrontation();
 			} else if (userInput.equalsIgnoreCase("Yes")) {
-				break;
+				controller.fight();
 			} else if (userInput.equalsIgnoreCase("No")) {
-				break;
+				controller.runChancesResolve();
 			}
 		} while (true);
 	}
@@ -201,31 +195,179 @@ public class TmlGame {
 
 
 
+
     /*
     **  F I G H T
     */
+	
+    public void fight() {
 
-	public void fight() {
+		cleanScreen();
 
-		// Text Prompt for name
+		String userInput;
 
-		// JLabel labelOnToprint = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClass() + ".");
-		// JLabel labelOnToprint2 = new JLabel("Welcome to the world, you come out of your house looking for an adventure!.");
+		if (controller.fightAlgo() == true) {
+		
+			System.out.println("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + "." );
+			System.out.println("You see your foe's desecreated body: \n- Loot it");
+			userInput = scanner.nextLine().trim();
+
+			cleanScreen();
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.GuiG.fight();
+			} else if (userInput.equalsIgnoreCase("Loot it")) {
+				controller.looting();
+			}
+		} else {
+
+			System.out.println("You gave all you had in the fight, however you failed");
+			System.out.println("You know this is the last second of your life: \n -Bye");
+			userInput = scanner.nextLine().trim();
+			
+			cleanScreen();
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.GuiG.fight();
+			} else if (userInput.equalsIgnoreCase("Bye")) {
+				controller.goStart();
+			}
+		}
 	}
+
+	Random rand = new Random();
 
 	public void looting() {
 
-		// Text Prompt for name
+		int rnd = rand.nextInt(3);
+			
+		int statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
+		statChanged = statChanged < 1 ? 1 : statChanged;
 
-		// JLabel labelOnToprint = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClass() + ".");
-		// JLabel labelOnToprint2 = new JLabel("Welcome to the world, you come out of your house looking for an adventure!.");
+		cleanScreen();
+
+		String userInput;
+
+		rnd = rand.nextInt(3);
+		if (rnd == 1) { // 30 % 
+		
+			System.out.println("You only found blood and skin: \n-Move on");
+
+			userInput = scanner.nextLine().trim();
+
+			cleanScreen();
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.GuiG.looting();
+			} else if (userInput.equalsIgnoreCase("Move on")) {
+				controller.walk();
+			}
+		} else {
+
+			rnd = rand.nextInt(3);
+			
+			statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
+			statChanged = statChanged < 1 ? 1 : statChanged;
+
+			switch (rnd) {
+				case 0:
+				{
+					userInput = scanner.nextLine().trim();
+
+					System.out.println("You found a Weapon. Level " + statChanged + ".");
+					if (hero.getWeaponArtifact() != null) {
+						System.out.println("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ".\n-Take it\n-Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n-Take it\n-Leave it");
+					}
+					
+					cleanScreen();
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.GuiG.looting();
+					} else if (userInput.equalsIgnoreCase("Take it")) {
+						hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
+						controller.walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						controller.goStart();
+					}
+					break;
+				}
+				case 1:
+				{
+					userInput = scanner.nextLine().trim();
+
+					System.out.println("You found a Armor. Level " + statChanged + ".");
+					if (hero.getArmorArtifact() != null) {
+						System.out.println("You have a Armor level " + hero.getArmorArtifact().getStat() + ".\n-Take it\n-Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n-Take it\n-Leave it");
+					}
+					
+					cleanScreen();
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.GuiG.looting();
+					} else if (userInput.equalsIgnoreCase("Take it")) {
+						hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
+						controller.walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						controller.goStart();
+					}
+					break;
+				}
+				case 2:
+				{
+					userInput = scanner.nextLine().trim();
+
+					System.out.println("You found a Helm. Level " + statChanged + ".");
+					if (hero.getHelmArtifact() != null) {
+						System.out.println("You have a Helm level " + hero.getHelmArtifact().getStat() + ".\n-Take it\n-Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n-Take it\n-Leave it");
+					}
+					
+					cleanScreen();
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.GuiG.looting();
+					} else if (userInput.equalsIgnoreCase("Take it")) {
+						hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
+						controller.walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						controller.goStart();
+					}
+					break;
+				}
+			}
+		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void win() {
 
 		// Text Prompt for name
 
-		// JLabel labelOnToprint = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClass() + ".");
+		// JLabel labelOnToprintmvn = new JLabel("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClass() + ".");
 		// JLabel labelOnToprint2 = new JLabel("Welcome to the world, you come out of your house looking for an adventure!.");
 	}
 

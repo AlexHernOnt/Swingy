@@ -286,7 +286,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 
-		if (fightAlgo(hero) == true) {
+		if (controller.fightAlgo() == true) {
 
 			fightWon = true;
 			
@@ -331,31 +331,6 @@ public class GuiGame extends JFrame implements ActionListener {
 		frame.setVisible(true);
 	}
 
-	/*
-	**	Algo Logic:
-	**	0, 1, 2 -> (66%)
-	**	+ 1 ?   -> (75%)
-	**	- 1 ?   -> (50%)  
-	*/
-
-	private boolean fightAlgo(Hero h) {
-
-		int lvlDif = hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX());
-				
-		if (rand.nextInt(5 + lvlDif) > 0 ||	// from 0 inclusive to 3 exclusive)
-			(hero.getArmorArtifact() != null && rand.nextInt(2) > 0) ||
-			(hero.getWeaponArtifact() != null && rand.nextInt(2) > 0) ||
-			(hero.getHelmArtifact() != null && rand.nextInt(2) > 0)) {
-			if (hero.getLevel() == 0) {
-				hero.addXP(400 + (lvlDif * 30));
-			}
-			else {
-				hero.addXP(hero.getLevel() * 400 + (lvlDif * 30));
-			}
-			return true;
-		}
-		return false;
-	}
 
 
 

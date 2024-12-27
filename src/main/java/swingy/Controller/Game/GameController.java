@@ -105,6 +105,10 @@ public class GameController {
 		model.runChancesResolve();
 	}
 
+	public boolean  fightAlgo() {
+		return model.fightAlgo();
+	}
+
 
 
 

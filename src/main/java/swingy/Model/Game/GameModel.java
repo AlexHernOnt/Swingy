@@ -85,10 +85,20 @@ public class GameModel {
 		} else {
 			Controller.walk();
 		}
-	}	
+	}
 
 
 
+
+
+
+
+
+
+
+	/*
+	**	Flight or fight
+	*/
 
 	public void runChancesResolve() {
 
@@ -97,5 +107,44 @@ public class GameModel {
 		} else {
 			Controller.walk();
 		}
+	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**	Actually who wins the fight
+	*/
+
+	/*
+	**	Algo Logic:
+	**	0, 1, 2 -> (66%)
+	**	+ 1 ?   -> (75%)
+	**	- 1 ?   -> (50%)  
+	*/
+
+	public boolean fightAlgo() {
+
+		int lvlDif = hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX());
+				
+		if (rand.nextInt(5 + lvlDif) > 0 ||	// from 0 inclusive to 3 exclusive)
+			(hero.getArmorArtifact() != null && rand.nextInt(2) > 0) ||
+			(hero.getWeaponArtifact() != null && rand.nextInt(2) > 0) ||
+			(hero.getHelmArtifact() != null && rand.nextInt(2) > 0)) {
+			if (hero.getLevel() == 0) {
+				hero.addXP(400 + (lvlDif * 30));
+			}
+			else {
+				hero.addXP(hero.getLevel() * 400 + (lvlDif * 30));
+			}
+			return true;
+		}
+		return false;
 	}
 }
