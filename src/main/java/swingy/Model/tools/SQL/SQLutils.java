@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/22 20:51:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:53:16 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ public class SQLutils {
 			conn = DriverManager.getConnection(DATABASE_URL);
 			System.out.println("Database connected or created successfully!");
 		} catch (ClassNotFoundException e) {
-			System.out.println("SQLite JDBC driver not found: " + e.getMessage());
+			throw new IllegalStateException("SQLite JDBC driver not found.");
 		} catch (SQLException e) {
-			System.out.println("Error while connecting or creating the database: " + e.getMessage());
+			throw new IllegalStateException("Error while connecting or creating the database: " + e.getMessage());
 		}
 	}
 

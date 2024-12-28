@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 19:04:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:27:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ public class Hero {
 
 	public void setWeaponArtifact(Artifact art) {
 
-		if (art.getType().equals("Weapon")) {
+		if (art.getType().equalsIgnoreCase("Weapon")) {
 			weaponArtifact = art;
 			sql.updateHero(this);
 		}
@@ -220,7 +220,7 @@ public class Hero {
 
 	public void setArmorArtifact(Artifact art) {
 
-		if (art.getType().equals("Armor")) {
+		if (art.getType().equalsIgnoreCase("Armor")) {
 			armorArtifact = art;
 			sql.updateHero(this);
 		}
@@ -228,7 +228,7 @@ public class Hero {
 
 	public void setHelmArtifact(Artifact art) {
 
-		if (art.getType().equals("Helm")) {
+		if (art.getType().equalsIgnoreCase("Helm")) {
 			helmArtifact = art;
 			sql.updateHero(this);
 		}

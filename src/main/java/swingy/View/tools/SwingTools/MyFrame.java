@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:15:43 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/12 15:20:10 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:52:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ public class MyFrame extends JFrame {
 	public String COLOR = "#69614c";
 	public Controller controller;
 	public GameController GController;
-	
+	private boolean modeGame;
+
     public MyFrame()
     {
 		// Window Settings
@@ -50,23 +51,19 @@ public class MyFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-				controller.StateSwitcher();
+
+				if (modeGame) {
+					GController.StateSwitcher();
+				} else {
+					controller.StateSwitcher();
+				}
             }
         });
     }
 
-	public void CrazyIdea() {
-		addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-				GController.StateSwitcher();
-            }
-        });
-	}
-
 	/*
-	 * setters
-	 */
+	** setters
+	*/
 
 	public void setController(Controller p_controller) {
 		controller = p_controller;
@@ -74,5 +71,9 @@ public class MyFrame extends JFrame {
 
 	public void setController(GameController p_controller) {
 		GController = p_controller;
+	}
+
+	public void turnGameModeOn() {
+		modeGame = true;
 	}
 } 

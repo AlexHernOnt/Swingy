@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 18:54:55 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:41:47 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ public class GameController {
 	private Controller mainController;
 	public StatesGame currentState;
 
+	private boolean fightResult;
+
 
 
 
@@ -52,40 +54,44 @@ public class GameController {
 		this.mainController = mainController;
 
 		welcomeScreen();
-		// currentState = States.STARTGAME;
+		currentState = StatesGame.WELCOMESCREEN;
+	}
+
+	public void goStart() {
+		mainController.startGame();
 	}
 
     public void welcomeScreen() {
-
+		currentState = StatesGame.WELCOMESCREEN;
+		
 		model.resetHeroInMap();
         view.welcomeScreen();
     }
 
 	public void walk() {
+		currentState = StatesGame.WALK;
 		view.walk();
 	}
 
-	public void win() {
-		view.win();
-	}
-
 	public void confrontation() {
+		currentState = StatesGame.CONFRONTATION;
 		view.confrontation();
 	}
 
 	public void fight() {
+		currentState = StatesGame.FIGHT;
 		view.fight();
 	}
 
 	public void looting() {
+		currentState = StatesGame.LOOTING;
 		view.looting();
 	}
 	
-	public void goStart() {
-		mainController.startGame();
+	public void win() {
+		currentState = StatesGame.WIN;
+		view.win();
 	}
-
-
 
 
 
@@ -120,11 +126,15 @@ public class GameController {
 		return model.getHero();
 	}
 
+	public boolean getFightResult() {
+		return fightResult;
+	}
 
 
 
 
 
+	
 
 
 
@@ -135,31 +145,27 @@ public class GameController {
 
 	public void StateSwitcher() {
 
-		System.out.println("INCREDIBLE WORK !");
-		// view.closeWindows();
-		// switch (currentState) {
-		// 	case STARTGAME:
-		// 		startGame();
-		// 		break;
-		// 	case SETHERONAME:
-		// 		setHeroName();
-		// 		break;
-		// 	case SETHEROCLASS:
-		// 		setHeroClass();
-		// 		break;
-		// }
+		view.closeWindows();
+
+		switch (currentState) {
+			case WELCOMESCREEN:
+				welcomeScreen();
+				break;
+			case WALK:
+				walk();
+				break;
+			case CONFRONTATION:
+				confrontation();
+				break;
+			case FIGHT:
+				fight();
+				break;
+			case LOOTING:
+				looting();
+				break;
+			case WIN:
+				win();
+				break;
+		}
 	}
-
-
-
-
-
-
-
-
-
-
-	/*
-	** Setters
-	*/
 }

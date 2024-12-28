@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 15:48:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:10:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,7 +424,6 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		active = false;
 		frame.dispose();
 		frame = null;
-		// controller.StateSwitcher();
 	}
 
 

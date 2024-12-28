@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 17:39:46 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:26:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,49 +91,40 @@ public class View {
 	**  Select Hero And Present Game
 	*/
 
-	public void startGame() {
-
-		String str;
+    public void startGame() {
 
 		if (GUI) {
 			Gui.startGame();
 		}
 		else {
+
 			cleanScreen();
-			System.out.println("Welcome to Swingy");
 
+			System.out.println("Welcome to Swingy!");
+		
+			String userInput;
+			
 			do {
-				str = promptForSelectHero();
-			} while (!selectHeroOk(str));
+
+				System.out.println("Choose an option:\n- Continue\n- New Game");
+				userInput = scanner.nextLine().trim();
+		
+				cleanScreen();
+		
+				if (userInput.equalsIgnoreCase("gui")) {
+					GUI = true;
+					Gui.startGame();
+					break;
+				} else if (userInput.equalsIgnoreCase("Continue")) {
+					viewSetHeroName();
+					break;
+				} else if (userInput.equalsIgnoreCase("New Game")) {
+					viewSetHeroName();
+					break;
+				}
+			} while (true);
 		}
 	}
-
-	private boolean selectHeroOk(String str) {
-		cleanScreen();
-		switch (str) {
-			case "gui":
-				GUI = true;
-				Gui.startGame();
-				return true;
-			case "Continue":
-				viewSetHeroName();
-				return true;
-			case "New Game":
-				viewSetHeroName();
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	public String promptForSelectHero() {
-		System.out.println("Choose an option:\n- Continue\n- New Game");
-		String str = scanner.nextLine();
-		return str;
-	}
-
-
-
 
 
 
@@ -149,8 +140,6 @@ public class View {
 	public String heroName;
 
 	public void viewSetHeroName() {
-
-		controller.currentState = States.SETHERONAME;
 
 		if (GUI) {
 			Gui.SetHeroName();
@@ -215,10 +204,6 @@ public class View {
 	public String heroClass;
 
 	public void	viewSetHeroClass() {
-
-		controller.currentState = States.SETHEROCLASS;
-
-		// Prompt for hero class until a valid one is provided
 
 		if (GUI) {
 			Gui.SetHeroClass();

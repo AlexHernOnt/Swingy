@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 18:56:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:43:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ public class GuiGame extends JFrame implements ActionListener {
 		panelMiddle.setBounds(0, 500, 1600, 100);
 		panelBottom.setBounds(0, 700, 1600, 300);
 
+		if (frame != null)
+			this.frame.turnGameModeOn();
 	}
 
 
@@ -185,7 +187,7 @@ public class GuiGame extends JFrame implements ActionListener {
     public void walk() {
 
 		toolsGui.reOpenWindow(this);
-		
+
 		// Making Text
 
 		labelOnTop.setIcon(new ImageIcon(worldImg));
@@ -286,7 +288,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 
-		if (controller.fightAlgo() == true) {
+		if (controller.getFightResult()) {
 
 			fightWon = true;
 			
@@ -416,7 +418,7 @@ public class GuiGame extends JFrame implements ActionListener {
 			}
 
 			// Making Buttons
-	
+
 			TakeItButton = toolsGui.confButton(TakeItButton, "Take it", 550, 0, this);
 			LeaveItButton = toolsGui.confButton(LeaveItButton, "Leave it", 850, 0, this);
 
@@ -448,13 +450,13 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 	/*
-    **  W I N
-    */
+	**  W I N
+	*/
 
 	JButton NextLevelButton;
 	JButton MainMenuButton;
 
-    public void win() {
+	public void win() {
 
 		toolsGui.reOpenWindow(this);
 		
@@ -495,9 +497,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    ** E V E N T     L I S T E N E R
-    */
+	/*
+	** E V E N T     L I S T E N E R
+	*/
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -545,6 +547,7 @@ public class GuiGame extends JFrame implements ActionListener {
 		*/
 
 		else if (e.getSource() == FightButton) {
+			controller.fightAlgo();
 			controller.fight();
 		}
 		else if (e.getSource() == RunButton) {
@@ -620,9 +623,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    ** W I N D O W     M A N A G M E N T
-    */
+	/*
+	** W I N D O W     M A N A G M E N T
+	*/
 
 
 	protected void closeWindow() {

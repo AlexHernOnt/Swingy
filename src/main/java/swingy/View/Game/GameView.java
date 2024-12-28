@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:51:52 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 18:23:58 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:37:37 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.GameController;
+import Controller.StatesGame;
 import Model.GameMap;
 import View.MyFrame;
 import View.TmlGame;
@@ -63,7 +64,7 @@ public class GameView {
 	*/
 	
 	public void welcomeScreen() {
-		
+
 		if (GUI) {
 			GuiG.welcomeScreen();
 		}
@@ -82,18 +83,8 @@ public class GameView {
 		}
 	}
 
-	public void win() {
-		
-		if (GUI) {
-			GuiG.win();
-		}
-		else {
-			TmlG.win();
-		}
-	}
-
 	public void confrontation() {
-		
+
 		if (GUI) {
 			GuiG.confrontation();
 		}
@@ -103,7 +94,7 @@ public class GameView {
 	}
 
 	public void fight() {
-		
+
 		if (GUI) {
 			GuiG.fight();
 		}
@@ -119,6 +110,16 @@ public class GameView {
 		}
 		else {
 			TmlG.looting();
+		}
+	}
+
+	public void win() {
+		
+		if (GUI) {
+			GuiG.win();
+		}
+		else {
+			TmlG.win();
 		}
 	}
 
