@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 17:10:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:25:58 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import Hero.Hero;
+
+import Model.SQLutils;
+
 import View.View;
 import View.ToolsGUI;
 import View.MyFrame;
@@ -41,7 +44,6 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
-import Model.SQLutils;
 
 
 public class GuiCreateHero extends JFrame implements ActionListener {
@@ -103,7 +105,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		toolsGui.confLabel(labelOnTop, null);
 		toolsGui.confLabel(labelMiddle, null);
 
-		panelOnTop.setBounds(0, 100, 1600, 500);
+		panelOnTop.setBounds(0, 100, 1600, 300);
 		panelMiddle.setBounds(0, 500, 1600, 100);
 		panelBottom.setBounds(0, 700, 1600, 300);
 	}
@@ -309,7 +311,6 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		panelBottom.add(ClassKnightButton);
 		panelBottom.add(ClassArcherButton);
 
-
 		// Adding to frames
 
 		frame.add(panelOnTop);
@@ -452,8 +453,15 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	}
 
 	public void setFrame(MyFrame newFrame) {
+		
+		if (frame != null) {
+			frame.dispose();
+			frame = null;
+		}
+
 		frame = newFrame;
 		frame.setController(controller);
+		frame.turnGameModeOff();
 	}
 
 	public boolean getGUI() {

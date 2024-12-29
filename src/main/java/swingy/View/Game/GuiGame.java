@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 18:43:40 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:02:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ import java.awt.Image;
 public class GuiGame extends JFrame implements ActionListener {
 
 	/*
-    **	V A R I A B L E S
+	**	V A R I A B L E S
 	*/
 
 	private Random rand = new Random();
@@ -82,9 +82,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  C O N S T R U C T O R 
-    */
+	/*
+	**	C O N S T R U C T O R 
+	*/
 	
 	public GuiGame(GameController controller, GameView view, MyFrame frame, boolean active, Hero hero, GameMap map) {
 
@@ -115,8 +115,10 @@ public class GuiGame extends JFrame implements ActionListener {
 		panelMiddle.setBounds(0, 500, 1600, 100);
 		panelBottom.setBounds(0, 700, 1600, 300);
 
-		if (frame != null)
+		if (frame != null){
 			this.frame.turnGameModeOn();
+			this.frame.setController(controller);
+		}
 	}
 
 
@@ -129,9 +131,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  W E L C O M E     S C R E E N
-    */
+	/*
+	**	W E L C O M E     S C R E E N
+	*/
 
 	JButton comenzarButton;
 
@@ -174,9 +176,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  W A L K
-    */
+	/*
+	**	W A L K
+	*/
 	
 
 	JButton NorthButton;
@@ -229,9 +231,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  C O N F R O N T A T I O N
-    */
+	/*
+	**	C O N F R O N T A T I O N
+	*/
 
 	JButton FightButton;
 	JButton RunButton;
@@ -277,9 +279,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  F I G H T
-    */
+	/*
+	**	F I G H T
+	*/
 
 	JButton FightResult;
 	boolean fightWon;
@@ -342,9 +344,9 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 
-    /*
-    **  L O O T I N G 
-    */
+	/*
+	**	L O O T I N G 
+	*/
 
 	JButton TakeItButton;
 	JButton LeaveItButton;
@@ -374,7 +376,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 			panelBottom.setLayout(null);
 			panelBottom.add(LeaveItButton);
-			
+
 		} else {
 
 			rnd = rand.nextInt(3);
@@ -450,7 +452,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 	/*
-	**  W I N
+	**	W I N
 	*/
 
 	JButton NextLevelButton;
@@ -498,7 +500,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 
 	/*
-	** E V E N T     L I S T E N E R
+	**	E V E N T     L I S T E N E R
 	*/
 
 	@Override
@@ -662,8 +664,15 @@ public class GuiGame extends JFrame implements ActionListener {
 	}
 
 	public void setFrame(MyFrame newFrame) {
+
+		if (frame != null) {
+			frame.dispose();
+			frame = null;
+		}
+
 		frame = newFrame;
 		frame.setController(controller);
+		frame.turnGameModeOn();
 	}
 
 	public boolean getGUI() {

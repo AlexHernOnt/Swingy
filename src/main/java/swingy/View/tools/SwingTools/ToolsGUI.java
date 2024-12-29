@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:52:57 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 18:05:52 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:06:56 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ public class ToolsGUI {
     */
 
 	public void reOpenWindow(GuiCreateHero gui) {
-		if (gui.getGUI() == true &&  gui.getActive() == false) {
+
+		if (gui.getGUI() == true && gui.getActive() == false) {
 			System.out.println("Opening Window Again");
 			gui.setActive(true);
 			gui.setFrame(new MyFrame());
@@ -42,11 +43,11 @@ public class ToolsGUI {
 	}
 
 	public void reOpenWindow(GuiGame gui) {
+
 		if (gui.getGUI() == true && gui.getActive() == false) {
 			System.out.println("Opening Window Again");
 			gui.setActive(true);
 			gui.setFrame(new MyFrame());
-			gui.getFrame().turnGameModeOn();
 		}
 		cleanScreen(gui);
 	}
@@ -64,19 +65,26 @@ public class ToolsGUI {
 	*/
 
 	protected void cleanScreen(GuiGame gui) {
-		gui.getFrame().getContentPane().removeAll();
-		gui.getFrame().revalidate();
-		gui.getFrame().repaint();
+
+		if (gui.getFrame() != null) {
+			gui.getFrame().getContentPane().removeAll();
+			gui.getFrame().revalidate();
+			gui.getFrame().repaint();
+		}
 
 		gui.getPanelOnTop().removeAll();
 		gui.getPanelMiddle().removeAll();
 		gui.getPanelBottom().removeAll();
+
 	}
 
 	protected void cleanScreen(GuiCreateHero gui) {
-		gui.getFrame().getContentPane().removeAll();
-		gui.getFrame().revalidate();
-		gui.getFrame().repaint();
+
+		if (gui.getFrame() != null) {
+			gui.getFrame().getContentPane().removeAll();
+			gui.getFrame().revalidate();
+			gui.getFrame().repaint();
+		}
 
 		gui.getPanelOnTop().removeAll();
 		gui.getPanelMiddle().removeAll();

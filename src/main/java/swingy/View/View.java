@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 18:26:36 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:44:17 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,13 @@ public class View {
 		
 				if (userInput.equalsIgnoreCase("gui")) {
 					GUI = true;
-					Gui.startGame();
+					controller.startGame();
 					break;
 				} else if (userInput.equalsIgnoreCase("Continue")) {
-					viewSetHeroName();
+					controller.setHeroName();
 					break;
 				} else if (userInput.equalsIgnoreCase("New Game")) {
-					viewSetHeroName();
+					controller.setHeroName();
 					break;
 				}
 			} while (true);
@@ -157,18 +157,20 @@ public class View {
 			cleanScreen();
 			if (!heroName.equals("gui")) {
 				System.out.println("The hero's name is '" + heroName + "'");
-				viewSetHeroClass();
+				controller.setHeroClass();
 			}
 		}
 	}
 
 	private boolean nameOK(String str) {
+
 		cleanScreen();
+		
 		switch (str) {
 			case "gui":
 			{
 				GUI = true;
-				Gui.SetHeroName();
+				controller.setHeroName();
 				return true;
 			}
 			case "":
@@ -230,7 +232,7 @@ public class View {
 		}
 		else if (str.equals("gui")) {
 			GUI = true;
-			Gui.SetHeroClass();
+			controller.setHeroClass();
 			return true;
 		}
 		else if (!str.isEmpty()) {
@@ -310,5 +312,25 @@ public class View {
 	
 	public boolean getActive() {
 		return Gui.getActive();
+	}
+
+
+
+
+
+
+
+
+
+	/*
+	**  Setters
+	*/
+
+	public void setGUI(boolean GUI) {
+		this.GUI = GUI;
+	}
+
+	public void setActive(boolean active) {
+		Gui.setActive(active);
 	}
 }

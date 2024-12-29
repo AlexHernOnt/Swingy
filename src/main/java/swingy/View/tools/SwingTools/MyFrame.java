@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:15:43 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 16:52:07 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 19:55:19 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,9 @@ public class MyFrame extends JFrame {
 
 	public void turnGameModeOn() {
 		modeGame = true;
+	}
+
+	public void turnGameModeOff() {
+		modeGame = false;
 	}
 } 

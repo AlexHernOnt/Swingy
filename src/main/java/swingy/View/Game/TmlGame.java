@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 18:43:00 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:38:49 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@ package View;
 
 import java.util.Random;
 import java.util.Scanner;
-import Hero.Artifact;
 
 import Controller.GameController;
+
+import Hero.Artifact;
 import Hero.Hero;
 import Model.GameMap;
 import View.MyFrame;
@@ -91,9 +92,9 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-				view.getController().welcomeScreen();
+					view.getController().welcomeScreen();
 				break;
-			} else if (userInput.equalsIgnoreCase("start")) {
+			} else if (userInput.equalsIgnoreCase("start") || userInput.equalsIgnoreCase("e")) {
 				view.getController().walk();
 				break;
 			}
@@ -130,7 +131,7 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-				view.getController().walk();
+					view.getController().walk();
 				break;
 			} else if (userInput.equalsIgnoreCase("North") || userInput.equalsIgnoreCase("N")) {
 				hero.goNorth();
@@ -180,9 +181,9 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-				view.getController().confrontation();
+					view.getController().confrontation();
 				break;
-			} else if (userInput.equalsIgnoreCase("Yes")) {
+			} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
 				controller.fightAlgo();
 				view.getController().fight();
 				break;
@@ -224,9 +225,9 @@ public class TmlGame {
 				cleanScreen();
 				if (userInput.equalsIgnoreCase("gui")) {
 					view.GUI = true;
-					view.getController().fight();
+							view.getController().fight();
 					break;
-				} else if (userInput.equalsIgnoreCase("Loot it")) {
+				} else if (userInput.equalsIgnoreCase("Loot it") || userInput.equalsIgnoreCase("e")) {
 					view.getController().looting();
 					view.getController().fight();
 					break;
@@ -237,15 +238,15 @@ public class TmlGame {
 			do {
 			
 				System.out.println("You gave all you had in the fight, however you failed");
-				System.out.println("You know this is the last second of your life: \n-Bye");
+				System.out.println("You know this is the last second of your life: \n- Bye");
 				userInput = scanner.nextLine().trim();
 				
 				cleanScreen();
 				if (userInput.equalsIgnoreCase("gui")) {
 					view.GUI = true;
-					view.getController().fight();
+							view.getController().fight();
 					break;
-				} else if (userInput.equalsIgnoreCase("Bye")) {
+				} else if (userInput.equalsIgnoreCase("Bye") || userInput.equalsIgnoreCase("e")) {
 					view.getController().goStart();
 					break;
 				}
@@ -288,9 +289,9 @@ public class TmlGame {
 
 				if (userInput.equalsIgnoreCase("gui")) {
 					view.GUI = true;
-					view.getController().looting();
+							view.getController().looting();
 					break;
-				} else if (userInput.equalsIgnoreCase("Move on")) {
+				} else if (userInput.equalsIgnoreCase("Move on") || userInput.equalsIgnoreCase("e")) {
 					view.getController().walk();
 					break;
 				}
@@ -322,9 +323,9 @@ public class TmlGame {
 						
 						if (userInput.equalsIgnoreCase("gui")) {
 							view.GUI = true;
-							view.getController().looting();
+											view.getController().looting();
 							break;
-						} else if (userInput.equalsIgnoreCase("Take it")) {
+						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
 							hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
 							view.getController().walk();
 							break;
@@ -351,9 +352,9 @@ public class TmlGame {
 						
 						if (userInput.equalsIgnoreCase("gui")) {
 							view.GUI = true;
-							view.getController().looting();
+											view.getController().looting();
 							break;
-						} else if (userInput.equalsIgnoreCase("Take it")) {
+						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
 							hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
 							view.getController().walk();
 							break;
@@ -380,9 +381,9 @@ public class TmlGame {
 						
 						if (userInput.equalsIgnoreCase("gui")) {
 							view.GUI = true;
-							view.getController().looting();
+											view.getController().looting();
 							break;
-						} else if (userInput.equalsIgnoreCase("Take it")) {
+						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
 							hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
 							view.getController().walk();
 							break;
@@ -425,9 +426,9 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-				view.getController().win();
+					view.getController().win();
 				break;
-			} else if (userInput.equalsIgnoreCase("Yes")) {
+			} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
 				view.getController().welcomeScreen();
 				break;
 			} else if (userInput.equalsIgnoreCase("Main Menu")) {

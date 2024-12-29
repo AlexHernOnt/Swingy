@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 18:41:47 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:32:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,18 @@ public class GameController {
 	public GameController(Hero hero, boolean isGUI, MyFrame frame, boolean active, Controller mainController) {
 
 		// Initialize classes
-
+		
 		this.model = new GameModel(this, hero);
 		this.view = new GameView(this, isGUI, frame, active, hero, model.getMap());
 		this.mainController = mainController;
 
 		welcomeScreen();
-		currentState = StatesGame.WELCOMESCREEN;
 	}
 
 	public void goStart() {
+		mainController.view.setGUI(view.GUI);
+		mainController.view.setActive(view.GuiG.getActive());
+		System.err.println("At closing: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");
 		mainController.startGame();
 	}
 
@@ -99,6 +101,9 @@ public class GameController {
 
 
 
+
+
+
 	/*
 	** Connect with logic
 	*/
@@ -111,12 +116,18 @@ public class GameController {
 		model.runChancesResolve();
 	}
 
-	public boolean  fightAlgo() {
-		return model.fightAlgo();
+	public void fightAlgo() {
+		fightResult = model.fightAlgo();
 	}
 
 
 
+
+
+
+
+
+	
 
 	/*
 	** S A V E     S T A T E 
@@ -147,6 +158,8 @@ public class GameController {
 
 		view.closeWindows();
 
+		System.out.println(currentState);
+
 		switch (currentState) {
 			case WELCOMESCREEN:
 				welcomeScreen();
@@ -166,6 +179,8 @@ public class GameController {
 			case WIN:
 				win();
 				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + currentState);
 		}
 	}
 }

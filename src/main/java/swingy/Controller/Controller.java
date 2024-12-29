@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 17:27:12 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:30:16 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,27 @@ public class Controller {
 	public Controller(String GUI) {
 
 		// Initialize classes
-
 		view = new View(this, GUI.equalsIgnoreCase("gui") ? true : false);
 		model = new Model();
-		
-		currentState = States.STARTGAME;
 	}
 
 	public void startGame() {
+		currentState = States.STARTGAME;
 		view.startGame();
 	}
 
 	public void loadSave() {
+		currentState = States.STARTGAME;
 		view.loadSave();
 	}
 
 	public void setHeroName() {
+		currentState = States.SETHERONAME;
 		view.viewSetHeroName();
 	}
 
 	public void setHeroClass() {
+		currentState = States.SETHEROCLASS;
 		view.viewSetHeroClass();
 	}
 
