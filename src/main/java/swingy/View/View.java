@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 17:44:17 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:16:09 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@ package View;
 import Controller.Controller;
 import Controller.States;
 import Hero.Hero;
+import Model.SQLutils;
 import View.GuiCreateHero;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class View {
 	private GuiCreateHero Gui;
 	private Scanner scanner;
 	protected boolean GUI = true;
+	private SQLutils sql = new SQLutils();
 
 
 
@@ -75,6 +77,87 @@ public class View {
 
 		if (GUI) {
 			Gui.loadSave();
+		} else {
+
+			cleanScreen();
+
+			System.out.println("Choose a save file:");
+			String userInput;
+			
+			do {
+
+				if (sql.getNameFromSave(1) != null) {
+					System.out.println("\n- 1: (" + sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + " " + sql.getArtifactsPrintable(1) + ")");
+				}
+				else {
+					System.out.println("\n- 1: Empty");
+				}
+				
+				if (sql.getNameFromSave(2) != null) {
+					System.out.println("- 2: (" + sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + " " + sql.getArtifactsPrintable(1) + ")");
+				}
+				else {
+					System.out.println("- 2: Empty");
+				}
+
+				if (sql.getNameFromSave(3) != null) {
+					System.out.println("- 3: (" + sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + " " + sql.getArtifactsPrintable(1) + ")");
+				}
+				else {
+					System.out.println("- 3: Empty");
+				}
+				System.out.println("- Back.");
+
+				userInput = scanner.nextLine().trim();
+				
+				if (userInput.equalsIgnoreCase("gui"))
+				{
+					GUI = true;
+					controller.loadSave();
+					break;
+				}
+				else if (userInput.equalsIgnoreCase("1"))
+				{
+					if (sql.getNameFromSave(1) != null)
+					{
+						controller.saveHero(sql.createHeroObjFromEntry(1));
+						controller.goToGame();
+						break;
+					}
+					else
+					{
+						System.out.println("(1): Empty Save File.");
+					}
+				}
+				else if (userInput.equalsIgnoreCase("2"))
+				{
+					if (sql.getNameFromSave(2) != null) {
+						controller.saveHero(sql.createHeroObjFromEntry(2));
+						controller.goToGame();
+						break;
+					}
+					else
+					{
+						System.out.println("(2): Empty Save File.");
+					}
+				}
+				else if (userInput.equalsIgnoreCase("3"))
+				{
+					if (sql.getNameFromSave(3) != null)
+					{
+						controller.saveHero(sql.createHeroObjFromEntry(3));
+						controller.goToGame();
+						break;
+					}
+					else
+					{
+						System.out.println("(3): Empty Save File.");
+					}
+				} else if (userInput.equalsIgnoreCase("Back")) {
+					controller.startGame();
+					break;
+				}
+			} while (true);
 		}
 	}
 
@@ -92,16 +175,16 @@ public class View {
 	*/
 
     public void startGame() {
+		
+		System.err.println("At start game  in CRETE: Active:" + getActive() + ". And GUI: " +  GUI + ".");
 
 		if (GUI) {
 			Gui.startGame();
-		}
-		else {
+		} else {
 
 			cleanScreen();
 
 			System.out.println("Welcome to Swingy!");
-		
 			String userInput;
 			
 			do {
@@ -116,7 +199,7 @@ public class View {
 					controller.startGame();
 					break;
 				} else if (userInput.equalsIgnoreCase("Continue")) {
-					controller.setHeroName();
+					controller.loadSave();
 					break;
 				} else if (userInput.equalsIgnoreCase("New Game")) {
 					controller.setHeroName();

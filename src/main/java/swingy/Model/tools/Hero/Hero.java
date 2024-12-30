@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 17:27:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:11:50 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ public class Hero {
 			boolean pArmorArtifact, int armorArtifactStat,
 			boolean pHelmArtifact, int helmArtifactStat) {
 
+		// Take the data
+
 		this.id = pId;
 		this.name = g_name;
 		this.classType = g_class;
@@ -92,6 +94,8 @@ public class Hero {
 		this.attack = pAttack;
 		this.defense = pDefense;
 
+		// Make the Artifacts
+
 		if (pWeaponArtifact) {
 			this.weaponArtifact = new Artifact(weaponArtifactStat, "Weapon");
 		}
@@ -102,6 +106,19 @@ public class Hero {
 			this.helmArtifact = new Artifact(helmArtifactStat, "Helm");
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**	XP Managment
+	*/
 
 	public void addXP(int xp) {
 		System.out.println("XP received: " + xp);
@@ -127,6 +144,22 @@ public class Hero {
 
 
 
+
+
+
+
+
+
+	/*
+	**	SQL request
+	*/
+
+	public void killHero() {
+		sql.killHero(id);
+	}
+
+
+	
 
 
 

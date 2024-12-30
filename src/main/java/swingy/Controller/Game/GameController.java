@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 20:32:02 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:20:17 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,14 @@ public class GameController {
 	}
 
 	public void goStart() {
+
+		// Preserves the state of the window situation
+		
 		mainController.view.setGUI(view.GUI);
 		mainController.view.setActive(view.GuiG.getActive());
-		System.err.println("At closing: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");
+
+		System.err.println("At closing in GAME: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");
+		
 		mainController.startGame();
 	}
 

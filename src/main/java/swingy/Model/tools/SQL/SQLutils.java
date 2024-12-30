@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/28 12:53:16 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:32:45 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,10 +219,8 @@ public class SQLutils {
 
 
 	/*
-	** Count the entries
+	-- Count the entries
 	*/
-
-
 
 	public int checkHeroEntries() {
 
@@ -248,7 +246,7 @@ public class SQLutils {
 
 
 	/*
-	** Count the entries
+	-- Count the entries
 	*/
 
 	public void giveIdtoHero(Hero hero) {
@@ -273,7 +271,7 @@ public class SQLutils {
 
 
 	/*
-	**	Delete the oldest
+	--	Delete the oldest
 	*/
 
 	public void deleteOldestEntry() {
@@ -290,6 +288,35 @@ public class SQLutils {
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+	/*
+	**	D E L E T E     E L E M E N T
+	*/
+
+	public void killHero(int id) {
+		
+		String deleteSQL = "DELETE FROM Hero WHERE id = ?";
+		
+		try (PreparedStatement statement = conn.prepareStatement(deleteSQL)) {
+
+			statement.setInt(1, id);
+			int rowsDeleated = statement.executeUpdate();
+
+			if (rowsDeleated > 0) {
+				System.out.println("Hero killed successfully!");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error deleting the requested hero with Id " + e.getMessage());
+		}
+	}
 
 
 

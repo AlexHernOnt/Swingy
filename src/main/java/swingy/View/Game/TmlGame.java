@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 20:38:49 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:12:05 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,17 @@ public class TmlGame {
 
     /*
     **  W E L C O M E     S C R E E N
-    */
-    
-    public void welcomeScreen() {
+	*/
+
+	public void welcomeScreen() {
 
 		cleanScreen();
 
 		System.out.println("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
 		System.out.println("You come out of your house looking for an adventure!\n");
-	
+
 		String userInput;
-		
+
 		do {
 
 			System.out.println("Choose an option:\n- Start");
@@ -92,7 +92,7 @@ public class TmlGame {
 	
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
-					view.getController().welcomeScreen();
+				view.getController().welcomeScreen();
 				break;
 			} else if (userInput.equalsIgnoreCase("start") || userInput.equalsIgnoreCase("e")) {
 				view.getController().walk();
@@ -111,11 +111,11 @@ public class TmlGame {
 
 
 
-    /*
-    **  W A L K
-    */
+	/*
+	**  W A L K
+	*/
 
-    public void walk() {
+	public void walk() {
 
 		cleanScreen();
 		System.out.println("You are at X " + (hero.getPosX() + 1) + " / " + (map.getSize() + 1) + ". And Y " + (hero.getPosY() + 1) + " / " + (map.getSize() + 1) + ".");
@@ -162,9 +162,9 @@ public class TmlGame {
 
 
 
-    /*
-    **  C O N F R O N T A T I O N
-    */
+	/*
+	**  C O N F R O N T A T I O N
+	*/
 
 	public void confrontation() {
 
@@ -204,11 +204,11 @@ public class TmlGame {
 
 
 
-    /*
-    **  F I G H T
-    */
+	/*
+	**  F I G H T
+	*/
 	
-    public void fight() {
+	public void fight() {
 
 		cleanScreen();
 
@@ -244,9 +244,10 @@ public class TmlGame {
 				cleanScreen();
 				if (userInput.equalsIgnoreCase("gui")) {
 					view.GUI = true;
-							view.getController().fight();
+					view.getController().fight();
 					break;
 				} else if (userInput.equalsIgnoreCase("Bye") || userInput.equalsIgnoreCase("e")) {
+					hero.killHero();
 					view.getController().goStart();
 					break;
 				}
@@ -264,9 +265,9 @@ public class TmlGame {
 
 
 
-    /*
-    **   L O O T I N G
-    */
+	/*
+	**	L O O T I N G
+	*/
 	
 	Random rand = new Random();
 
@@ -407,9 +408,9 @@ public class TmlGame {
 
 
 
-    /*
-    **	W I N
-    */
+	/*
+	**	W I N
+	*/
 
 	public void win() {
 
@@ -447,7 +448,7 @@ public class TmlGame {
 
 
 	/*
-	**  Utils
+	**	Utils
 	*/
 
 	public void closeWindows() 	{

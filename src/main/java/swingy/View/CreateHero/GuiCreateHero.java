@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 20:25:58 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:18:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	JButton NewGameButton;
 	JButton exitGameButton;
 
-
 	public void startGame() {
 
 		toolsGui.reOpenWindow(this);
+		panelOnTop.setBounds(0, 100, 1600, 300);
 		
 		// Making Text
 
@@ -139,7 +139,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		labelMiddle.setText("Choose an option: ");
 
 		// Making Buttons
-		
+
 		ContinueButton = toolsGui.confButton(ContinueButton, "Continue", 450, 0, this);
 		NewGameButton = toolsGui.confButton(NewGameButton, "New Game", 700, 0, this);
 		exitGameButton = toolsGui.confButton(exitGameButton, "Exit", 950, 0, this);
@@ -180,9 +180,17 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	JButton saveFile2;
 	JButton saveFile3;
 
+	boolean firstSaveOK;
+	boolean secondSaveOK;
+	boolean thirdSaveOK;
+	
 	public void loadSave() {
 
 		toolsGui.reOpenWindow(this);
+		
+		// Exception of size of panelTop
+
+		panelOnTop.setBounds(0, 100, 1600, 500);
 		
 		// Making Text
 		
@@ -191,10 +199,33 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 
 
 		// Making Buttons
+		firstSaveOK = false;
+		secondSaveOK = false;
+		thirdSaveOK = false;
 
-		saveFile1 = toolsGui.confFullButton(saveFile1, sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + " " + sql.getArtifactsPrintable(1), 465, 200, 650, 70, this);
-		saveFile2 = toolsGui.confFullButton(saveFile2, sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + " " + sql.getArtifactsPrintable(2), 465, 300, 650, 70, this);
-		saveFile3 = toolsGui.confFullButton(saveFile3, sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + " " + sql.getArtifactsPrintable(3), 465, 400, 650, 70, this);
+		if (sql.getNameFromSave(1) != null) {
+			saveFile1 = toolsGui.confFullButton(saveFile1, sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + " " + sql.getArtifactsPrintable(1), 465, 200, 650, 70, this);
+			firstSaveOK = true;
+		}
+		else {
+			saveFile1 = toolsGui.confFullButton(saveFile1, "Empty", 465, 200, 650, 70, this);
+		}
+		
+		if (sql.getNameFromSave(2) != null) {
+			saveFile2 = toolsGui.confFullButton(saveFile2, sql.getNameFromSave(2) + " - " + "Level " + sql.getLevelFromSave(2) + " " + sql.getArtifactsPrintable(2), 465, 300, 650, 70, this);
+			secondSaveOK = true;
+		}
+		else {
+			saveFile2 = toolsGui.confFullButton(saveFile2, "Empty", 465, 300, 650, 70, this);
+		}
+
+		if (sql.getNameFromSave(3) != null) {
+			saveFile3 = toolsGui.confFullButton(saveFile3, sql.getNameFromSave(3) + " - " + "Level " + sql.getLevelFromSave(3) + " " + sql.getArtifactsPrintable(3), 465, 400, 650, 70, this);
+			thirdSaveOK = true;
+		}
+		else {
+			saveFile3 = toolsGui.confFullButton(saveFile3, "Empty", 465, 400, 650, 70, this);
+		}
 		
 		GoBack = toolsGui.confButton(GoBack, "Go back", 697, 0, this);
 
@@ -217,7 +248,6 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		frame.add(panelBottom);
 		frame.setVisible(true);
 	}
-
 
 
 
@@ -356,17 +386,18 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 		**	loadSave()
 		*/
 
-		else if (e.getSource() == saveFile1) {
+		else if (e.getSource() == saveFile1 && firstSaveOK) {
 			controller.saveHero(sql.createHeroObjFromEntry(1));
 			controller.goToGame();
 
-		} else if (e.getSource() == saveFile2) {
+		} else if (e.getSource() == saveFile2 && secondSaveOK) {
 			controller.saveHero(sql.createHeroObjFromEntry(2));
 			controller.goToGame();
 
-		} else if (e.getSource() == saveFile3) {
+		} else if (e.getSource() == saveFile3 && thirdSaveOK) {
 			controller.saveHero(sql.createHeroObjFromEntry(3));
 			controller.goToGame();
+			
 		} else if (e.getSource() == GoBack) {
 			controller.startGame();
 		}

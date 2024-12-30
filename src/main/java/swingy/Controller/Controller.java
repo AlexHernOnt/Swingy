@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 18:30:16 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:06:38 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public class Controller {
 	}
 
 	public void loadSave() {
-		currentState = States.STARTGAME;
+		currentState = States.LOADSAVE;
 		view.loadSave();
 	}
 
@@ -114,6 +114,9 @@ public class Controller {
 		switch (currentState) {
 			case STARTGAME:
 				startGame();
+				break;
+			case LOADSAVE:
+				loadSave();
 				break;
 			case SETHERONAME:
 				setHeroName();

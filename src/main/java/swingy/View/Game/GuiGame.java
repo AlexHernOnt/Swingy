@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/29 20:02:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:20:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ public class GuiGame extends JFrame implements ActionListener {
 		toolsGui.confLabel(labelOnTop, null);
 		toolsGui.confLabel(labelMiddle, null);
 		
-		panelOnTop.setBounds(0, 100,1600, 300);
+		panelOnTop.setBounds(0, 100, 1600, 300);
 		panelMiddle.setBounds(0, 500, 1600, 100);
 		panelBottom.setBounds(0, 700, 1600, 300);
 
@@ -317,6 +317,7 @@ public class GuiGame extends JFrame implements ActionListener {
 			// Making Buttons
 
 			FightResult = toolsGui.confButton(FightResult, "Bye...", 697, 0, this);
+			hero.killHero();
 		}
 
 		// Adding to panels
@@ -570,6 +571,7 @@ public class GuiGame extends JFrame implements ActionListener {
 			}
 			else {
 				controller.goStart();
+				
 			}
 		}
 
@@ -635,7 +637,6 @@ public class GuiGame extends JFrame implements ActionListener {
 		active = false;
 		frame.dispose();
 		frame = null;
-		// controller.StateSwitcher();
 	}
 
 
