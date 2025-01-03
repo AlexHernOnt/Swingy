@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:46:02 by ahernand          #+#    #+#             */
-/*   Updated: 2025/01/03 15:38:32 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:02:24 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ import Hero.Hero;
 import Model.SQLutils;
 import View.GuiCreateHero;
 import java.util.Scanner;
+import java.util.Set;
+
 import View.MyFrame;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.ConstraintViolation;
 
 public class View {
 
@@ -32,7 +39,8 @@ public class View {
 	protected boolean GUI = true;
 	private SQLutils sql = new SQLutils();
 
-
+	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	Validator validator = factory.getValidator();
 
 
 
@@ -245,9 +253,23 @@ public class View {
 			} else if (userInput.equalsIgnoreCase("")) {
 				controller.setHeroName();
 			} else {
-				heroName = userInput;
-				System.out.println("The hero's name is '" + heroName + "'");
-				controller.setHeroClass();
+				Hero dummy = new Hero("Warrior", userInput);
+
+						
+				// Validate the Hero object
+				Set<ConstraintViolation<Hero>> violations = validator.validate(dummy);
+
+				// Handle validation results
+				if (!violations.isEmpty()) {
+					for (ConstraintViolation<Hero> violation : violations) {
+						System.out.println("Validation error: " + violation.getMessage());
+					}
+					controller.setHeroName();
+				} else {
+					heroName = userInput;
+					System.out.println("The hero's name is '" + heroName + "'");
+					controller.setHeroClass();
+				}
 			}
 		}
 	}
@@ -305,8 +327,6 @@ public class View {
 
 	private void printClass() {
 		cleanScreen();
-		System.out.println("Here's your hero's stats: \n");
-		System.out.println(controller.createHeroController(heroClass, heroName));
 		controller.goToGame();
 	}
 

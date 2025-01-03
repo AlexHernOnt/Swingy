@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2025/01/03 17:22:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:58:03 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,37 +383,45 @@ public class GuiGame extends JFrame implements ActionListener {
 			
 			labelOnTop.setIcon(new ImageIcon(prizeImg));
 
-			switch (controller.getTypeLootResult()) {
-				case 0:
-					artifactType = "Weapon";
-					labelOnTop.setText("You found a Weapon. Level " + statChanged + ".");
-					if (hero.getWeaponArtifact() != null) {
-						labelMiddle.setText("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ". ");
-					}
-					else {
-						labelMiddle.setText("You don't have an Artifact of this type.");
-					}
-					break;
-				case 1:
-					artifactType = "Armor";
-					labelOnTop.setText("You found a Armour. Level " + statChanged + ".");
-					if (hero.getArmorArtifact() != null) {
-						labelMiddle.setText("You have an Armour level " + hero.getArmorArtifact().getStat() + ". ");
-					}
-					else {
-						labelMiddle.setText("You don't have an Artifact of this type.");
-					}
-					break;
-				case 2:
-					artifactType = "Helm";
-					labelOnTop.setText("You found a Helm. Level " + statChanged + ".");
-					if (hero.getHelmArtifact() != null) {
-						labelMiddle.setText("You have a Helm level " + hero.getHelmArtifact().getStat() + ". ");
-					}
-					else {
-						labelMiddle.setText("You don't have an Artifact of this type.");
-					}
-					break;
+			if (controller.getTypeLootResult() == 0) {
+
+				// For weapons
+
+				artifactType = "Weapon";
+
+				labelOnTop.setText("You found a Weapon. Level " + statChanged + ".");
+				if (hero.getWeaponArtifact() != null) {
+					labelMiddle.setText("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ". ");
+				}
+				else {
+					labelMiddle.setText("You don't have an Artifact of this type.");
+				}
+			} else if (controller.getTypeLootResult() == 1) {
+				
+				// For Armors
+
+				artifactType = "Armor";
+
+				labelOnTop.setText("You found a Armour. Level " + statChanged + ".");
+				if (hero.getArmorArtifact() != null) {
+					labelMiddle.setText("You have an Armour level " + hero.getArmorArtifact().getStat() + ". ");
+				}
+				else {
+					labelMiddle.setText("You don't have an Artifact of this type.");
+				}
+			} else if (controller.getTypeLootResult() == 2) {
+
+				// For Helms
+
+				artifactType = "Helm";
+			
+				labelOnTop.setText("You found a Helm. Level " + statChanged + ".");
+				if (hero.getHelmArtifact() != null) {
+					labelMiddle.setText("You have a Helm level " + hero.getHelmArtifact().getStat() + ". ");
+				}
+				else {
+					labelMiddle.setText("You don't have an Artifact of this type.");
+				}
 			}
 
 			// Making Buttons
@@ -566,7 +574,6 @@ public class GuiGame extends JFrame implements ActionListener {
 				
 				controller.isLootResultAlgo();
 				controller.typeLootResultAlgo();
-				
 				controller.looting();
 			}
 			else {

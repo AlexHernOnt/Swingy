@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2025/01/03 17:36:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:40:45 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ public class TmlGame {
 		cleanScreen();
 
 		System.out.println("Your name is: " + controller.getHero().getName() + ", a true " + controller.getHero().getClassType() + ".");
-		System.out.println("You come out of your house looking for an adventure!\n");
+		System.out.println("You come out of your house looking for an adventure!");
 
 		String userInput;
 
@@ -203,7 +203,7 @@ public class TmlGame {
 
 		if (controller.getFightResult()) {
 		
-			System.out.println("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + ".\n\n");
+			System.out.println("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + ".");
 			System.out.println("You see your foe's desecreated body: \n- Loot it");
 			userInput = scanner.nextLine().trim();
 
@@ -265,7 +265,7 @@ public class TmlGame {
 		int statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
 		statChanged = statChanged < 1 ? 1 : statChanged;
 
-		if (rnd == 1) { // 30 % 
+		if (controller.getIsLootResult() == 1) { // 30 % 
 			System.out.println("You only found blood and skin: \n- Move on");
 			userInput = scanner.nextLine().trim();
 
@@ -287,83 +287,86 @@ public class TmlGame {
 			statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
 			statChanged = statChanged < 1 ? 1 : statChanged;
 
-			switch (rnd) {
-				case 0:
-				{
-					System.out.println("You found a Weapon. Level " + statChanged + ".");
-					
-					if (hero.getWeaponArtifact() != null) {
-						System.out.println("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ".\n- Take it\n- Leave it");
-					}
-					else {
-						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-					}
+			if (controller.getTypeLootResult() == 0)
+			{
+				// For weapons
 
-					userInput = scanner.nextLine().trim();
-					
-					cleanScreen();
-					
-					if (userInput.equalsIgnoreCase("gui")) {
-						view.GUI = true;
-						view.getController().looting();
-					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-						hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
-						view.getController().walk();
-					} else if (userInput.equalsIgnoreCase("Leave it")) {
-						view.getController().walk();
-					} else {
-						view.getController().looting();
-					}
+				System.out.println("You found a Weapon. Level " + statChanged + ".");
+				
+				if (hero.getWeaponArtifact() != null) {
+					System.out.println("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ".\n- Take it\n- Leave it");
 				}
-				case 1:
-				{
-					System.out.println("You found a Armor. Level " + statChanged + ".");
-					if (hero.getArmorArtifact() != null) {
-						System.out.println("You have a Armor level " + hero.getArmorArtifact().getStat() + ".\n- Take it\n- Leave it");
-					}
-					else {
-						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-					}
+				else {
+					System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+				}
 
-					userInput = scanner.nextLine().trim();
-					cleanScreen();
-					
-					if (userInput.equalsIgnoreCase("gui")) {
-						view.GUI = true;
-						view.getController().looting();
-					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-						hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
-						view.getController().walk();
-					} else if (userInput.equalsIgnoreCase("Leave it")) {
-						view.getController().walk();
-					} else {
-						view.getController().looting();
-					}
+				userInput = scanner.nextLine().trim();
+				
+				cleanScreen();
+				
+				if (userInput.equalsIgnoreCase("gui")) {
+					view.GUI = true;
+					view.getController().looting();
+				} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+					hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
+					view.getController().walk();
+				} else if (userInput.equalsIgnoreCase("Leave it")) {
+					view.getController().walk();
+				} else {
+					view.getController().looting();
 				}
-				case 2:
-				{
-					System.out.println("You found a Helm. Level " + statChanged + ".");
-					if (hero.getHelmArtifact() != null) {
-						System.out.println("You have a Helm level " + hero.getHelmArtifact().getStat() + ".\n- Take it\n- Leave it");
-					}
-					else {
-						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-					}
-					
-					userInput = scanner.nextLine().trim();
-					cleanScreen();
-					
-					if (userInput.equalsIgnoreCase("gui")) {
-						view.GUI = true;
-						view.getController().looting();
-					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-						hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
-						view.getController().walk();
-					} else if (userInput.equalsIgnoreCase("Leave it")) {
-						view.getController().walk();
-					} else {
-						view.getController().looting();
-					}
+			} else if (controller.getTypeLootResult() == 1) {
+				
+				// For Armors
+
+				System.out.println("You found a Armor. Level " + statChanged + ".");
+				if (hero.getArmorArtifact() != null) {
+					System.out.println("You have a Armor level " + hero.getArmorArtifact().getStat() + ".\n- Take it\n- Leave it");
+				}
+				else {
+					System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+				}
+
+				userInput = scanner.nextLine().trim();
+				cleanScreen();
+				
+				if (userInput.equalsIgnoreCase("gui")) {
+					view.GUI = true;
+					view.getController().looting();
+				} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+					hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
+					view.getController().walk();
+				} else if (userInput.equalsIgnoreCase("Leave it")) {
+					view.getController().walk();
+				} else {
+					view.getController().looting();
+				}
+			}
+			else if (controller.getTypeLootResult() == 2) {
+				
+				// For Helms
+
+				System.out.println("You found a Helm. Level " + statChanged + ".");
+				if (hero.getHelmArtifact() != null) {
+					System.out.println("You have a Helm level " + hero.getHelmArtifact().getStat() + ".\n- Take it\n- Leave it");
+				}
+				else {
+					System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+				}
+				
+				userInput = scanner.nextLine().trim();
+				cleanScreen();
+				
+				if (userInput.equalsIgnoreCase("gui")) {
+					view.GUI = true;
+					view.getController().looting();
+				} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+					hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
+					view.getController().walk();
+				} else if (userInput.equalsIgnoreCase("Leave it")) {
+					view.getController().walk();
+				} else {
+					view.getController().looting();
 				}
 			}
 		}

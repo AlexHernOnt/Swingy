@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2025/01/03 17:26:55 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:41:11 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ public class SQLutils {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(DATABASE_URL);
-			System.out.println("Database connected or created successfully!");
+			// System.out.println("Database connected or created successfully!"); 	//printf
 		} catch (ClassNotFoundException e) {
 			throw new IllegalStateException("SQLite JDBC driver not found.");
 		} catch (SQLException e) {
@@ -66,7 +66,7 @@ public class SQLutils {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(DATABASE_URL);
-			System.out.println("Database connected or created successfully!");
+			// System.out.println("Database connected or created successfully!");	//printf
 			createTable();
 			insertHero( h);
 			// showDB();	//printf
@@ -122,7 +122,7 @@ public class SQLutils {
 		try (Statement statement = conn.createStatement()) {
 
 			statement.execute(createTableSQL);
-			System.out.println("Hero table created or already exists!");
+			// System.out.println("Hero table created or already exists!"); 	//printf
 
 		} catch (SQLException e) {
 			System.out.println("Error while creating Hero table: " + e.getMessage());
@@ -205,7 +205,7 @@ public class SQLutils {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Hero inserted successfully!");
+				// System.out.println("Hero inserted successfully!");	//printf
 			}
 			
 		} catch (SQLException e) {
@@ -231,7 +231,7 @@ public class SQLutils {
 			ResultSet resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
-				System.out.println("Successfully read " + resultSet.getInt("total") + " elements.");
+				// System.out.println("Successfully read " + resultSet.getInt("total") + " elements.");	//printf
 				return resultSet.getInt("total");
 			}
 			
@@ -259,7 +259,7 @@ public class SQLutils {
 			
 			if (resultSet.next()) {
 				hero.setId(resultSet.getInt("newestId"));
-				System.out.println("Successfully set hero's id to " + hero.getId() + ".");
+				// System.out.println("Successfully set hero's id to " + hero.getId() + ".");	//printf
 			}
 			
 		} catch (Exception e) {
@@ -281,7 +281,7 @@ public class SQLutils {
 		try (PreparedStatement statement = conn.prepareStatement(deleteSQL)) {
 			
 			statement.executeUpdate();
-			System.out.println("Successfully deleted the oldest entry.");
+			// System.out.println("Successfully deleted the oldest entry."); // printf
 
 		} catch (SQLException e) {
 			System.out.println("Error deleting the oldest entry: " + e.getMessage());
@@ -311,7 +311,7 @@ public class SQLutils {
 			int rowsDeleated = statement.executeUpdate();
 
 			if (rowsDeleated > 0) {
-				System.out.println("Hero killed successfully!");
+				// System.out.println("Hero killed successfully!");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error deleting the requested hero with Id " + e.getMessage());
@@ -408,7 +408,7 @@ public class SQLutils {
 
 			int rowsInserted = stmUpdate.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Hero updated successfully!");
+				// System.out.println("Hero updated successfully!");	// printf
 			}
 			
 		} catch (SQLException e) {

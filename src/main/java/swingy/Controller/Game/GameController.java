@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2025/01/03 17:24:48 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:40:45 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ public class GameController {
 		// mainController.view.setGUI(view.GUI);
 		// mainController.view.setActive(view.GuiG.getActive());
 
-		System.err.println("At closing in GAME: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");
+		// System.err.println("At closing in GAME: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");	//printf
 		
 		Controller.startGame();
 	}

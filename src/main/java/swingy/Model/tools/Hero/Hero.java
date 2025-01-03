@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:45:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 17:11:50 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:32:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ public class Hero {
 	*/
 
 	public void addXP(int xp) {
-		System.out.println("XP received: " + xp);
+		// System.out.println("XP received: " + xp);	//printf
 
 		experience += xp;
 		levelUp();
@@ -132,7 +132,7 @@ public class Hero {
 	}
 
 	private void levelUp() {
-		System.out.println("Current xp: " + experience + " / " + formulaLevelUp());
+		// System.out.println("Current xp: " + experience + " / " + formulaLevelUp());	//printf
 		
 		if (experience > formulaLevelUp()) {
 			level++;
