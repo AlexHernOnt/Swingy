@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:49:26 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 18:59:06 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:25:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ public class GameModel {
 
 	public void positionCheck() {
 		
-		System.out.println("Y: " + hero.getPosY() + " _ X: " + hero.getPosX());
+		// System.out.println("Y: " + hero.getPosY() + " _ X: " + hero.getPosX());	//printf
 
 		if (map.offLimits(hero.getPosY(), hero.getPosX())) {
 			Controller.win();
@@ -146,5 +146,13 @@ public class GameModel {
 			return true;
 		}
 		return false;
+	}
+
+	public int typeLootResultAlgo() {
+		return rand.nextInt(3);
+	}
+	
+	public int isLootResultAlgo() {
+		return rand.nextInt(3);
 	}
 }

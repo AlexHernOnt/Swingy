@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:54:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 17:32:45 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:26:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ public class SQLutils {
 			System.out.println("Database connected or created successfully!");
 			createTable();
 			insertHero( h);
-			showDB();
+			// showDB();	//printf
 		} catch (ClassNotFoundException e) {
 			System.out.println("SQLite JDBC driver not found: " + e.getMessage());
 		} catch (SQLException e) {

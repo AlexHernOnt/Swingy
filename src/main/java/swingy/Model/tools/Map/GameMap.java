@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:29:11 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/23 17:14:09 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:40:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ public class GameMap {
 		int size;
 
 		size = (lvl - 1) * 5 + 10 - (lvl % 2);
-		System.out.println("Size of map = " + size + ".");
+		// System.out.println("Size of map = " + size + ".");
 		
 		map = new int[size][size];
 
@@ -91,7 +91,7 @@ public class GameMap {
 				}
 			}
 		}
-		printMap();
+		// printMap();
 	}
 
 	public boolean offLimits(int x, int y) {
@@ -105,8 +105,7 @@ public class GameMap {
 	}
 
 	public int enemy(int y, int x) {
-		
-		if (map[y][x] >= 0) {
+		if (y >= 0 && y < map.length && x >= 0 && x < map.length && map[y][x] >= 0) {
 			return map[y][x];
 		}
 		return -1;

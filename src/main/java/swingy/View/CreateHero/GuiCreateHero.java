@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:38:20 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 18:18:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:39:42 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	JButton nameHeroButton;
 	JTextField nameTextField;
 
-	public void SetHeroName() {
+	public void setHeroName() {
 
 		toolsGui.reOpenWindow(this);
 		
@@ -313,7 +313,7 @@ public class GuiCreateHero extends JFrame implements ActionListener {
 	JButton ClassKnightButton;
 	JButton ClassArcherButton;
 
-	public void SetHeroClass() {
+	public void setHeroClass() {
 
 		toolsGui.reOpenWindow(this);
 		

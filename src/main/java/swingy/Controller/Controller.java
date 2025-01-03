@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:45:59 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 18:06:38 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:24:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ import Model.Model;
 import View.View;
 import Controller.States;
 import Controller.GameController;
+import View.MyFrame;
 
 public class Controller {
 
@@ -46,6 +47,26 @@ public class Controller {
 		model = new Model();
 	}
 
+	public Controller(boolean GUI, boolean active, MyFrame frame) {
+
+		// Initialize classes
+		view = new View(this, GUI, active, frame);
+		model = new Model();
+	}
+
+
+
+
+
+
+
+
+
+
+	/*
+	**  C O N S T R U C T O R S 
+	*/
+
 	public void startGame() {
 		currentState = States.STARTGAME;
 		view.startGame();
@@ -58,12 +79,12 @@ public class Controller {
 
 	public void setHeroName() {
 		currentState = States.SETHERONAME;
-		view.viewSetHeroName();
+		view.setHeroName();
 	}
 
 	public void setHeroClass() {
 		currentState = States.SETHEROCLASS;
-		view.viewSetHeroClass();
+		view.setHeroClass();
 	}
 
 

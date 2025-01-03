@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 20:32:04 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 17:20:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:22:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,9 +358,7 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		toolsGui.reOpenWindow(this);
 		
-		// Making Text
-		int rnd = rand.nextInt(3);
-		if (rnd == 1) { // 30 % 
+		if (controller.getIsLootResult() == 1) { // 30 % 
 
 			labelOnTop.setIcon(new ImageIcon(enemyImg));
 			labelOnTop.setText("You only found blood and skin.");
@@ -380,14 +378,12 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		} else {
 
-			rnd = rand.nextInt(3);
-			
 			statChanged = (hero.getLevel() - (hero.getLevel() - map.enemy(hero.getPosY(), hero.getPosX()))) + 1;
 			statChanged = statChanged < 1 ? 1 : statChanged;
 			
 			labelOnTop.setIcon(new ImageIcon(prizeImg));
 
-			switch (rnd) {
+			switch (controller.getTypeLootResult()) {
 				case 0:
 					artifactType = "Weapon";
 					labelOnTop.setText("You found a Weapon. Level " + statChanged + ".");
@@ -567,6 +563,10 @@ public class GuiGame extends JFrame implements ActionListener {
 
 		else if (e.getSource() == FightResult) {
 			if (fightWon == true) {
+				
+				controller.isLootResultAlgo();
+				controller.typeLootResultAlgo();
+				
 				controller.looting();
 			}
 			else {

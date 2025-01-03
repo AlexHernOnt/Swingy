@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:08:49 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 17:12:05 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:24:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ public class TmlGame {
 
 		String userInput;
 
-		do {
-
 			System.out.println("Choose an option:\n- Start");
 			userInput = scanner.nextLine().trim();
 	
@@ -93,12 +91,11 @@ public class TmlGame {
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
 				view.getController().welcomeScreen();
-				break;
 			} else if (userInput.equalsIgnoreCase("start") || userInput.equalsIgnoreCase("e")) {
 				view.getController().walk();
-				break;
+			} else {
+				view.getController().welcomeScreen();
 			}
-		} while (true);
 	}
 
 
@@ -122,8 +119,6 @@ public class TmlGame {
 	
 		String userInput;
 		
-		do {
-
 			System.out.println("Which direction will you walk?:\n- North\n- East\n- South\n- West");
 			userInput = scanner.nextLine().trim();
 	
@@ -132,25 +127,21 @@ public class TmlGame {
 			if (userInput.equalsIgnoreCase("gui")) {
 				view.GUI = true;
 					view.getController().walk();
-				break;
 			} else if (userInput.equalsIgnoreCase("North") || userInput.equalsIgnoreCase("N")) {
 				hero.goNorth();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("East") || userInput.equalsIgnoreCase("E")) {
 				hero.goEast();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("South") || userInput.equalsIgnoreCase("S")) {
 				hero.goSouth();
 				view.getController().positionCheck();
-				break;
 			} else if (userInput.equalsIgnoreCase("West") || userInput.equalsIgnoreCase("W")) {
 				hero.goWest();
 				view.getController().positionCheck();
-				break;
+			} else {
+				view.getController().walk();
 			}
-		} while (true);
 	}
 
 
@@ -172,26 +163,22 @@ public class TmlGame {
 		System.out.println("You face a terrible lvl " + map.enemy(hero.getPosY(), hero.getPosX()) + " creature before you.");
 		
 		String userInput;
-		do {
+		System.out.println("Do you want to fight it? (You're level) " + hero.getLevel() + ":\n- Yes\n- No");
+		userInput = scanner.nextLine().trim();
 
-			System.out.println("Do you want to fight it? (You're level) " + hero.getLevel() + ":\n- Yes\n- No");
-			userInput = scanner.nextLine().trim();
-	
-			cleanScreen();
-	
-			if (userInput.equalsIgnoreCase("gui")) {
-				view.GUI = true;
-					view.getController().confrontation();
-				break;
-			} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
-				controller.fightAlgo();
-				view.getController().fight();
-				break;
-			} else if (userInput.equalsIgnoreCase("No")) {
-				view.getController().runChancesResolve();
-				break;
-			}
-		} while (true);
+		cleanScreen();
+
+		if (userInput.equalsIgnoreCase("gui")) {
+			view.GUI = true;
+			view.getController().confrontation();
+		} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
+			controller.fightAlgo();
+			view.getController().fight();
+		} else if (userInput.equalsIgnoreCase("No")) {
+			view.getController().runChancesResolve();
+		} else {
+			view.getController().confrontation();
+		}
 	}
 
 
@@ -216,42 +203,40 @@ public class TmlGame {
 
 		if (controller.getFightResult()) {
 		
-			do {
+			System.out.println("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + ".\n\n");
+			System.out.println("You see your foe's desecreated body: \n- Loot it");
+			userInput = scanner.nextLine().trim();
 
-				System.out.println("Victory! Current XP " + hero.getExperience() + " / " + hero.formulaLevelUp() + ".\n\n");
-				System.out.println("You see your foe's desecreated body: \n- Loot it");
-				userInput = scanner.nextLine().trim();
+			cleanScreen();
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.getController().fight();
+			} else if (userInput.equalsIgnoreCase("Loot it") || userInput.equalsIgnoreCase("e")) {
+				
+				controller.isLootResultAlgo();
+				controller.typeLootResultAlgo();
 
-				cleanScreen();
-				if (userInput.equalsIgnoreCase("gui")) {
-					view.GUI = true;
-							view.getController().fight();
-					break;
-				} else if (userInput.equalsIgnoreCase("Loot it") || userInput.equalsIgnoreCase("e")) {
-					view.getController().looting();
-					view.getController().fight();
-					break;
-				}
-			} while (true);
+				view.getController().looting();
+			} else {
+				view.getController().fight();
+			}
 
 		} else {
-			do {
 			
-				System.out.println("You gave all you had in the fight, however you failed");
-				System.out.println("You know this is the last second of your life: \n- Bye");
-				userInput = scanner.nextLine().trim();
-				
-				cleanScreen();
-				if (userInput.equalsIgnoreCase("gui")) {
-					view.GUI = true;
-					view.getController().fight();
-					break;
-				} else if (userInput.equalsIgnoreCase("Bye") || userInput.equalsIgnoreCase("e")) {
-					hero.killHero();
-					view.getController().goStart();
-					break;
-				}
-			} while (true);
+			System.out.println("You gave all you had in the fight, however you failed");
+			System.out.println("You know this is the last second of your life: \n- Bye");
+			userInput = scanner.nextLine().trim();
+			
+			cleanScreen();
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.getController().fight();
+			} else if (userInput.equalsIgnoreCase("Bye") || userInput.equalsIgnoreCase("e")) {
+				hero.killHero();
+				view.getController().goStart();
+			} else {
+				view.getController().fight();
+			}
 		}
 	}
 
@@ -281,22 +266,19 @@ public class TmlGame {
 		statChanged = statChanged < 1 ? 1 : statChanged;
 
 		if (rnd == 1) { // 30 % 
-			do {
-			
-				System.out.println("You only found blood and skin: \n- Move on");
-				userInput = scanner.nextLine().trim();
+			System.out.println("You only found blood and skin: \n- Move on");
+			userInput = scanner.nextLine().trim();
 
-				cleanScreen();
+			cleanScreen();
 
-				if (userInput.equalsIgnoreCase("gui")) {
-					view.GUI = true;
-							view.getController().looting();
-					break;
-				} else if (userInput.equalsIgnoreCase("Move on") || userInput.equalsIgnoreCase("e")) {
-					view.getController().walk();
-					break;
-				}
-			} while (true);
+			if (userInput.equalsIgnoreCase("gui")) {
+				view.GUI = true;
+				view.getController().looting();
+			} else if (userInput.equalsIgnoreCase("Move on") || userInput.equalsIgnoreCase("e")) {
+				view.getController().walk();
+			} else {
+				view.getController().looting();
+			}
 			
 		} else {
 
@@ -308,91 +290,80 @@ public class TmlGame {
 			switch (rnd) {
 				case 0:
 				{
-					do {
-						System.out.println("You found a Weapon. Level " + statChanged + ".");
-						
-						if (hero.getWeaponArtifact() != null) {
-							System.out.println("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ".\n- Take it\n- Leave it");
-						}
-						else {
-							System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-						}
+					System.out.println("You found a Weapon. Level " + statChanged + ".");
+					
+					if (hero.getWeaponArtifact() != null) {
+						System.out.println("You have a Weapon level " + hero.getWeaponArtifact().getStat() + ".\n- Take it\n- Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+					}
 
-						userInput = scanner.nextLine().trim();
-						
-						cleanScreen();
-						
-						if (userInput.equalsIgnoreCase("gui")) {
-							view.GUI = true;
-											view.getController().looting();
-							break;
-						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-							hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
-							view.getController().walk();
-							break;
-						} else if (userInput.equalsIgnoreCase("Leave it")) {
-							view.getController().walk();
-							break;
-						}
-						break;
-					} while (true);
+					userInput = scanner.nextLine().trim();
+					
+					cleanScreen();
+					
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.getController().looting();
+					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+						hero.setWeaponArtifact(new Artifact(statChanged, "Weapon"));
+						view.getController().walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						view.getController().walk();
+					} else {
+						view.getController().looting();
+					}
 				}
 				case 1:
 				{
-					do {
-						System.out.println("You found a Armor. Level " + statChanged + ".");
-						if (hero.getArmorArtifact() != null) {
-							System.out.println("You have a Armor level " + hero.getArmorArtifact().getStat() + ".\n- Take it\n- Leave it");
-						}
-						else {
-							System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-						}
+					System.out.println("You found a Armor. Level " + statChanged + ".");
+					if (hero.getArmorArtifact() != null) {
+						System.out.println("You have a Armor level " + hero.getArmorArtifact().getStat() + ".\n- Take it\n- Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+					}
 
-						userInput = scanner.nextLine().trim();
-						cleanScreen();
-						
-						if (userInput.equalsIgnoreCase("gui")) {
-							view.GUI = true;
-											view.getController().looting();
-							break;
-						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-							hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
-							view.getController().walk();
-							break;
-						} else if (userInput.equalsIgnoreCase("Leave it")) {
-							view.getController().walk();
-							break;
-						}
-					} while (true);
+					userInput = scanner.nextLine().trim();
+					cleanScreen();
+					
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.getController().looting();
+					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+						hero.setArmorArtifact(new Artifact(statChanged, "Armor"));
+						view.getController().walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						view.getController().walk();
+					} else {
+						view.getController().looting();
+					}
 				}
 				case 2:
 				{
-					do {
-
-						System.out.println("You found a Helm. Level " + statChanged + ".");
-						if (hero.getHelmArtifact() != null) {
-							System.out.println("You have a Helm level " + hero.getHelmArtifact().getStat() + ".\n- Take it\n- Leave it");
-						}
-						else {
-							System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
-						}
-						
-						userInput = scanner.nextLine().trim();
-						cleanScreen();
-						
-						if (userInput.equalsIgnoreCase("gui")) {
-							view.GUI = true;
-											view.getController().looting();
-							break;
-						} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
-							hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
-							view.getController().walk();
-							break;
-						} else if (userInput.equalsIgnoreCase("Leave it")) {
-							view.getController().walk();
-							break;
-						}
-					} while (true);
+					System.out.println("You found a Helm. Level " + statChanged + ".");
+					if (hero.getHelmArtifact() != null) {
+						System.out.println("You have a Helm level " + hero.getHelmArtifact().getStat() + ".\n- Take it\n- Leave it");
+					}
+					else {
+						System.out.println("You don't have an Artifact of this type.\n- Take it\n- Leave it");
+					}
+					
+					userInput = scanner.nextLine().trim();
+					cleanScreen();
+					
+					if (userInput.equalsIgnoreCase("gui")) {
+						view.GUI = true;
+						view.getController().looting();
+					} else if (userInput.equalsIgnoreCase("Take it") || userInput.equalsIgnoreCase("e")) {
+						hero.setHelmArtifact(new Artifact(statChanged, "Helm"));
+						view.getController().walk();
+					} else if (userInput.equalsIgnoreCase("Leave it")) {
+						view.getController().walk();
+					} else {
+						view.getController().looting();
+					}
 				}
 			}
 		}
@@ -417,26 +388,22 @@ public class TmlGame {
 		cleanScreen();
 
 		String userInput;
-		do {
-			
-			System.out.println("You have reached the end of level " + hero.getLevel() + ".");
-			System.out.println("Will you continue to level " + (hero.getLevel() + 1) + "?\n- Yes\n- Main Menu");
-			userInput = scanner.nextLine().trim();
-	
-			cleanScreen();
-	
-			if (userInput.equalsIgnoreCase("gui")) {
-				view.GUI = true;
-					view.getController().win();
-				break;
-			} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
-				view.getController().welcomeScreen();
-				break;
-			} else if (userInput.equalsIgnoreCase("Main Menu")) {
-				view.getController().goStart();
-				break;
-			}
-		} while (true);
+		System.out.println("You have reached the end of level " + hero.getLevel() + ".");
+		System.out.println("Will you continue to level " + (hero.getLevel() + 1) + "?\n- Yes\n- Main Menu");
+		userInput = scanner.nextLine().trim();
+
+		cleanScreen();
+
+		if (userInput.equalsIgnoreCase("gui")) {
+			view.GUI = true;
+			view.getController().win();
+		} else if (userInput.equalsIgnoreCase("Yes") || userInput.equalsIgnoreCase("e")) {
+			view.getController().welcomeScreen();
+		} else if (userInput.equalsIgnoreCase("Main Menu")) {
+			view.getController().goStart();
+		} else {
+			view.getController().win();
+		}
 	}
 
 

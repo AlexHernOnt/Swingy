@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:27:36 by ahernand          #+#    #+#             */
-/*   Updated: 2024/12/30 16:20:17 by ahernand         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:24:48 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ public class GameController {
 	public StatesGame currentState;
 
 	private boolean fightResult;
+	private int typeLootResult;
+	private int isLootResult;
 
 
 
@@ -59,13 +61,14 @@ public class GameController {
 	public void goStart() {
 
 		// Preserves the state of the window situation
+		Controller Controller = new Controller(view.GUI, view.GuiG.getActive(), view.GuiG.getFrame());
 		
-		mainController.view.setGUI(view.GUI);
-		mainController.view.setActive(view.GuiG.getActive());
+		// mainController.view.setGUI(view.GUI);
+		// mainController.view.setActive(view.GuiG.getActive());
 
 		System.err.println("At closing in GAME: Active:" + view.GuiG.getActive() + ". And GUI: " +  view.GUI + ".");
 		
-		mainController.startGame();
+		Controller.startGame();
 	}
 
     public void welcomeScreen() {
@@ -125,6 +128,14 @@ public class GameController {
 		fightResult = model.fightAlgo();
 	}
 
+	public void isLootResultAlgo() {
+		isLootResult = model.isLootResultAlgo();
+	}
+
+	public void typeLootResultAlgo() {
+		typeLootResult = model.typeLootResultAlgo();
+	}
+
 
 
 
@@ -146,6 +157,13 @@ public class GameController {
 		return fightResult;
 	}
 
+	public int getIsLootResult() {
+		return isLootResult;
+	}
+
+	public int getTypeLootResult() {
+		return typeLootResult;
+	}
 
 
 
