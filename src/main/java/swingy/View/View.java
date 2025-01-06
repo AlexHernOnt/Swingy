@@ -106,7 +106,7 @@ public class View {
 
 			System.out.println("Choose a save file:");
 			String userInput;
-		
+
 			if (sql.getNameFromSave(1) != null) {
 				System.out.println("\n- 1: (" + sql.getNameFromSave(1) + " - " + "Level " + sql.getLevelFromSave(1) + " " + sql.getArtifactsPrintable(1) + ")");
 			}
@@ -144,6 +144,7 @@ public class View {
 				else
 				{
 					System.out.println("(1): Empty Save File.");
+					controller.loadSave();
 				}
 			}
 			else if (userInput.equalsIgnoreCase("2"))
@@ -154,6 +155,7 @@ public class View {
 				}
 				else
 				{
+					controller.loadSave();
 					System.out.println("(2): Empty Save File.");
 				}
 			}
@@ -166,6 +168,7 @@ public class View {
 				}
 				else
 				{
+					controller.loadSave();
 					System.out.println("(3): Empty Save File.");
 				}
 			} else if (userInput.equalsIgnoreCase("Back")) {
@@ -255,7 +258,6 @@ public class View {
 			} else {
 				Hero dummy = new Hero("Warrior", userInput);
 
-						
 				// Validate the Hero object
 				Set<ConstraintViolation<Hero>> violations = validator.validate(dummy);
 
